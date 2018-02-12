@@ -30,28 +30,28 @@ public class ReflectUtilsTest {
     @Test
     public void reflect() throws Exception {
         Assert.assertEquals(
-                ReflectUtils.reflect(Object.class),
-                ReflectUtils.reflect("java.lang.Object", ClassLoader.getSystemClassLoader())
+                ReflectUtils.Companion.reflect(Object.class),
+                ReflectUtils.Companion.reflect("java.lang.Object", ClassLoader.getSystemClassLoader())
         );
         assertEquals(
-                ReflectUtils.reflect(Object.class),
-                ReflectUtils.reflect("java.lang.Object")
+                ReflectUtils.Companion.reflect(Object.class),
+                ReflectUtils.Companion.reflect("java.lang.Object")
         );
         assertEquals(
-                ReflectUtils.reflect(String.class).get(),
-                ReflectUtils.reflect("java.lang.String").get()
+                ReflectUtils.Companion.reflect(String.class).get(),
+                ReflectUtils.Companion.reflect("java.lang.String").get()
         );
         assertEquals(
                 Object.class,
-                ReflectUtils.reflect(Object.class).get()
+                ReflectUtils.Companion.reflect(Object.class).get()
         );
         assertEquals(
                 "abc",
-                ReflectUtils.reflect((Object) "abc").get()
+                ReflectUtils.Companion.reflect((Object) "abc").get()
         );
         assertEquals(
                 1,
-                ReflectUtils.reflect(1).get()
+                ReflectUtils.Companion.reflect(1).get()
         );
     }
 
@@ -59,53 +59,53 @@ public class ReflectUtilsTest {
     public void newInstance() throws Exception {
         assertEquals(
                 "",
-                ReflectUtils.reflect(String.class).newInstance().get()
+                ReflectUtils.Companion.reflect(String.class).newInstance().get()
         );
         assertEquals(
                 "abc",
-                ReflectUtils.reflect(String.class).newInstance("abc").get()
+                ReflectUtils.Companion.reflect(String.class).newInstance("abc").get()
         );
         assertEquals(
                 "abc",
-                ReflectUtils.reflect(String.class).newInstance("abc".getBytes()).get()
+                ReflectUtils.Companion.reflect(String.class).newInstance("abc".getBytes()).get()
         );
         assertEquals(
                 "abc",
-                ReflectUtils.reflect(String.class).newInstance("abc".toCharArray()).get()
+                ReflectUtils.Companion.reflect(String.class).newInstance("abc".toCharArray()).get()
         );
         assertEquals(
                 "b",
-                ReflectUtils.reflect(String.class).newInstance("abc".toCharArray(), 1, 1).get()
+                ReflectUtils.Companion.reflect(String.class).newInstance("abc".toCharArray(), 1, 1).get()
         );
     }
 
     @Test
     public void newInstancePrivate() throws Exception {
-        assertNull(ReflectUtils.reflect(PrivateConstructors.class).newInstance().field("string").get());
+        assertNull(ReflectUtils.Companion.reflect(PrivateConstructors.class).newInstance().field("string").get());
 
         assertEquals(
                 "abc",
-                ReflectUtils.reflect(PrivateConstructors.class).newInstance("abc").field("string").get()
+                ReflectUtils.Companion.reflect(PrivateConstructors.class).newInstance("abc").field("string").get()
         );
     }
 
     @Test
     public void newInstanceNull() throws Exception {
-        Test2 test2 = ReflectUtils.reflect(Test2.class).newInstance((Object) null).get();
+        Test2 test2 = ReflectUtils.Companion.reflect(Test2.class).newInstance((Object) null).get();
         assertNull(test2.n);
     }
 
     @Test
     public void newInstanceWithPrivate() throws Exception {
-        Test7 t1 = ReflectUtils.reflect(Test7.class).newInstance(1).get();
+        Test7 t1 = ReflectUtils.Companion.reflect(Test7.class).newInstance(1).get();
         assertEquals(1, (int) t1.i);
         assertNull(t1.s);
 
-        Test7 t2 = ReflectUtils.reflect(Test7.class).newInstance("a").get();
+        Test7 t2 = ReflectUtils.Companion.reflect(Test7.class).newInstance("a").get();
         assertNull(t2.i);
         assertEquals("a", t2.s);
 
-        Test7 t3 = ReflectUtils.reflect(Test7.class).newInstance("a", 1).get();
+        Test7 t3 = ReflectUtils.Companion.reflect(Test7.class).newInstance("a", 1).get();
         assertEquals(1, (int) t3.i);
         assertEquals("a", t3.s);
     }
@@ -114,23 +114,23 @@ public class ReflectUtilsTest {
     public void newInstanceAmbiguity() throws Exception {
         Test2 test;
 
-        test = ReflectUtils.reflect(Test2.class).newInstance().get();
+        test = ReflectUtils.Companion.reflect(Test2.class).newInstance().get();
         assertEquals(null, test.n);
         assertEquals(Test2.ConstructorType.NO_ARGS, test.constructorType);
 
-        test = ReflectUtils.reflect(Test2.class).newInstance("abc").get();
+        test = ReflectUtils.Companion.reflect(Test2.class).newInstance("abc").get();
         assertEquals("abc", test.n);
         assertEquals(Test2.ConstructorType.OBJECT, test.constructorType);
 
-        test = ReflectUtils.reflect(Test2.class).newInstance(new Long("1")).get();
+        test = ReflectUtils.Companion.reflect(Test2.class).newInstance(new Long("1")).get();
         assertEquals(1L, test.n);
         assertEquals(Test2.ConstructorType.NUMBER, test.constructorType);
 
-        test = ReflectUtils.reflect(Test2.class).newInstance(1).get();
+        test = ReflectUtils.Companion.reflect(Test2.class).newInstance(1).get();
         assertEquals(1, test.n);
         assertEquals(Test2.ConstructorType.INTEGER, test.constructorType);
 
-        test = ReflectUtils.reflect(Test2.class).newInstance('a').get();
+        test = ReflectUtils.Companion.reflect(Test2.class).newInstance('a').get();
         assertEquals('a', test.n);
         assertEquals(Test2.ConstructorType.OBJECT, test.constructorType);
     }
@@ -140,62 +140,62 @@ public class ReflectUtilsTest {
         // instance methods
         assertEquals(
                 "",
-                ReflectUtils.reflect((Object) " ").method("trim").get()
+                ReflectUtils.Companion.reflect((Object) " ").method("trim").get()
         );
         assertEquals(
                 "12",
-                ReflectUtils.reflect((Object) " 12 ").method("trim").get()
+                ReflectUtils.Companion.reflect((Object) " 12 ").method("trim").get()
         );
         assertEquals(
                 "34",
-                ReflectUtils.reflect((Object) "1234").method("substring", 2).get()
+                ReflectUtils.Companion.reflect((Object) "1234").method("substring", 2).get()
         );
         assertEquals(
                 "12",
-                ReflectUtils.reflect((Object) "1234").method("substring", 0, 2).get()
+                ReflectUtils.Companion.reflect((Object) "1234").method("substring", 0, 2).get()
         );
         assertEquals(
                 "1234",
-                ReflectUtils.reflect((Object) "12").method("concat", "34").get()
+                ReflectUtils.Companion.reflect((Object) "12").method("concat", "34").get()
         );
         assertEquals(
                 "123456",
-                ReflectUtils.reflect((Object) "12").method("concat", "34").method("concat", "56").get()
+                ReflectUtils.Companion.reflect((Object) "12").method("concat", "34").method("concat", "56").get()
         );
         assertEquals(
                 2,
-                ReflectUtils.reflect((Object) "1234").method("indexOf", "3").get()
+                ReflectUtils.Companion.reflect((Object) "1234").method("indexOf", "3").get()
         );
         assertEquals(
                 2.0f,
-                (float) ReflectUtils.reflect((Object) "1234").method("indexOf", "3").method("floatValue").get(),
+                (float) ReflectUtils.Companion.reflect((Object) "1234").method("indexOf", "3").method("floatValue").get(),
                 0.0f
         );
         assertEquals(
                 "2",
-                ReflectUtils.reflect((Object) "1234").method("indexOf", "3").method("toString").get()
+                ReflectUtils.Companion.reflect((Object) "1234").method("indexOf", "3").method("toString").get()
         );
 
         // static methods
         assertEquals(
                 "true",
-                ReflectUtils.reflect(String.class).method("valueOf", true).get()
+                ReflectUtils.Companion.reflect(String.class).method("valueOf", true).get()
         );
         assertEquals(
                 "1",
-                ReflectUtils.reflect(String.class).method("valueOf", 1).get()
+                ReflectUtils.Companion.reflect(String.class).method("valueOf", 1).get()
         );
         assertEquals(
                 "abc",
-                ReflectUtils.reflect(String.class).method("valueOf", "abc".toCharArray()).get()
+                ReflectUtils.Companion.reflect(String.class).method("valueOf", "abc".toCharArray()).get()
         );
         assertEquals(
                 "abc",
-                ReflectUtils.reflect(String.class).method("copyValueOf", "abc".toCharArray()).get()
+                ReflectUtils.Companion.reflect(String.class).method("copyValueOf", "abc".toCharArray()).get()
         );
         assertEquals(
                 "b",
-                ReflectUtils.reflect(String.class).method("copyValueOf", "abc".toCharArray(), 1, 1).get()
+                ReflectUtils.Companion.reflect(String.class).method("copyValueOf", "abc".toCharArray(), 1, 1).get()
         );
     }
 
@@ -205,13 +205,13 @@ public class ReflectUtilsTest {
         Test4 test4 = new Test4();
         assertEquals(
                 test4,
-                ReflectUtils.reflect(test4).method("i_method").get()
+                ReflectUtils.Companion.reflect(test4).method("i_method").get()
         );
 
         // static methods
         assertEquals(
                 Test4.class,
-                ReflectUtils.reflect(Test4.class).method("s_method").get()
+                ReflectUtils.Companion.reflect(Test4.class).method("s_method").get()
         );
     }
 
@@ -221,24 +221,24 @@ public class ReflectUtilsTest {
         Test5 test8 = new Test5();
         assertEquals(
                 test8,
-                ReflectUtils.reflect(test8).method("i_method").get()
+                ReflectUtils.Companion.reflect(test8).method("i_method").get()
         );
 
         // static methods
         assertEquals(
                 Test5.class,
-                ReflectUtils.reflect(Test5.class).method("s_method").get()
+                ReflectUtils.Companion.reflect(Test5.class).method("s_method").get()
         );
     }
 
     @Test
     public void methodNullArguments() throws Exception {
         Test6 test9 = new Test6();
-        ReflectUtils.reflect(test9).method("put", "key", "value");
+        ReflectUtils.Companion.reflect(test9).method("put", "key", "value");
         assertTrue(test9.map.containsKey("key"));
         assertEquals("value", test9.map.get("key"));
 
-        ReflectUtils.reflect(test9).method("put", "key", null);
+        ReflectUtils.Companion.reflect(test9).method("put", "key", null);
         assertTrue(test9.map.containsKey("key"));
         assertNull(test9.map.get("key"));
     }
@@ -248,12 +248,12 @@ public class ReflectUtilsTest {
         TestHierarchicalMethodsSubclass subclass = new TestHierarchicalMethodsSubclass();
         assertEquals(
                 TestHierarchicalMethodsBase.PUBLIC_RESULT,
-                ReflectUtils.reflect(subclass).method("pub_base_method", 1).get()
+                ReflectUtils.Companion.reflect(subclass).method("pub_base_method", 1).get()
         );
 
         assertEquals(
                 TestHierarchicalMethodsBase.PRIVATE_RESULT,
-                ReflectUtils.reflect(subclass).method("very_priv_method").get()
+                ReflectUtils.Companion.reflect(subclass).method("very_priv_method").get()
         );
     }
 
@@ -262,13 +262,13 @@ public class ReflectUtilsTest {
         TestHierarchicalMethodsSubclass subclass = new TestHierarchicalMethodsSubclass();
         assertEquals(
                 TestHierarchicalMethodsSubclass.PRIVATE_RESULT,
-                ReflectUtils.reflect(subclass).method("priv_method", 1).get()
+                ReflectUtils.Companion.reflect(subclass).method("priv_method", 1).get()
         );
 
         TestHierarchicalMethodsBase baseClass = new TestHierarchicalMethodsBase();
         assertEquals(
                 TestHierarchicalMethodsBase.PRIVATE_RESULT,
-                ReflectUtils.reflect(baseClass).method("priv_method", 1).get()
+                ReflectUtils.Companion.reflect(baseClass).method("priv_method", 1).get()
         );
     }
 
@@ -276,23 +276,23 @@ public class ReflectUtilsTest {
     public void methodAmbiguity() throws Exception {
         Test3 test;
 
-        test = ReflectUtils.reflect(Test3.class).newInstance().method("method").get();
+        test = ReflectUtils.Companion.reflect(Test3.class).newInstance().method("method").get();
         assertEquals(null, test.n);
         assertEquals(Test3.MethodType.NO_ARGS, test.methodType);
 
-        test = ReflectUtils.reflect(Test3.class).newInstance().method("method", "abc").get();
+        test = ReflectUtils.Companion.reflect(Test3.class).newInstance().method("method", "abc").get();
         assertEquals("abc", test.n);
         assertEquals(Test3.MethodType.OBJECT, test.methodType);
 
-        test = ReflectUtils.reflect(Test3.class).newInstance().method("method", new Long("1")).get();
+        test = ReflectUtils.Companion.reflect(Test3.class).newInstance().method("method", new Long("1")).get();
         assertEquals(1L, test.n);
         assertEquals(Test3.MethodType.NUMBER, test.methodType);
 
-        test = ReflectUtils.reflect(Test3.class).newInstance().method("method", 1).get();
+        test = ReflectUtils.Companion.reflect(Test3.class).newInstance().method("method", 1).get();
         assertEquals(1, test.n);
         assertEquals(Test3.MethodType.INTEGER, test.methodType);
 
-        test = ReflectUtils.reflect(Test3.class).newInstance().method("method", 'a').get();
+        test = ReflectUtils.Companion.reflect(Test3.class).newInstance().method("method", 'a').get();
         assertEquals('a', test.n);
         assertEquals(Test3.MethodType.OBJECT, test.methodType);
     }
@@ -301,45 +301,45 @@ public class ReflectUtilsTest {
     public void field() throws Exception {
         // instance field
         Test1 test1 = new Test1();
-        ReflectUtils.reflect(test1).field("I_INT1", 1);
-        assertEquals(1, ReflectUtils.reflect(test1).field("I_INT1").get());
+        ReflectUtils.Companion.reflect(test1).field("I_INT1", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test1).field("I_INT1").get());
 
-        ReflectUtils.reflect(test1).field("I_INT2", 1);
-        assertEquals(1, ReflectUtils.reflect(test1).field("I_INT2").get());
+        ReflectUtils.Companion.reflect(test1).field("I_INT2", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test1).field("I_INT2").get());
 
-        ReflectUtils.reflect(test1).field("I_INT2", null);
-        assertNull(ReflectUtils.reflect(test1).field("I_INT2").get());
+        ReflectUtils.Companion.reflect(test1).field("I_INT2", null);
+        assertNull(ReflectUtils.Companion.reflect(test1).field("I_INT2").get());
 
         // static field
-        ReflectUtils.reflect(Test1.class).field("S_INT1", 1);
-        assertEquals(1, ReflectUtils.reflect(Test1.class).field("S_INT1").get());
+        ReflectUtils.Companion.reflect(Test1.class).field("S_INT1", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(Test1.class).field("S_INT1").get());
 
-        ReflectUtils.reflect(Test1.class).field("S_INT2", 1);
-        assertEquals(1, ReflectUtils.reflect(Test1.class).field("S_INT2").get());
+        ReflectUtils.Companion.reflect(Test1.class).field("S_INT2", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(Test1.class).field("S_INT2").get());
 
-        ReflectUtils.reflect(Test1.class).field("S_INT2", null);
-        assertNull(ReflectUtils.reflect(Test1.class).field("S_INT2").get());
+        ReflectUtils.Companion.reflect(Test1.class).field("S_INT2", null);
+        assertNull(ReflectUtils.Companion.reflect(Test1.class).field("S_INT2").get());
 
         // hierarchies field
         TestHierarchicalMethodsSubclass test2 = new TestHierarchicalMethodsSubclass();
 
-        ReflectUtils.reflect(test2).field("invisibleField1", 1);
-        assertEquals(1, ReflectUtils.reflect(test2).field("invisibleField1").get());
+        ReflectUtils.Companion.reflect(test2).field("invisibleField1", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test2).field("invisibleField1").get());
 
-        ReflectUtils.reflect(test2).field("invisibleField2", 1);
-        assertEquals(1, ReflectUtils.reflect(test2).field("invisibleField2").get());
+        ReflectUtils.Companion.reflect(test2).field("invisibleField2", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test2).field("invisibleField2").get());
 
-        ReflectUtils.reflect(test2).field("invisibleField3", 1);
-        assertEquals(1, ReflectUtils.reflect(test2).field("invisibleField3").get());
+        ReflectUtils.Companion.reflect(test2).field("invisibleField3", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test2).field("invisibleField3").get());
 
-        ReflectUtils.reflect(test2).field("visibleField1", 1);
-        assertEquals(1, ReflectUtils.reflect(test2).field("visibleField1").get());
+        ReflectUtils.Companion.reflect(test2).field("visibleField1", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test2).field("visibleField1").get());
 
-        ReflectUtils.reflect(test2).field("visibleField2", 1);
-        assertEquals(1, ReflectUtils.reflect(test2).field("visibleField2").get());
+        ReflectUtils.Companion.reflect(test2).field("visibleField2", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test2).field("visibleField2").get());
 
-        ReflectUtils.reflect(test2).field("visibleField3", 1);
-        assertEquals(1, ReflectUtils.reflect(test2).field("visibleField3").get());
+        ReflectUtils.Companion.reflect(test2).field("visibleField3", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test2).field("visibleField3").get());
     }
 
     @Test
@@ -348,57 +348,57 @@ public class ReflectUtilsTest {
             private String bar;
         }
         Foo foo = new Foo();
-        ReflectUtils.reflect(foo).field("bar", "FooBar");
+        ReflectUtils.Companion.reflect(foo).field("bar", "FooBar");
         assertThat(foo.bar, Matchers.is("FooBar"));
-        assertEquals("FooBar", ReflectUtils.reflect(foo).field("bar").get());
+        assertEquals("FooBar", ReflectUtils.Companion.reflect(foo).field("bar").get());
 
-        ReflectUtils.reflect(foo).field("bar", null);
+        ReflectUtils.Companion.reflect(foo).field("bar", null);
         assertNull(foo.bar);
-        assertNull(ReflectUtils.reflect(foo).field("bar").get());
+        assertNull(ReflectUtils.Companion.reflect(foo).field("bar").get());
     }
 
     @Test
     public void fieldFinal() throws Exception {
         // instance field
         Test8 test11 = new Test8();
-        ReflectUtils.reflect(test11).field("F_INT1", 1);
-        assertEquals(1, ReflectUtils.reflect(test11).field("F_INT1").get());
+        ReflectUtils.Companion.reflect(test11).field("F_INT1", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test11).field("F_INT1").get());
 
-        ReflectUtils.reflect(test11).field("F_INT2", 1);
-        assertEquals(1, ReflectUtils.reflect(test11).field("F_INT2").get());
+        ReflectUtils.Companion.reflect(test11).field("F_INT2", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(test11).field("F_INT2").get());
 
-        ReflectUtils.reflect(test11).field("F_INT2", null);
-        assertNull(ReflectUtils.reflect(test11).field("F_INT2").get());
+        ReflectUtils.Companion.reflect(test11).field("F_INT2", null);
+        assertNull(ReflectUtils.Companion.reflect(test11).field("F_INT2").get());
 
         // static field
-        ReflectUtils.reflect(Test8.class).field("SF_INT1", 1);
-        assertEquals(1, ReflectUtils.reflect(Test8.class).field("SF_INT1").get());
+        ReflectUtils.Companion.reflect(Test8.class).field("SF_INT1", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(Test8.class).field("SF_INT1").get());
 
-        ReflectUtils.reflect(Test8.class).field("SF_INT2", 1);
-        assertEquals(1, ReflectUtils.reflect(Test8.class).field("SF_INT2").get());
+        ReflectUtils.Companion.reflect(Test8.class).field("SF_INT2", 1);
+        assertEquals(1, ReflectUtils.Companion.reflect(Test8.class).field("SF_INT2").get());
 
-        ReflectUtils.reflect(Test8.class).field("SF_INT2", null);
-        assertNull(ReflectUtils.reflect(Test8.class).field("SF_INT2").get());
+        ReflectUtils.Companion.reflect(Test8.class).field("SF_INT2", null);
+        assertNull(ReflectUtils.Companion.reflect(Test8.class).field("SF_INT2").get());
     }
 
     @Test
     public void fieldPrivateStaticFinal() throws Exception {
-        assertEquals(1, ReflectUtils.reflect(TestPrivateStaticFinal.class).field("I1").get());
-        assertEquals(1, ReflectUtils.reflect(TestPrivateStaticFinal.class).field("I2").get());
+        assertEquals(1, ReflectUtils.Companion.reflect(TestPrivateStaticFinal.class).field("I1").get());
+        assertEquals(1, ReflectUtils.Companion.reflect(TestPrivateStaticFinal.class).field("I2").get());
 
-        ReflectUtils.reflect(TestPrivateStaticFinal.class).field("I1", 2);
-        ReflectUtils.reflect(TestPrivateStaticFinal.class).field("I2", 2);
+        ReflectUtils.Companion.reflect(TestPrivateStaticFinal.class).field("I1", 2);
+        ReflectUtils.Companion.reflect(TestPrivateStaticFinal.class).field("I2", 2);
 
-        assertEquals(2, ReflectUtils.reflect(TestPrivateStaticFinal.class).field("I1").get());
-        assertEquals(2, ReflectUtils.reflect(TestPrivateStaticFinal.class).field("I2").get());
+        assertEquals(2, ReflectUtils.Companion.reflect(TestPrivateStaticFinal.class).field("I1").get());
+        assertEquals(2, ReflectUtils.Companion.reflect(TestPrivateStaticFinal.class).field("I2").get());
     }
 
     @Test
     public void fieldAdvanced() throws Exception {
-        ReflectUtils.reflect(Test1.class)
-                .field("S_DATA", ReflectUtils.reflect(Test1.class).newInstance())
+        ReflectUtils.Companion.reflect(Test1.class)
+                .field("S_DATA", ReflectUtils.Companion.reflect(Test1.class).newInstance())
                 .field("S_DATA")
-                .field("I_DATA", ReflectUtils.reflect(Test1.class).newInstance())
+                .field("I_DATA", ReflectUtils.Companion.reflect(Test1.class).newInstance())
                 .field("I_DATA")
                 .field("I_INT1", 1)
                 .field("S_INT1", 2);
@@ -412,10 +412,10 @@ public class ReflectUtilsTest {
 
     @Test
     public void fieldFinalAdvanced() throws Exception {
-        ReflectUtils.reflect(Test8.class)
-                .field("S_DATA", ReflectUtils.reflect(Test8.class).newInstance())
+        ReflectUtils.Companion.reflect(Test8.class)
+                .field("S_DATA", ReflectUtils.Companion.reflect(Test8.class).newInstance())
                 .field("S_DATA")
-                .field("I_DATA", ReflectUtils.reflect(Test8.class).newInstance())
+                .field("I_DATA", ReflectUtils.Companion.reflect(Test8.class).newInstance())
                 .field("I_DATA")
                 .field("F_INT1", 1)
                 .field("F_INT2", 1)
@@ -432,7 +432,7 @@ public class ReflectUtilsTest {
     @Test
     public void _hashCode() throws Exception {
         Object object = new Object();
-        assertEquals(ReflectUtils.reflect(object).hashCode(), object.hashCode());
+        assertEquals(ReflectUtils.Companion.reflect(object).hashCode(), object.hashCode());
     }
 
     @Test
@@ -443,15 +443,15 @@ public class ReflectUtilsTest {
                 return "test";
             }
         };
-        assertEquals(ReflectUtils.reflect(object).toString(), object.toString());
+        assertEquals(ReflectUtils.Companion.reflect(object).toString(), object.toString());
     }
 
     @Test
     public void _equals() throws Exception {
         Object object = new Object();
-        ReflectUtils a = ReflectUtils.reflect(object);
-        ReflectUtils b = ReflectUtils.reflect(object);
-        ReflectUtils c = ReflectUtils.reflect(object);
+        ReflectUtils a = ReflectUtils.Companion.reflect(object);
+        ReflectUtils b = ReflectUtils.Companion.reflect(object);
+        ReflectUtils c = ReflectUtils.Companion.reflect(object);
 
         assertTrue(b.equals(a));
         assertTrue(a.equals(b));

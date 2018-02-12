@@ -21,8 +21,8 @@ public class FileIOUtilsTest {
 
     @Test
     public void writeFileFromIS() throws Exception {
-        Assert.assertTrue(FileIOUtils.writeFileFromIS(PATH_TEMP + "UTF8.txt", new FileInputStream(PATH_FILE + "UTF8.txt"), false));
-        Assert.assertTrue(FileIOUtils.writeFileFromIS(PATH_TEMP + "UTF8.txt", new FileInputStream(PATH_FILE + "UTF8.txt"), true));
+        Assert.assertTrue(FileIOUtils.Companion.writeFileFromIS(PATH_TEMP + "UTF8.txt", new FileInputStream(PATH_FILE + "UTF8.txt"), false));
+        Assert.assertTrue(FileIOUtils.Companion.writeFileFromIS(PATH_TEMP + "UTF8.txt", new FileInputStream(PATH_FILE + "UTF8.txt"), true));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class FileIOUtilsTest {
 
     @After
     public void tearDown() throws Exception {
-        FileUtils.deleteAllInDir(PATH_TEMP);
+        FileUtils.Companion.deleteAllInDir(PATH_TEMP);
     }
 
 }

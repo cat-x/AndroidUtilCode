@@ -19,7 +19,7 @@ import org.robolectric.annotation.Config;
 public class TestUtils {
 
     public static void init() {
-        Utils.init(RuntimeEnvironment.application);
+        Utils.Companion.init(RuntimeEnvironment.application);
     }
 
     @Test

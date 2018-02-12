@@ -60,7 +60,7 @@ public class CacheUtilsTest {
     private ParcelableTest   mParcelableTest   = new ParcelableTest("Blankj", "CacheUtils");
     private SerializableTest mSerializableTest = new SerializableTest("Blankj", "CacheUtils");
     private Bitmap           mBitmap           = Bitmap.createBitmap(100, 100, Bitmap.Config.RGB_565);
-    private Drawable         mDrawable         = new BitmapDrawable(Utils.getApp().getResources(), mBitmap);
+    private Drawable         mDrawable         = new BitmapDrawable(Utils.Companion.getApp().getResources(), mBitmap);
 
     public CacheUtilsTest() {
         try {
@@ -80,14 +80,14 @@ public class CacheUtilsTest {
     public void setUp() throws Exception {
         if (mCacheUtils1 == null) {
             mCacheUtils1 = CacheUtils.getInstance(cache1File);
-            mCacheUtils1.put("bytes1", mBytes, 60 * CacheUtils.SEC);
-            mCacheUtils1.put("string1", mString, 60 * CacheUtils.MIN);
-            mCacheUtils1.put("jsonObject1", mJSONObject, 24 * CacheUtils.HOUR);
-            mCacheUtils1.put("jsonArray1", mJSONArray, 365 * CacheUtils.DAY);
-            mCacheUtils1.put("bitmap1", mBitmap, 60 * CacheUtils.SEC);
-            mCacheUtils1.put("drawable1", mDrawable, 60 * CacheUtils.SEC);
-            mCacheUtils1.put("parcelable1", mParcelableTest, 60 * CacheUtils.SEC);
-            mCacheUtils1.put("serializable1", mSerializableTest, 60 * CacheUtils.SEC);
+            mCacheUtils1.put("bytes1", mBytes, 60 * CacheUtils.Companion.getSEC());
+            mCacheUtils1.put("string1", mString, 60 * CacheUtils.Companion.getMIN());
+            mCacheUtils1.put("jsonObject1", mJSONObject, 24 * CacheUtils.Companion.getHOUR());
+            mCacheUtils1.put("jsonArray1", mJSONArray, 365 * CacheUtils.Companion.getDAY());
+            mCacheUtils1.put("bitmap1", mBitmap, 60 * CacheUtils.Companion.getSEC());
+            mCacheUtils1.put("drawable1", mDrawable, 60 * CacheUtils.Companion.getSEC());
+            mCacheUtils1.put("parcelable1", mParcelableTest, 60 * CacheUtils.Companion.getSEC());
+            mCacheUtils1.put("serializable1", mSerializableTest, 60 * CacheUtils.Companion.getSEC());
         }
         if (mCacheUtils2 == null) {
             mCacheUtils2 = CacheUtils.getInstance(cache2File);
@@ -195,9 +195,9 @@ public class CacheUtilsTest {
 
     @Test
     public void getCacheSize() throws Exception {
-        assertEquals(FileUtils.getDirLength(cache1File), mCacheUtils1.getCacheSize());
+        assertEquals(FileUtils.Companion.getDirLength(cache1File), mCacheUtils1.getCacheSize());
 
-        assertEquals(FileUtils.getDirLength(cache2File), mCacheUtils2.getCacheSize());
+        assertEquals(FileUtils.Companion.getDirLength(cache2File), mCacheUtils2.getCacheSize());
     }
 
     @Test

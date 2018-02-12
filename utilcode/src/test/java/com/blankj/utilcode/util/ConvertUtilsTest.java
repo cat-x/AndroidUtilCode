@@ -32,7 +32,7 @@ public class ConvertUtilsTest {
     public void bytes2HexString() throws Exception {
         assertEquals(
                 hexString,
-                ConvertUtils.bytes2HexString(mBytes)
+                ConvertUtils.Companion.bytes2HexString(mBytes)
         );
     }
 
@@ -41,7 +41,7 @@ public class ConvertUtilsTest {
         assertTrue(
                 Arrays.equals(
                         mBytes,
-                        ConvertUtils.hexString2Bytes(hexString)
+                        ConvertUtils.Companion.hexString2Bytes(hexString)
                 )
         );
     }
@@ -51,7 +51,7 @@ public class ConvertUtilsTest {
         assertTrue(
                 Arrays.equals(
                         mBytes1,
-                        ConvertUtils.chars2Bytes(mChars1)
+                        ConvertUtils.Companion.chars2Bytes(mChars1)
                 )
         );
     }
@@ -61,7 +61,7 @@ public class ConvertUtilsTest {
         assertTrue(
                 Arrays.equals(
                         mChars1,
-                        ConvertUtils.bytes2Chars(mBytes1)
+                        ConvertUtils.Companion.bytes2Chars(mBytes1)
                 )
         );
     }
@@ -70,7 +70,7 @@ public class ConvertUtilsTest {
     public void byte2MemorySize() throws Exception {
         assertEquals(
                 1024,
-                ConvertUtils.byte2MemorySize(MemoryConstants.GB, MemoryConstants.MB),
+                ConvertUtils.Companion.byte2MemorySize(MemoryConstants.INSTANCE.getGB(), MemoryConstants.INSTANCE.getMB()),
                 0.001
         );
     }
@@ -79,32 +79,32 @@ public class ConvertUtilsTest {
     public void byte2FitMemorySize() throws Exception {
         assertEquals(
                 "3.098MB",
-                ConvertUtils.byte2FitMemorySize(1024 * 1024 * 3 + 1024 * 100)
+                ConvertUtils.Companion.byte2FitMemorySize(1024 * 1024 * 3 + 1024 * 100)
         );
     }
 
     @Test
     public void millis2FitTimeSpan() throws Exception {
-        long millis = 6 * TimeConstants.DAY
-                + 6 * TimeConstants.HOUR
-                + 6 * TimeConstants.MIN
-                + 6 * TimeConstants.SEC
+        long millis = 6 * TimeConstants.INSTANCE.getDAY()
+                + 6 * TimeConstants.INSTANCE.getHOUR()
+                + 6 * TimeConstants.INSTANCE.getMIN()
+                + 6 * TimeConstants.INSTANCE.getSEC()
                 + 6;
         assertEquals(
                 "6天6小时6分钟6秒6毫秒",
-                ConvertUtils.millis2FitTimeSpan(millis, 7)
+                ConvertUtils.Companion.millis2FitTimeSpan(millis, 7)
         );
         assertEquals(
                 "6天6小时6分钟6秒",
-                ConvertUtils.millis2FitTimeSpan(millis, 4)
+                ConvertUtils.Companion.millis2FitTimeSpan(millis, 4)
         );
         assertEquals(
                 "6天6小时6分钟",
-                ConvertUtils.millis2FitTimeSpan(millis, 3)
+                ConvertUtils.Companion.millis2FitTimeSpan(millis, 3)
         );
         assertEquals(
                 "25天24分钟24秒24毫秒",
-                ConvertUtils.millis2FitTimeSpan(millis * 4, 5)
+                ConvertUtils.Companion.millis2FitTimeSpan(millis * 4, 5)
         );
     }
 
@@ -112,11 +112,11 @@ public class ConvertUtilsTest {
     public void bytes2Bits_bits2Bytes() throws Exception {
         assertEquals(
                 "0111111111111010",
-                ConvertUtils.bytes2Bits(new byte[]{0x7F, (byte) 0xFA})
+                ConvertUtils.Companion.bytes2Bits(new byte[]{0x7F, (byte) 0xFA})
         );
         assertEquals(
                 "0111111111111010",
-                ConvertUtils.bytes2Bits(ConvertUtils.bits2Bytes("111111111111010"))
+                ConvertUtils.Companion.bytes2Bits(ConvertUtils.Companion.bits2Bytes("111111111111010"))
         );
     }
 
@@ -126,7 +126,7 @@ public class ConvertUtilsTest {
         assertTrue(
                 Arrays.equals(
                         string.getBytes("UTF-8"),
-                        ConvertUtils.inputStream2Bytes(ConvertUtils.bytes2InputStream(string.getBytes("UTF-8")))
+                        ConvertUtils.Companion.inputStream2Bytes(ConvertUtils.Companion.bytes2InputStream(string.getBytes("UTF-8")))
                 )
         );
     }
@@ -136,7 +136,7 @@ public class ConvertUtilsTest {
         String string = "this is test string";
         assertEquals(
                 string,
-                ConvertUtils.inputStream2String(ConvertUtils.string2InputStream(string, "UTF-8"), "UTF-8")
+                ConvertUtils.Companion.inputStream2String(ConvertUtils.Companion.string2InputStream(string, "UTF-8"), "UTF-8")
         );
     }
 }

@@ -47,45 +47,45 @@ public class ObjectUtilsTest {
         LongSparseArray<String> lsa = new LongSparseArray<>();
         android.util.LongSparseArray<String> lsaV4 = new android.util.LongSparseArray<>();
 
-        assertTrue(ObjectUtils.isEmpty(sb));
-        assertFalse(ObjectUtils.isEmpty(sb1));
-        assertTrue(ObjectUtils.isEmpty(string));
-        assertFalse(ObjectUtils.isEmpty(string1));
-        assertTrue(ObjectUtils.isEmpty(arr));
-        assertTrue(ObjectUtils.isEmpty(list));
-        assertTrue(ObjectUtils.isEmpty(map));
-        assertTrue(ObjectUtils.isEmpty(sam));
-        assertTrue(ObjectUtils.isEmpty(sa));
-        assertTrue(ObjectUtils.isEmpty(sba));
-        assertTrue(ObjectUtils.isEmpty(sia));
-        assertTrue(ObjectUtils.isEmpty(sla));
-        assertTrue(ObjectUtils.isEmpty(lsa));
-        assertTrue(ObjectUtils.isEmpty(lsaV4));
+        assertTrue(ObjectUtils.Companion.isEmpty(sb));
+        assertFalse(ObjectUtils.Companion.isEmpty(sb1));
+        assertTrue(ObjectUtils.Companion.isEmpty(string));
+        assertFalse(ObjectUtils.Companion.isEmpty(string1));
+        assertTrue(ObjectUtils.Companion.isEmpty(arr));
+        assertTrue(ObjectUtils.Companion.isEmpty(list));
+        assertTrue(ObjectUtils.Companion.isEmpty(map));
+        assertTrue(ObjectUtils.Companion.isEmpty(sam));
+        assertTrue(ObjectUtils.Companion.isEmpty(sa));
+        assertTrue(ObjectUtils.Companion.isEmpty(sba));
+        assertTrue(ObjectUtils.Companion.isEmpty(sia));
+        assertTrue(ObjectUtils.Companion.isEmpty(sla));
+        assertTrue(ObjectUtils.Companion.isEmpty(lsa));
+        assertTrue(ObjectUtils.Companion.isEmpty(lsaV4));
 
-        assertTrue(!ObjectUtils.isNotEmpty(sb));
-        assertFalse(!ObjectUtils.isNotEmpty(sb1));
-        assertTrue(!ObjectUtils.isNotEmpty(string));
-        assertFalse(!ObjectUtils.isNotEmpty(string1));
-        assertTrue(!ObjectUtils.isNotEmpty(arr));
-        assertTrue(!ObjectUtils.isNotEmpty(list));
-        assertTrue(!ObjectUtils.isNotEmpty(map));
-        assertTrue(!ObjectUtils.isNotEmpty(sam));
-        assertTrue(!ObjectUtils.isNotEmpty(sa));
-        assertTrue(!ObjectUtils.isNotEmpty(sba));
-        assertTrue(!ObjectUtils.isNotEmpty(sia));
-        assertTrue(!ObjectUtils.isNotEmpty(sla));
-        assertTrue(!ObjectUtils.isNotEmpty(lsa));
-        assertTrue(!ObjectUtils.isNotEmpty(lsaV4));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(sb));
+        assertFalse(!ObjectUtils.Companion.isNotEmpty(sb1));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(string));
+        assertFalse(!ObjectUtils.Companion.isNotEmpty(string1));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(arr));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(list));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(map));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(sam));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(sa));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(sba));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(sia));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(sla));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(lsa));
+        assertTrue(!ObjectUtils.Companion.isNotEmpty(lsaV4));
     }
 
     @Test
     public void equals() throws Exception {
-        assertTrue(ObjectUtils.equals(1, 1));
-        assertTrue(ObjectUtils.equals("str", "str"));
-        assertTrue(ObjectUtils.equals(null, null));
+        assertTrue(ObjectUtils.Companion.equals(1, 1));
+        assertTrue(ObjectUtils.Companion.equals("str", "str"));
+        assertTrue(ObjectUtils.Companion.equals(null, null));
 
-        assertFalse(ObjectUtils.equals(null, 1));
-        assertFalse(ObjectUtils.equals(null, ""));
+        assertFalse(ObjectUtils.Companion.equals(null, 1));
+        assertFalse(ObjectUtils.Companion.equals(null, ""));
     }
 
 }

@@ -26,8 +26,8 @@ public class ZipUtilsTest {
 
     @Before
     public void setUp() throws Exception {
-        FileUtils.createOrExistsDir(PATH_TEMP);
-        assertTrue(ZipUtils.zipFile(PATH_ZIP, zipFile, "测试zip"));
+        FileUtils.Companion.createOrExistsDir(PATH_TEMP);
+        assertTrue(ZipUtils.Companion.zipFile(PATH_ZIP, zipFile, "测试zip"));
     }
 
     @Test
@@ -36,31 +36,31 @@ public class ZipUtilsTest {
         files.add(PATH_ZIP + "test.txt");
         files.add(PATH_ZIP);
         files.add(PATH_ZIP + "testDir");
-        assertTrue(ZipUtils.zipFiles(files, zipFiles));
+        assertTrue(ZipUtils.Companion.zipFiles(files, zipFiles));
     }
 
     @Test
     public void unzipFile() throws Exception {
-        System.out.println(ZipUtils.unzipFile(zipFile, PATH_TEMP));
+        System.out.println(ZipUtils.Companion.unzipFile(zipFile, PATH_TEMP));
     }
 
     @Test
     public void unzipFileByKeyword() throws Exception {
-        System.out.println((ZipUtils.unzipFileByKeyword(zipFile, PATH_TEMP, null)).toString());
+        System.out.println((ZipUtils.Companion.unzipFileByKeyword(zipFile, PATH_TEMP, null)).toString());
     }
 
     @Test
     public void getFilesPath() throws Exception {
-        System.out.println(ZipUtils.getFilesPath(zipFile));
+        System.out.println(ZipUtils.Companion.getFilesPath(zipFile));
     }
 
     @Test
     public void getComments() throws Exception {
-        System.out.println(ZipUtils.getComments(zipFile));
+        System.out.println(ZipUtils.Companion.getComments(zipFile));
     }
 
     @After
     public void tearDown() throws Exception {
-        FileUtils.deleteAllInDir(PATH_TEMP);
+        FileUtils.Companion.deleteAllInDir(PATH_TEMP);
     }
 }

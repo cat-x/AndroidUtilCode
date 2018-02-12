@@ -29,14 +29,14 @@ public class ClipboardUtilsTest {
 
     @Test
     public void testText() throws Exception {
-        ClipboardUtils.copyText("test");
-        assertEquals("test", ClipboardUtils.getText());
+        ClipboardUtils.Companion.copyText("test");
+        assertEquals("test", ClipboardUtils.Companion.getText());
     }
 
     @Test
     public void testUri() throws Exception {
-        ClipboardUtils.copyUri(Uri.parse("http://www.blankj.com"));
-        System.out.println((ClipboardUtils.getUri()));
+        ClipboardUtils.Companion.copyUri(Uri.parse("http://www.blankj.com"));
+        System.out.println((ClipboardUtils.Companion.getUri()));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ClipboardUtilsTest {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_DIAL);
-        ClipboardUtils.copyIntent(intent);
-        System.out.println(ClipboardUtils.getText());
+        ClipboardUtils.Companion.copyIntent(intent);
+        System.out.println(ClipboardUtils.Companion.getText());
     }
 }
