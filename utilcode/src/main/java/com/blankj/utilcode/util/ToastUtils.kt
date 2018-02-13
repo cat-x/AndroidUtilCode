@@ -214,7 +214,7 @@ class ToastUtils private constructor() {
         }
 
         private fun show(format: String, duration: Int, vararg args: Any) {
-            show(String.format(format, *args), duration)
+            show(text = String.format(format, *args), duration = duration)
         }
 
         private fun show(text: CharSequence, duration: Int) {

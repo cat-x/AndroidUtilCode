@@ -1,5 +1,6 @@
 package com.blankj.utilcode.util
 
+
 import android.support.annotation.*
 import android.support.annotation.IntRange
 import android.support.design.widget.Snackbar
@@ -9,8 +10,6 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import java.lang.ref.WeakReference
 
 /**
@@ -32,10 +31,6 @@ class SnackbarUtils private constructor(private val parent: View?) {
     private var actionListener: View.OnClickListener? = null
     private var bottomMargin: Int = 0
 
-
-    @IntDef(value = longArrayOf(LENGTH_INDEFINITE.toLong(), LENGTH_SHORT.toLong(), LENGTH_LONG.toLong()))
-    @Retention(RetentionPolicy.SOURCE)
-    annotation class Duration
 
     init {
         setDefault()
@@ -221,6 +216,10 @@ class SnackbarUtils private constructor(private val parent: View?) {
         const val LENGTH_INDEFINITE = -2
         const val LENGTH_SHORT = -1
         const val LENGTH_LONG = 0
+
+        @IntDef(LENGTH_INDEFINITE.toLong(), LENGTH_SHORT.toLong(), LENGTH_LONG.toLong())
+        @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+        annotation class Duration
 
         const private val COLOR_DEFAULT = -0x1000001
         const private val COLOR_SUCCESS = -0xd44a00

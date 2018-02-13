@@ -1,25 +1,8 @@
 package com.blankj.utilcode.util
 
 import android.annotation.TargetApi
-import android.content.res.Resources
-import android.graphics.Bitmap
+import android.graphics.*
 import android.graphics.Bitmap.CompressFormat
-import android.graphics.BitmapFactory
-import android.graphics.BitmapShader
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
-import android.graphics.LinearGradient
-import android.graphics.Matrix
-import android.graphics.Paint
-import android.graphics.PixelFormat
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.PorterDuffXfermode
-import android.graphics.Rect
-import android.graphics.RectF
-import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.ExifInterface
@@ -34,18 +17,8 @@ import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
 import android.support.v4.content.ContextCompat
 import android.view.View
-
 import com.blankj.utilcode.constant.MemoryConstants
-
-import java.io.BufferedOutputStream
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileDescriptor
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
+import java.io.*
 
 /**
  * <pre>
@@ -1634,19 +1607,19 @@ class ImageUtils private constructor() {
             var height = options.outHeight
             var width = options.outWidth
             var inSampleSize = 1
-            while ((width = width shr 1) >= maxWidth && (height = height shr 1) >= maxHeight) {
+            while ({ width = width shr 1;width }() >= maxWidth && { height = height shr 1;height }() >= maxHeight) {
                 inSampleSize = inSampleSize shl 1
             }
             return inSampleSize
         }
 
-        private fun input2Byte(`is`: InputStream?): ByteArray? {
-            if (`is` == null) return null
+        private fun input2Byte(inputStream: InputStream?): ByteArray? {
+            if (inputStream == null) return null
             try {
                 val os = ByteArrayOutputStream()
                 val b = ByteArray(MemoryConstants.KB)
-                var len: Int
-                while ((len = `is`.read(b, 0, MemoryConstants.KB)) != -1) {
+                var len: Int = -1
+                while ({ len = inputStream.read(b, 0, MemoryConstants.KB);len }() != -1) {
                     os.write(b, 0, len)
                 }
                 return os.toByteArray()
@@ -1654,7 +1627,7 @@ class ImageUtils private constructor() {
                 e.printStackTrace()
                 return null
             } finally {
-                CloseUtils.closeIO(`is`)
+                CloseUtils.closeIO(inputStream)
             }
         }
     }

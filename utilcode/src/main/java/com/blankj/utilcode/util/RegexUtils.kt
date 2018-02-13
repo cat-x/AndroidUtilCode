@@ -1,9 +1,7 @@
 package com.blankj.utilcode.util
 
 import com.blankj.utilcode.constant.RegexConstants
-
-import java.util.ArrayList
-import java.util.regex.Matcher
+import java.util.*
 import java.util.regex.Pattern
 
 /**

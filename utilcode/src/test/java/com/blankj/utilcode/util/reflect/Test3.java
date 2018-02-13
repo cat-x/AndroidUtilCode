@@ -10,7 +10,7 @@ package com.blankj.utilcode.util.reflect;
  */
 public class Test3 {
 
-    public Object     n;
+    public Object n;
     public MethodType methodType;
 
     public void method() {

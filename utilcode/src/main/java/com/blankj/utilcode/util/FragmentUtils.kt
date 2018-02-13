@@ -13,9 +13,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.ViewCompat
 import android.util.Log
 import android.view.View
-
-import java.util.ArrayList
-import java.util.Collections
+import java.util.*
 
 /**
  * <pre>
@@ -31,7 +29,7 @@ class FragmentUtils private constructor() {
         throw UnsupportedOperationException("u can't instantiate me...")
     }
 
-    private class Args private constructor(internal var id: Int, internal var isHide: Boolean, internal var isAddStack: Boolean)
+    internal class Args constructor(internal var id: Int, internal var isHide: Boolean, internal var isAddStack: Boolean)
 
     class FragmentNode(internal var fragment: Fragment, internal var next: List<FragmentNode>?) {
 

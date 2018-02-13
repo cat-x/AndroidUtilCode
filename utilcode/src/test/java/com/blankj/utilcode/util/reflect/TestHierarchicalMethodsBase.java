@@ -10,13 +10,12 @@ package com.blankj.utilcode.util.reflect;
  */
 public class TestHierarchicalMethodsBase {
 
-    public static String PUBLIC_RESULT  = "PUBLIC_BASE";
+    public static String PUBLIC_RESULT = "PUBLIC_BASE";
     public static String PRIVATE_RESULT = "PRIVATE_BASE";
-
+    public int visibleField1;
+    public int visibleField2;
     private int invisibleField1;
     private int invisibleField2;
-    public  int visibleField1;
-    public  int visibleField2;
 
     public String pub_base_method(int number) {
         return PUBLIC_RESULT;

@@ -1,23 +1,12 @@
 package com.blankj.utilcode.util
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.BlurMaskFilter
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.Rect
-import android.graphics.Shader
-import android.graphics.Typeface
+import android.graphics.*
+import android.graphics.BlurMaskFilter.Blur
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.FloatRange
-import android.support.annotation.IntDef
+import android.support.annotation.*
 import android.support.annotation.IntRange
 import android.support.v4.content.ContextCompat
 import android.text.Layout
@@ -25,34 +14,9 @@ import android.text.Layout.Alignment
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
-import android.text.style.AbsoluteSizeSpan
-import android.text.style.AlignmentSpan
-import android.text.style.BackgroundColorSpan
-import android.text.style.CharacterStyle
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.LeadingMarginSpan
-import android.text.style.LineHeightSpan
-import android.text.style.MaskFilterSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.ReplacementSpan
-import android.text.style.ScaleXSpan
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.SubscriptSpan
-import android.text.style.SuperscriptSpan
-import android.text.style.TypefaceSpan
-import android.text.style.URLSpan
-import android.text.style.UnderlineSpan
-import android.text.style.UpdateAppearance
+import android.text.style.*
 import android.util.Log
-
-import java.io.InputStream
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import java.lang.ref.WeakReference
-
-import android.graphics.BlurMaskFilter.Blur
 
 /**
  * <pre>
@@ -101,7 +65,7 @@ class SpanUtils {
     private var shadowDx: Float = 0.toFloat()
     private var shadowDy: Float = 0.toFloat()
     private var shadowColor: Int = 0
-    private var spans: Array<Any>? = null
+    private var spans: Array<out Any>? = null
 
     private var imageBitmap: Bitmap? = null
     private var imageDrawable: Drawable? = null
@@ -118,10 +82,6 @@ class SpanUtils {
     private val mTypeCharSequence = 0
     private val mTypeImage = 1
     private val mTypeSpace = 2
-
-    @IntDef(ALIGN_BOTTOM.toLong(), ALIGN_BASELINE.toLong(), ALIGN_CENTER.toLong(), ALIGN_TOP.toLong())
-    @Retention(RetentionPolicy.SOURCE)
-    annotation class Align
 
     init {
         mBuilder = SpannableStringBuilder()
@@ -782,7 +742,7 @@ class SpanUtils {
             mBuilder.setSpan(TypefaceSpan(fontFamily), start, end, flag)
         }
         if (typeface != null) {
-            mBuilder.setSpan(CustomTypefaceSpan(typeface), start, end, flag)
+            mBuilder.setSpan(CustomTypefaceSpan(typeface!!), start, end, flag)
         }
         if (alignment != null) {
             mBuilder.setSpan(AlignmentSpan.Standard(alignment), start, end, flag)
@@ -802,7 +762,7 @@ class SpanUtils {
             )
         }
         if (shader != null) {
-            mBuilder.setSpan(ShaderSpan(shader), start, end, flag)
+            mBuilder.setSpan(ShaderSpan(shader!!), start, end, flag)
         }
         if (shadowRadius != -1f) {
             mBuilder.setSpan(
@@ -824,11 +784,11 @@ class SpanUtils {
         mBuilder.append("<img>")
         val end = start + 5
         if (imageBitmap != null) {
-            mBuilder.setSpan(CustomImageSpan(imageBitmap, alignImage), start, end, flag)
+            mBuilder.setSpan(CustomImageSpan(imageBitmap!!, alignImage), start, end, flag)
         } else if (imageDrawable != null) {
-            mBuilder.setSpan(CustomImageSpan(imageDrawable, alignImage), start, end, flag)
+            mBuilder.setSpan(CustomImageSpan(imageDrawable!!, alignImage), start, end, flag)
         } else if (imageUri != null) {
-            mBuilder.setSpan(CustomImageSpan(imageUri, alignImage), start, end, flag)
+            mBuilder.setSpan(CustomImageSpan(imageUri!!, alignImage), start, end, flag)
         } else if (imageResourceId != -1) {
             mBuilder.setSpan(CustomImageSpan(imageResourceId, alignImage), start, end, flag)
         }
@@ -876,18 +836,12 @@ class SpanUtils {
 
         }
 
-        companion object {
-
-            val ALIGN_CENTER = 2
-
-            val ALIGN_TOP = 3
-        }
     }
 
     /**
      * 空格
      */
-    internal inner class SpaceSpan private constructor(private val width: Int, private val color: Int = Color.TRANSPARENT) : ReplacementSpan() {
+    internal inner class SpaceSpan constructor(private val width: Int, private val color: Int = Color.TRANSPARENT) : ReplacementSpan() {
 
         override fun getSize(paint: Paint, text: CharSequence,
                              @IntRange(from = 0) start: Int,
@@ -917,7 +871,7 @@ class SpanUtils {
     /**
      * 引用
      */
-    internal inner class CustomQuoteSpan private constructor(private val color: Int, private val stripeWidth: Int, private val gapWidth: Int) : LeadingMarginSpan {
+    internal inner class CustomQuoteSpan constructor(private val color: Int, private val stripeWidth: Int, private val gapWidth: Int) : LeadingMarginSpan {
 
         override fun getLeadingMargin(first: Boolean): Int {
             return stripeWidth + gapWidth
@@ -943,7 +897,7 @@ class SpanUtils {
     /**
      * 列表项
      */
-    internal inner class CustomBulletSpan private constructor(private val color: Int, private val radius: Int, private val gapWidth: Int) : LeadingMarginSpan {
+    internal inner class CustomBulletSpan constructor(private val color: Int, private val radius: Int, private val gapWidth: Int) : LeadingMarginSpan {
 
         private var sBulletPath: Path? = null
 
@@ -981,7 +935,7 @@ class SpanUtils {
     }
 
     @SuppressLint("ParcelCreator")
-    internal inner class CustomTypefaceSpan private constructor(private val newType: Typeface) : TypefaceSpan("") {
+    internal inner class CustomTypefaceSpan constructor(private val newType: Typeface) : TypefaceSpan("") {
 
         override fun updateDrawState(textPaint: TextPaint) {
             apply(textPaint, newType)
@@ -1017,8 +971,8 @@ class SpanUtils {
 
     internal inner class CustomImageSpan : CustomDynamicDrawableSpan {
         private var mDrawable: Drawable? = null
-        private val mContentUri: Uri?
-        private val mResourceId: Int
+        private var mContentUri: Uri? = null
+        private var mResourceId: Int = 0
 
         override val drawable: Drawable?
             get() {
@@ -1055,25 +1009,25 @@ class SpanUtils {
                 return drawable
             }
 
-        private constructor(b: Bitmap, verticalAlignment: Int) : super(verticalAlignment) {
+        constructor(b: Bitmap, verticalAlignment: Int) : super(verticalAlignment) {
             mDrawable = BitmapDrawable(Utils.app.getResources(), b)
             mDrawable!!.setBounds(
                     0, 0, mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight
             )
         }
 
-        private constructor(d: Drawable, verticalAlignment: Int) : super(verticalAlignment) {
+        constructor(d: Drawable, verticalAlignment: Int) : super(verticalAlignment) {
             mDrawable = d
             mDrawable!!.setBounds(
                     0, 0, mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight
             )
         }
 
-        private constructor(uri: Uri, verticalAlignment: Int) : super(verticalAlignment) {
+        constructor(uri: Uri, verticalAlignment: Int) : super(verticalAlignment) {
             mContentUri = uri
         }
 
-        private constructor(@DrawableRes resourceId: Int, verticalAlignment: Int) : super(verticalAlignment) {
+        constructor(@DrawableRes resourceId: Int, verticalAlignment: Int) : super(verticalAlignment) {
             mResourceId = resourceId
         }
     }
@@ -1082,18 +1036,18 @@ class SpanUtils {
 
         val mVerticalAlignment: Int
 
-        abstract val drawable: Drawable
+        abstract val drawable: Drawable?
 
-        private val cachedDrawable: Drawable
+        private val cachedDrawable: Drawable?
             get() {
                 val wr = mDrawableRef
                 var d: Drawable? = null
                 if (wr != null) {
                     d = wr.get()
                 }
-                if (d == null) {
+                if (d == null && drawable != null) {
                     d = drawable
-                    mDrawableRef = WeakReference(d)
+                    mDrawableRef = WeakReference(d!!)
                 }
                 return d
             }
@@ -1104,13 +1058,13 @@ class SpanUtils {
             mVerticalAlignment = ALIGN_BOTTOM
         }
 
-        private constructor(verticalAlignment: Int) {
+        constructor(verticalAlignment: Int) {
             mVerticalAlignment = verticalAlignment
         }
 
         override fun getSize(paint: Paint, text: CharSequence,
                              start: Int, end: Int, fm: Paint.FontMetricsInt?): Int {
-            val d = cachedDrawable
+            val d = cachedDrawable ?: return 0
             val rect = d.bounds
             if (fm != null) {
                 //                LogUtils.d("fm.top: " + fm.top,
@@ -1141,53 +1095,45 @@ class SpanUtils {
                           start: Int, end: Int, x: Float,
                           top: Int, y: Int, bottom: Int, paint: Paint) {
             val d = cachedDrawable
-            val rect = d.bounds
-            canvas.save()
-            val transY: Float
-            val lineHeight = bottom - top
-            //            LogUtils.d("rectHeight: " + rect.height(),
-            //                    "lineHeight: " + (bottom - top));
-            if (rect.height() < lineHeight) {
-                if (mVerticalAlignment == ALIGN_TOP) {
-                    transY = top.toFloat()
-                } else if (mVerticalAlignment == ALIGN_CENTER) {
-                    transY = ((bottom + top - rect.height()) / 2).toFloat()
-                } else if (mVerticalAlignment == ALIGN_BASELINE) {
-                    transY = (y - rect.height()).toFloat()
+            if (d != null) {
+                val rect = d.bounds
+                canvas.save()
+                val transY: Float
+                val lineHeight = bottom - top
+                //            LogUtils.d("rectHeight: " + rect.height(),
+                //                    "lineHeight: " + (bottom - top));
+                if (rect.height() < lineHeight) {
+                    if (mVerticalAlignment == ALIGN_TOP) {
+                        transY = top.toFloat()
+                    } else if (mVerticalAlignment == ALIGN_CENTER) {
+                        transY = ((bottom + top - rect.height()) / 2).toFloat()
+                    } else if (mVerticalAlignment == ALIGN_BASELINE) {
+                        transY = (y - rect.height()).toFloat()
+                    } else {
+                        transY = (bottom - rect.height()).toFloat()
+                    }
+                    canvas.translate(x, transY)
                 } else {
-                    transY = (bottom - rect.height()).toFloat()
+                    canvas.translate(x, top.toFloat())
                 }
-                canvas.translate(x, transY)
-            } else {
-                canvas.translate(x, top.toFloat())
+                d.draw(canvas)
+                canvas.restore()
             }
-            d.draw(canvas)
-            canvas.restore()
         }
 
-        companion object {
-
-            val ALIGN_BOTTOM = 0
-
-            val ALIGN_BASELINE = 1
-
-            val ALIGN_CENTER = 2
-
-            val ALIGN_TOP = 3
-        }
     }
 
-    internal inner class ShaderSpan private constructor(private val mShader: Shader) : CharacterStyle(), UpdateAppearance {
+    internal inner class ShaderSpan constructor(private val mShader: Shader) : CharacterStyle(), UpdateAppearance {
 
         override fun updateDrawState(tp: TextPaint) {
             tp.shader = mShader
         }
     }
 
-    internal inner class ShadowSpan private constructor(private val radius: Float,
-                                                        private val dx: Float,
-                                                        private val dy: Float,
-                                                        private val shadowColor: Int) : CharacterStyle(), UpdateAppearance {
+    internal inner class ShadowSpan constructor(private val radius: Float,
+                                                private val dx: Float,
+                                                private val dy: Float,
+                                                private val shadowColor: Int) : CharacterStyle(), UpdateAppearance {
 
         override fun updateDrawState(tp: TextPaint) {
             tp.setShadowLayer(radius, dx, dy, shadowColor)
@@ -1195,15 +1141,18 @@ class SpanUtils {
     }
 
     companion object {
-
         private val COLOR_DEFAULT = -0x1000001
 
-        val ALIGN_BOTTOM = 0
-        val ALIGN_BASELINE = 1
-        val ALIGN_CENTER = 2
-        val ALIGN_TOP = 3
+        const val ALIGN_BOTTOM = 0
+        const val ALIGN_BASELINE = 1
+        const val ALIGN_CENTER = 2
+        const val ALIGN_TOP = 3
 
         private val LINE_SEPARATOR = System.getProperty("line.separator")
+
+        @IntDef(SpanUtils.ALIGN_BOTTOM.toLong(), SpanUtils.ALIGN_BASELINE.toLong(), SpanUtils.ALIGN_CENTER.toLong(), SpanUtils.ALIGN_TOP.toLong())
+        @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+        annotation class Align
     }
 }
 /**

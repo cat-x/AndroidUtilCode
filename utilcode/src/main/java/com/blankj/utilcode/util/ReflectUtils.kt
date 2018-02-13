@@ -1,15 +1,7 @@
 package com.blankj.utilcode.util
 
-import java.lang.reflect.AccessibleObject
-import java.lang.reflect.Constructor
-import java.lang.reflect.Field
-import java.lang.reflect.Member
-import java.lang.reflect.Method
-import java.lang.reflect.Modifier
-import java.util.ArrayList
-import java.util.Arrays
-import java.util.Collections
-import java.util.Comparator
+import java.lang.reflect.*
+import java.util.*
 
 /**
  * <pre>
@@ -28,7 +20,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
      * @return [ReflectUtils]
      */
     @JvmOverloads
-    fun newInstance(vararg args: Any = arrayOfNulls(0)): ReflectUtils {
+    fun newInstance(vararg args: Any = arrayOf()): ReflectUtils {
         val types = getArgsType(*args)
         try {
             val constructor = type().getDeclaredConstructor(*types)
@@ -50,14 +42,14 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
 
     }
 
-    private fun getArgsType(vararg args: Any): Array<Class<*>> {
-        if (args == null) return arrayOfNulls(0)
+    private fun getArgsType(vararg args: Any?): Array<Class<*>> {
+        if (args.isEmpty()) return arrayOf()
         val result = arrayOfNulls<Class<*>>(args.size)
         for (i in args.indices) {
             val value = args[i]
             result[i] = if (value == null) NULL::class.java else value.javaClass
         }
-        return result
+        return result as Array<Class<*>>
     }
 
     private fun sortConstructors(list: List<Constructor<*>>) {
@@ -176,15 +168,15 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
      */
     @Throws(ReflectUtils.ReflectException::class)
     @JvmOverloads
-    fun method(name: String, vararg args: Any = arrayOfNulls(0)): ReflectUtils {
+    fun method(name: String, vararg args: Any = arrayOf()): ReflectUtils {
         val types = getArgsType(*args)
         try {
             val method = exactMethod(name, types)
-            return method(method, `object`, *args)
+            return method(method, obj = `object`, args = *args)
         } catch (e: NoSuchMethodException) {
             try {
                 val method = similarMethod(name, types)
-                return method(method, `object`, *args)
+                return method(method, obj = `object`, args = *args)
             } catch (e1: NoSuchMethodException) {
                 throw ReflectException(e1)
             }
@@ -422,13 +414,13 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
         /**
          * 设置要反射的类
          *
-         * @param object 类对象
+         * @param `object` 类对象
          * @return [ReflectUtils]
          * @throws ReflectException 反射异常
          */
         @Throws(ReflectUtils.ReflectException::class)
-        fun reflect(`object`: Any?): ReflectUtils {
-            return ReflectUtils(if (`object` == null) Any::class.java else `object`.javaClass, `object`)
+        fun reflect(any: Any?): ReflectUtils {
+            return ReflectUtils(if (any == null) Any::class.java else any.javaClass, any!!)
         }
 
         private fun forName(className: String): Class<*> {

@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.support.v4.util.SimpleArrayMap
 
-import java.util.Collections
-
 /**
  * <pre>
  * author: Blankj

@@ -46,14 +46,14 @@ class BrightnessUtils private constructor() {
 
         @RequiresApi(Build.VERSION_CODES.M)
                 /**
-         * 设置是否开启自动调节亮度
-         *
-         * 需添加权限 `<uses-permission android:name="android.permission.WRITE_SETTINGS" />`
-         * 并得到授权
-         *
-         * @param enabled `true`: 打开<br></br>`false`: 关闭
-         * @return `true`: 成功<br></br>`false`: 失败
-         */
+                 * 设置是否开启自动调节亮度
+                 *
+                 * 需添加权限 `<uses-permission android:name="android.permission.WRITE_SETTINGS" />`
+                 * 并得到授权
+                 *
+                 * @param enabled `true`: 打开<br></br>`false`: 关闭
+                 * @return `true`: 成功<br></br>`false`: 失败
+                 */
         fun setAutoBrightnessEnabled(enabled: Boolean): Boolean {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.System.canWrite(Utils.app)) {
                 val intent = Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS)

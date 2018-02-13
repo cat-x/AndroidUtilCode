@@ -10,7 +10,7 @@ package com.blankj.utilcode.util.reflect;
  */
 public class Test7 {
 
-    public final String  s;
+    public final String s;
     public final Integer i;
 
     private Test7(int i) {

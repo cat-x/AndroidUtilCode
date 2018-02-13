@@ -18,7 +18,7 @@ object CloneUtils {
 
     private fun serializable2Bytes(serializable: Serializable?): ByteArray? {
         if (serializable == null) return null
-        var baos: ByteArrayOutputStream? =null
+        var baos: ByteArrayOutputStream? = null
         var oos: ObjectOutputStream? = null
         try {
             baos = ByteArrayOutputStream()

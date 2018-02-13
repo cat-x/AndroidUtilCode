@@ -1,7 +1,6 @@
 package com.blankj.utilcode.util
 
 import android.util.Base64
-
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -9,8 +8,6 @@ import java.security.DigestInputStream
 import java.security.InvalidKeyException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.security.spec.AlgorithmParameterSpec
-
 import javax.crypto.Cipher
 import javax.crypto.Mac
 import javax.crypto.spec.IvParameterSpec
@@ -959,8 +956,8 @@ class EncryptUtils private constructor() {
             var i = 0
             var j = 0
             while (i < len) {
-                ret[j++] = hexDigits[bytes[i].ushr(4) and 0x0f]
-                ret[j++] = hexDigits[bytes[i] and 0x0f]
+                ret[j++] = hexDigits[bytes[i].toInt().ushr(4) and 0x0f]
+                ret[j++] = hexDigits[bytes[i].toInt() and 0x0f]
                 i++
             }
             return String(ret)

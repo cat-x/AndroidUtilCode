@@ -1,15 +1,11 @@
 package com.blankj.utilcode.util
 
 import android.annotation.SuppressLint
-
 import com.blankj.utilcode.constant.TimeConstants
-
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 /**
  * <pre>

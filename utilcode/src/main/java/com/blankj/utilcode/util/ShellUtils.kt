@@ -139,9 +139,9 @@ class ShellUtils private constructor() {
                             successMsg.append(LINE_SEP).append(line)
                         }
                     }
-                    if ({line = errorResult.readLine();line}() != null) {
+                    if ({ line = errorResult.readLine();line }() != null) {
                         errorMsg.append(line)
-                        while ({line = errorResult.readLine();line}() != null) {
+                        while ({ line = errorResult.readLine();line }() != null) {
                             errorMsg.append(LINE_SEP).append(line)
                         }
                     }

@@ -517,7 +517,7 @@ class FileIOUtils private constructor() {
                 os = ByteArrayOutputStream()
                 val b = ByteArray(sBufferSize)
                 var len: Int = -1
-                while ({len = fis.read(b, 0, sBufferSize);len}() != -1) {
+                while ({ len = fis.read(b, 0, sBufferSize);len }() != -1) {
                     os.write(b, 0, len)
                 }
                 return os.toByteArray()

@@ -1,24 +1,14 @@
 package com.blankj.utilcode.util
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.PixelFormat
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
-
 import com.blankj.utilcode.constant.MemoryConstants
 import com.blankj.utilcode.constant.TimeConstants
-
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-import java.io.UnsupportedEncodingException
+import java.io.*
+import kotlin.experimental.or
 
 /**
  * <pre>
@@ -65,8 +55,8 @@ class ConvertUtils private constructor() {
             var i = 0
             var j = 0
             while (i < len) {
-                ret[j++] = hexDigits[bytes[i].ushr(4) and 0x0f]
-                ret[j++] = hexDigits[bytes[i] and 0x0f]
+                ret[j++] = hexDigits[bytes[i].toInt().ushr(4) and 0x0f]
+                ret[j++] = hexDigits[bytes[i].toInt() and 0x0f]
                 i++
             }
             return String(ret)
@@ -143,7 +133,7 @@ class ConvertUtils private constructor() {
             if (len <= 0) return null
             val chars = CharArray(len)
             for (i in 0 until len) {
-                chars[i] = (bytes[i] and 0xff).toChar()
+                chars[i] = (bytes[i].toInt() and 0xff).toChar()
             }
             return chars
         }
@@ -287,7 +277,7 @@ class ConvertUtils private constructor() {
             val sb = StringBuilder()
             for (aByte in bytes) {
                 for (j in 7 downTo 0) {
-                    sb.append(if (aByte shr j and 0x01 == 0) '0' else '1')
+                    sb.append(if (aByte.toInt() shr j and 0x01 == 0) '0' else '1')
                 }
             }
             return sb.toString()
@@ -313,7 +303,7 @@ class ConvertUtils private constructor() {
             val bytes = ByteArray(byteLen)
             for (i in 0 until byteLen) {
                 for (j in 0..7) {
-                    bytes[i] = bytes[i] shl 1
+                    bytes[i] = (bytes[i].toInt() shl 1).toByte()
                     bytes[i] = bytes[i] or (bits[i * 8 + j] - '0').toByte()
                 }
             }
@@ -323,16 +313,16 @@ class ConvertUtils private constructor() {
         /**
          * inputStream 转 outputStream
          *
-         * @param is 输入流
+         * @param `is` 输入流
          * @return outputStream 子类
          */
-        fun input2OutputStream(`is`: InputStream?): ByteArrayOutputStream? {
-            if (`is` == null) return null
+        fun input2OutputStream(inputStream: InputStream?): ByteArrayOutputStream? {
+            if (inputStream == null) return null
             try {
                 val os = ByteArrayOutputStream()
                 val b = ByteArray(MemoryConstants.KB)
-                var len: Int
-                while ((len = `is`.read(b, 0, MemoryConstants.KB)) != -1) {
+                var len: Int = -1
+                while (({ len = inputStream.read(b, 0, MemoryConstants.KB);len }()) != -1) {
                     os.write(b, 0, len)
                 }
                 return os
@@ -340,7 +330,7 @@ class ConvertUtils private constructor() {
                 e.printStackTrace()
                 return null
             } finally {
-                CloseUtils.closeIO(`is`)
+                CloseUtils.closeIO(inputStream)
             }
         }
 
@@ -402,10 +392,10 @@ class ConvertUtils private constructor() {
          * @param charsetName 编码格式
          * @return 字符串
          */
-        fun inputStream2String(`is`: InputStream?, charsetName: String): String? {
-            if (`is` == null || isSpace(charsetName)) return null
+        fun inputStream2String(inputStream: InputStream?, charsetName: String): String? {
+            if (inputStream == null || isSpace(charsetName)) return null
             try {
-                return String(inputStream2Bytes(`is`)!!, charsetName)
+                return String(inputStream2Bytes(inputStream)!!, charset(charsetName))
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace()
                 return null
@@ -441,7 +431,7 @@ class ConvertUtils private constructor() {
         fun outputStream2String(out: OutputStream?, charsetName: String): String? {
             if (out == null || isSpace(charsetName)) return null
             try {
-                return String(outputStream2Bytes(out)!!, charsetName)
+                return String(outputStream2Bytes(out)!!, charset(charsetName))
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace()
                 return null

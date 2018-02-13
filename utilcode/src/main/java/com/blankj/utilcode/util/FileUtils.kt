@@ -1,20 +1,13 @@
 package com.blankj.utilcode.util
 
 import android.annotation.SuppressLint
-
-import java.io.BufferedInputStream
-import java.io.File
-import java.io.FileFilter
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.DigestInputStream
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * <pre>
@@ -754,19 +747,19 @@ class FileUtils private constructor() {
          */
         fun getFileLines(file: File?): Int {
             var count = 1
-            var `is`: InputStream? = null
+            var inputStream: InputStream? = null
             try {
-                `is` = BufferedInputStream(FileInputStream(file!!))
+                inputStream = BufferedInputStream(FileInputStream(file!!))
                 val buffer = ByteArray(1024)
-                var readChars: Int
+                var readChars: Int = -1
                 if (LINE_SEP.endsWith("\n")) {
-                    while ((readChars = `is`.read(buffer, 0, 1024)) != -1) {
+                    while ({ readChars = inputStream.read(buffer, 0, 1024);readChars }() != -1) {
                         for (i in 0 until readChars) {
                             if (buffer[i] == '\n'.toByte()) ++count
                         }
                     }
                 } else {
-                    while ((readChars = `is`.read(buffer, 0, 1024)) != -1) {
+                    while ({ readChars = inputStream.read(buffer, 0, 1024);readChars }() != -1) {
                         for (i in 0 until readChars) {
                             if (buffer[i] == '\r'.toByte()) ++count
                         }
@@ -775,7 +768,7 @@ class FileUtils private constructor() {
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
-                CloseUtils.closeIO(`is`)
+                CloseUtils.closeIO(inputStream)
             }
             return count
         }
@@ -798,7 +791,7 @@ class FileUtils private constructor() {
          */
         fun getDirSize(dir: File?): String {
             val len = getDirLength(dir)
-            return if (len == -1) "" else byte2FitMemorySize(len)
+            return if (len == -1L) "" else byte2FitMemorySize(len)
         }
 
         /**
@@ -809,7 +802,7 @@ class FileUtils private constructor() {
          */
         fun getFileSize(filePath: String): String {
             val len = getFileLength(filePath)
-            return if (len == -1) "" else byte2FitMemorySize(len)
+            return if (len == -1L) "" else byte2FitMemorySize(len)
         }
 
         /**
@@ -820,7 +813,7 @@ class FileUtils private constructor() {
          */
         fun getFileSize(file: File): String {
             val len = getFileLength(file)
-            return if (len == -1) "" else byte2FitMemorySize(len)
+            return if (len == -1L) "" else byte2FitMemorySize(len)
         }
 
         /**
@@ -1067,8 +1060,8 @@ class FileUtils private constructor() {
             var i = 0
             var j = 0
             while (i < len) {
-                ret[j++] = hexDigits[bytes[i].ushr(4) and 0x0f]
-                ret[j++] = hexDigits[bytes[i] and 0x0f]
+                ret[j++] = hexDigits[bytes[i].toInt().ushr(4) and 0x0f]
+                ret[j++] = hexDigits[bytes[i].toInt() and 0x0f]
                 i++
             }
             return String(ret)
