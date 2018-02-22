@@ -1,4 +1,4 @@
-package com.blankj.utilcode.util.reflect;
+package com.blankj.androidutilcode.feature.core.reflect;
 
 /**
  * <pre>
@@ -10,5 +10,8 @@ package com.blankj.utilcode.util.reflect;
  */
 public class TestPrivateStaticFinal {
     private static final int I1 = 1;
-    private static final Integer I2 = 1;
+
+    public static int getI1() {
+        return I1;
+    }
 }

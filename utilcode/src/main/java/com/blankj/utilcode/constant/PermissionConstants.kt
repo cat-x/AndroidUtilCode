@@ -5,9 +5,6 @@ import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.support.annotation.StringDef
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-
 
 /**
  * <pre>
@@ -41,7 +38,7 @@ object PermissionConstants {
     private val GROUP_STORAGE = arrayOf(permission.READ_EXTERNAL_STORAGE, permission.WRITE_EXTERNAL_STORAGE)
 
     @StringDef(CALENDAR, CAMERA, CONTACTS, LOCATION, MICROPHONE, PHONE, SENSORS, SMS, STORAGE)
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     annotation class Permission
 
     fun getPermissions(@Permission permission: String): Array<String> {

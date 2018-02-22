@@ -37,7 +37,7 @@ class ImageActivity : BaseBackActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        toolBar!!.setTitle(getString(R.string.demo_image))
+        toolBar!!.title = getString(R.string.demo_image)
 
         val rvImages = findViewById<RecyclerView>(R.id.rv_images)
         findViewById<View>(R.id.btn_save).setOnClickListener(this)

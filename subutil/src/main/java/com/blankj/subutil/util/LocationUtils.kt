@@ -93,7 +93,7 @@ class LocationUtils private constructor() {
 
     companion object {
 
-        private val TWO_MINUTES = 1000 * 60 * 2
+        private const val TWO_MINUTES = 1000 * 60 * 2
 
         private var mListener: OnLocationChangeListener? = null
         private var myLocationListener: MyLocationListener? = null
@@ -172,7 +172,7 @@ class LocationUtils private constructor() {
          */
         val isGpsEnabled: Boolean
             get() {
-                val lm = Utils.app.getSystemService(LOCATION_SERVICE) as LocationManager
+                val lm = Utils.app.getSystemService(LOCATION_SERVICE) as? LocationManager
                 return lm != null && lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
             }
 
@@ -183,7 +183,7 @@ class LocationUtils private constructor() {
          */
         val isLocationEnabled: Boolean
             get() {
-                val lm = Utils.app.getSystemService(LOCATION_SERVICE) as LocationManager
+                val lm = Utils.app.getSystemService(LOCATION_SERVICE) as? LocationManager
                 return lm != null && (lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER) || lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
             }
 

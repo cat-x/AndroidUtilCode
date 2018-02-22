@@ -77,7 +77,7 @@ class ConvertUtils private constructor() {
             var len = hexString.length
             if (len % 2 != 0) {
                 hexString = "0" + hexString
-                len = len + 1
+                len += 1
             }
             val hexBytes = hexString.toUpperCase().toCharArray()
             val ret = ByteArray(len shr 1)
@@ -96,9 +96,9 @@ class ConvertUtils private constructor() {
          * @return 0..15
          */
         private fun hex2Dec(hexChar: Char): Int {
-            return if (hexChar >= '0' && hexChar <= '9') {
+            return if (hexChar in '0'..'9') {
                 hexChar - '0'
-            } else if (hexChar >= 'A' && hexChar <= 'F') {
+            } else if (hexChar in 'A'..'F') {
                 hexChar - 'A' + 10
             } else {
                 throw IllegalArgumentException()
@@ -182,16 +182,12 @@ class ConvertUtils private constructor() {
          */
         @SuppressLint("DefaultLocale")
         fun byte2FitMemorySize(byteNum: Long): String {
-            return if (byteNum < 0) {
-                "shouldn't be less than zero!"
-            } else if (byteNum < MemoryConstants.KB) {
-                String.format("%.3fB", byteNum.toDouble())
-            } else if (byteNum < MemoryConstants.MB) {
-                String.format("%.3fKB", byteNum.toDouble() / MemoryConstants.KB)
-            } else if (byteNum < MemoryConstants.GB) {
-                String.format("%.3fMB", byteNum.toDouble() / MemoryConstants.MB)
-            } else {
-                String.format("%.3fGB", byteNum.toDouble() / MemoryConstants.GB)
+            return when {
+                byteNum < 0 -> "shouldn't be less than zero!"
+                byteNum < MemoryConstants.KB -> String.format("%.3fB", byteNum.toDouble())
+                byteNum < MemoryConstants.MB -> String.format("%.3fKB", byteNum.toDouble() / MemoryConstants.KB)
+                byteNum < MemoryConstants.GB -> String.format("%.3fMB", byteNum.toDouble() / MemoryConstants.MB)
+                else -> String.format("%.3fGB", byteNum.toDouble() / MemoryConstants.GB)
             }
         }
 
@@ -388,7 +384,7 @@ class ConvertUtils private constructor() {
         /**
          * inputStream 转 string 按编码
          *
-         * @param is          输入流
+         * @param inputStream          输入流
          * @param charsetName 编码格式
          * @return 字符串
          */
@@ -524,7 +520,7 @@ class ConvertUtils private constructor() {
          * @return drawable
          */
         fun bitmap2Drawable(bitmap: Bitmap?): Drawable? {
-            return if (bitmap == null) null else BitmapDrawable(Utils.app.getResources(), bitmap)
+            return if (bitmap == null) null else BitmapDrawable(Utils.app.resources, bitmap)
         }
 
         /**
@@ -576,7 +572,7 @@ class ConvertUtils private constructor() {
          * @return px 值
          */
         fun dp2px(dpValue: Float): Int {
-            val scale = Utils.app.getResources().getDisplayMetrics().density
+            val scale = Utils.app.resources.displayMetrics.density
             return (dpValue * scale + 0.5f).toInt()
         }
 
@@ -587,7 +583,7 @@ class ConvertUtils private constructor() {
          * @return dp 值
          */
         fun px2dp(pxValue: Float): Int {
-            val scale = Utils.app.getResources().getDisplayMetrics().density
+            val scale = Utils.app.resources.displayMetrics.density
             return (pxValue / scale + 0.5f).toInt()
         }
 
@@ -598,7 +594,7 @@ class ConvertUtils private constructor() {
          * @return px 值
          */
         fun sp2px(spValue: Float): Int {
-            val fontScale = Utils.app.getResources().getDisplayMetrics().scaledDensity
+            val fontScale = Utils.app.resources.displayMetrics.scaledDensity
             return (spValue * fontScale + 0.5f).toInt()
         }
 
@@ -609,7 +605,7 @@ class ConvertUtils private constructor() {
          * @return sp 值
          */
         fun px2sp(pxValue: Float): Int {
-            val fontScale = Utils.app.getResources().getDisplayMetrics().scaledDensity
+            val fontScale = Utils.app.resources.displayMetrics.scaledDensity
             return (pxValue / fontScale + 0.5f).toInt()
         }
 

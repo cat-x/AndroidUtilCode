@@ -739,21 +739,19 @@ class TimeUtils private constructor() {
             if (span < 0)
             // U can read http://www.apihome.cn/api/java/Formatter.html to understand it.
                 return String.format("%tc", millis)
-            if (span < 1000) {
-                return "刚刚"
-            } else if (span < TimeConstants.MIN) {
-                return String.format(Locale.getDefault(), "%d秒前", span / TimeConstants.SEC)
-            } else if (span < TimeConstants.HOUR) {
-                return String.format(Locale.getDefault(), "%d分钟前", span / TimeConstants.MIN)
-            }
+            when {
+                span < 1000 -> return "刚刚"
+                span < TimeConstants.MIN -> return String.format(Locale.getDefault(), "%d秒前", span / TimeConstants.SEC)
+                span < TimeConstants.HOUR -> return String.format(Locale.getDefault(), "%d分钟前", span / TimeConstants.MIN)
             // 获取当天 00:00
-            val wee = weeOfToday
-            return if (millis >= wee) {
-                String.format("今天%tR", millis)
-            } else if (millis >= wee - TimeConstants.DAY) {
-                String.format("昨天%tR", millis)
-            } else {
-                String.format("%tF", millis)
+                else -> {
+                    val wee = weeOfToday
+                    return when {
+                        millis >= wee -> String.format("今天%tR", millis)
+                        millis >= wee - TimeConstants.DAY -> String.format("昨天%tR", millis)
+                        else -> String.format("%tF", millis)
+                    }
+                }
             }
         }
 
@@ -1734,52 +1732,3 @@ class TimeUtils private constructor() {
         }
     }
 }
-/**
- * 将时间戳转为时间字符串
- *
- * 格式为 yyyy-MM-dd HH:mm:ss
- *
- * @param millis 毫秒时间戳
- * @return 时间字符串
- */
-/**
- * 将时间字符串转为时间戳
- *
- * time 格式为 yyyy-MM-dd HH:mm:ss
- *
- * @param time 时间字符串
- * @return 毫秒时间戳
- */
-/**
- * 将时间字符串转为 Date 类型
- *
- * time 格式为 yyyy-MM-dd HH:mm:ss
- *
- * @param time 时间字符串
- * @return Date 类型
- */
-/**
- * 将 Date 类型转为时间字符串
- *
- * 格式为 yyyy-MM-dd HH:mm:ss
- *
- * @param date Date 类型时间
- * @return 时间字符串
- */
-/**
- * 获取友好型与当前时间的差
- *
- * time 格式为 yyyy-MM-dd HH:mm:ss
- *
- * @param time 时间字符串
- * @return 友好型与当前时间的差
- *
- *  * 如果小于 1 秒钟内，显示刚刚
- *  * 如果在 1 分钟内，显示 XXX秒前
- *  * 如果在 1 小时内，显示 XXX分钟前
- *  * 如果在 1 小时外的今天内，显示今天15:32
- *  * 如果是昨天的，显示昨天15:32
- *  * 其余显示，2016-10-15
- *  * 时间不合法的情况全部日期和时间信息，如星期六 十月 27 14:21:20 CST 2007
- *
- */

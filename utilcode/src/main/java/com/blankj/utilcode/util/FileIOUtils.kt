@@ -423,7 +423,7 @@ class FileIOUtils private constructor() {
                 }
                 while ({ line = reader.readLine();line }() != null) {
                     if (curLine > end) break
-                    if (st <= curLine && curLine <= end) list.add(line!!)
+                    if (curLine in st..end) list.add(line!!)
                     ++curLine
                 }
                 return list
@@ -649,44 +649,3 @@ class FileIOUtils private constructor() {
         }
     }
 }
-/**
- * 将输入流写入文件
- *
- * @param file 文件
- * @param is   输入流
- * @return `true`: 写入成功<br></br>`false`: 写入失败
- */
-/**
- * 将字节数组写入文件
- *
- * @param file  文件
- * @param bytes 字节数组
- * @return `true`: 写入成功<br></br>`false`: 写入失败
- */
-/**
- * 将字符串写入文件
- *
- * @param file    文件
- * @param content 写入内容
- * @return `true`: 写入成功<br></br>`false`: 写入失败
- */
-/**
- * 读取文件到字符串链表中
- *
- * @param file 文件
- * @return 字符串链表中
- */
-/**
- * 读取文件到字符串链表中
- *
- * @param file 文件
- * @param st   需要读取的开始行数
- * @param end  需要读取的结束行数
- * @return 字符串链表中
- */
-/**
- * 读取文件到字符串中
- *
- * @param file 文件
- * @return 字符串
- */

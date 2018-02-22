@@ -16,11 +16,11 @@ import java.util.*
 
 /**
  * <pre>
- * author: Blankj
- * blog  : http://blankj.com
- * time  : 2016/08/02
- * desc  : App 相关工具类
-</pre> *
+ *     author: Blankj
+ *     blog  : http://blankj.com
+ *     time  : 2016/08/02
+ *     desc  : Utils about app.
+ * </pre>
  */
 class AppUtils private constructor() {
 
@@ -75,53 +75,53 @@ class AppUtils private constructor() {
     companion object {
 
         /**
-         * 判断 App 是否安装
+         * Return whether the app is installed.
          *
-         * @param action   action
-         * @param category category
-         * @return `true`: 已安装<br></br>`false`: 未安装
+         * @param action   The Intent action, such as ACTION_VIEW.
+         * @param category The desired category.
+         * @return {@code true}: yes<br>{@code false}: no
          */
         fun isInstallApp(action: String, category: String): Boolean {
             val intent = Intent(action)
             intent.addCategory(category)
-            val pm = Utils.app.getPackageManager()
+            val pm = Utils.app.packageManager
             val info = pm.resolveActivity(intent, 0)
             return info != null
         }
 
         /**
-         * 判断 App 是否安装
+         * Return whether the app is installed.
          *
-         * @param packageName 包名
-         * @return `true`: 已安装<br></br>`false`: 未安装
+         * @param packageName The name of the package.
+         * @return {@code true}: yes<br>{@code false}: no
          */
         fun isInstallApp(packageName: String): Boolean {
             return !isSpace(packageName) && IntentUtils.getLaunchAppIntent(packageName) != null
         }
 
         /**
-         * 安装 App(支持 8.0)
+         * Install the app.
+         * <p>Target APIs greater than 25 must hold
+         * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
          *
-         * 8.0 需添加权限
-         * `<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />`
-         *
-         * @param filePath  文件路径
-         * @param authority 7.0 及以上安装需要传入清单文件中的`<provider>`的 authorities 属性
-         * <br></br>参看 https://developer.android.com/reference/android/support/v4/content/FileProvider.html
+         * @param filePath  The path of file.
+         * @param authority Target APIs greater than 23 must hold the authority of a
+         *                  {@link android.support.v4.content.FileProvider} defined in a
+         *                  {@code <provider>} element in your app's manifest.
          */
         fun installApp(filePath: String, authority: String) {
             installApp(FileUtils.getFileByPath(filePath), authority)
         }
 
         /**
-         * 安装 App（支持 8.0）
+         * Install the app.
+         * <p>Target APIs greater than 25 must hold
+         * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
          *
-         * 8.0 需添加权限
-         * `<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />`
-         *
-         * @param file      文件
-         * @param authority 7.0 及以上安装需要传入清单文件中的`<provider>`的 authorities 属性
-         * <br></br>参看 https://developer.android.com/reference/android/support/v4/content/FileProvider.html
+         * @param file      The file.
+         * @param authority Target APIs greater than 23 must hold the authority of a
+         *                  {@link android.support.v4.content.FileProvider} defined in a
+         *                  {@code <provider>} element in your app's manifest.
          */
         fun installApp(file: File?, authority: String) {
             if (!FileUtils.isFileExists(file)) return
@@ -129,16 +129,17 @@ class AppUtils private constructor() {
         }
 
         /**
-         * 安装 App（支持 8.0）
+         * Install the app.
+         * <p>Target APIs greater than 25 must hold
+         * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
          *
-         * 8.0 需添加权限
-         * `<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />`
-         *
-         * @param activity    activity
-         * @param filePath    文件路径
-         * @param authority   7.0 及以上安装需要传入清单文件中的`<provider>`的 authorities 属性
-         * <br></br>参看 https://developer.android.com/reference/android/support/v4/content/FileProvider.html
-         * @param requestCode 请求值
+         * @param activity    The activity.
+         * @param filePath    The path of file.
+         * @param authority   Target APIs greater than 23 must hold the authority of a
+         *                    {@link android.support.v4.content.FileProvider} defined in a
+         *                    {@code <provider>} element in your app's manifest.
+         * @param requestCode If >= 0, this code will be returned in
+         *                    onActivityResult() when the activity exits.
          */
         fun installApp(activity: Activity,
                        filePath: String,
@@ -149,15 +150,16 @@ class AppUtils private constructor() {
 
         /**
          * 安装 App（支持 8.0）
+         * <p>8.0 需添加权限
+         * {@code <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />}</p>
          *
-         * 8.0 需添加权限
-         * `<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />`
-         *
-         * @param activity    activity
-         * @param file        文件
-         * @param authority   7.0 及以上安装需要传入清单文件中的`<provider>`的 authorities 属性
-         * <br></br>参看 https://developer.android.com/reference/android/support/v4/content/FileProvider.html
-         * @param requestCode 请求值
+         * @param activity    The activity.
+         * @param file        The file.
+         * @param authority   Target APIs greater than 23 must hold the authority of a
+         *                    {@link android.support.v4.content.FileProvider} defined in a
+         *                    {@code <provider>} element in your app's manifest.
+         * @param requestCode If >= 0, this code will be returned in
+         *                    onActivityResult() when the activity exits.
          */
         fun installApp(activity: Activity,
                        file: File?,
@@ -170,12 +172,11 @@ class AppUtils private constructor() {
 
         /**
          * 静默安装 App
+         * <p>非 root 需添加权限
+         * {@code <uses-permission android:name="android.permission.INSTALL_PACKAGES" />}</p>
          *
-         * 非 root 需添加权限
-         * `<uses-permission android:name="android.permission.INSTALL_PACKAGES" />`
-         *
-         * @param filePath 文件路径
-         * @return `true`: 安装成功<br></br>`false`: 安装失败
+         * @param filePath The path of file.
+         * @return {@code true}: 安装成功<br>{@code false}: 安装失败
          */
         fun installAppSilent(filePath: String): Boolean {
             val file = FileUtils.getFileByPath(filePath)
@@ -205,9 +206,10 @@ class AppUtils private constructor() {
         /**
          * 卸载 App
          *
-         * @param activity    activity
+         * @param activity    The activity.
          * @param packageName 包名
-         * @param requestCode 请求值
+         * @param requestCode If >= 0, this code will be returned in
+         *                    onActivityResult() when the activity exits.
          */
         fun uninstallApp(activity: Activity,
                          packageName: String,
@@ -218,13 +220,12 @@ class AppUtils private constructor() {
 
         /**
          * 静默卸载 App
-         *
-         * 非 root 需添加权限
-         * `<uses-permission android:name="android.permission.DELETE_PACKAGES" />`
+         * <p>非 root 需添加权限
+         * {@code <uses-permission android:name="android.permission.DELETE_PACKAGES" />}</p>
          *
          * @param packageName 包名
          * @param isKeepData  是否保留数据
-         * @return `true`: 卸载成功<br></br>`false`: 卸载失败
+         * @return {@code true}: 卸载成功<br>{@code false}: 卸载失败
          */
         fun uninstallAppSilent(packageName: String, isKeepData: Boolean): Boolean {
             if (isSpace(packageName)) return false
@@ -247,7 +248,7 @@ class AppUtils private constructor() {
         /**
          * 判断 App 是否有 root 权限
          *
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         val isAppRoot: Boolean
             get() {
@@ -272,9 +273,10 @@ class AppUtils private constructor() {
         /**
          * 打开 App
          *
-         * @param activity    activity
-         * @param packageName 包名
-         * @param requestCode 请求值
+         * @param activity    The activity.
+         * @param packageName The name of the package.
+         * @param requestCode If >= 0, this code will be returned in
+         *                    onActivityResult() when the activity exits.
          */
         fun launchApp(activity: Activity,
                       packageName: String,
@@ -301,7 +303,7 @@ class AppUtils private constructor() {
          * @return App 包名
          */
         val appPackageName: String
-            get() = Utils.app.getPackageName()
+            get() = Utils.app.packageName
 
         /**
          * 获取 App 具体设置
@@ -309,7 +311,7 @@ class AppUtils private constructor() {
          * @param packageName 包名
          */
         @JvmOverloads
-        fun getAppDetailsSettings(packageName: String = Utils.app.getPackageName()) {
+        fun getAppDetailsSettings(packageName: String = Utils.app.packageName) {
             if (isSpace(packageName)) return
             Utils.app.startActivity(IntentUtils.getAppDetailsSettingsIntent(packageName, true))
         }
@@ -320,7 +322,7 @@ class AppUtils private constructor() {
          * @return App 名称
          */
         val appName: String?
-            get() = getAppName(Utils.app.getPackageName())
+            get() = getAppName(Utils.app.packageName)
 
         /**
          * 获取 App 名称
@@ -331,9 +333,9 @@ class AppUtils private constructor() {
         fun getAppName(packageName: String): String? {
             if (isSpace(packageName)) return null
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, 0)
-                return if (pi == null) null else pi!!.applicationInfo.loadLabel(pm).toString()
+                return if (pi == null) null else pi.applicationInfo.loadLabel(pm).toString()
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return null
@@ -347,7 +349,7 @@ class AppUtils private constructor() {
          * @return App 图标
          */
         val appIcon: Drawable?
-            get() = getAppIcon(Utils.app.getPackageName())
+            get() = getAppIcon(Utils.app.packageName)
 
         /**
          * 获取 App 图标
@@ -358,9 +360,9 @@ class AppUtils private constructor() {
         fun getAppIcon(packageName: String): Drawable? {
             if (isSpace(packageName)) return null
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, 0)
-                return if (pi == null) null else pi!!.applicationInfo.loadIcon(pm)
+                return if (pi == null) null else pi.applicationInfo.loadIcon(pm)
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return null
@@ -374,7 +376,7 @@ class AppUtils private constructor() {
          * @return App 路径
          */
         val appPath: String?
-            get() = getAppPath(Utils.app.getPackageName())
+            get() = getAppPath(Utils.app.packageName)
 
         /**
          * 获取 App 路径
@@ -385,9 +387,9 @@ class AppUtils private constructor() {
         fun getAppPath(packageName: String): String? {
             if (isSpace(packageName)) return null
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, 0)
-                return if (pi == null) null else pi!!.applicationInfo.sourceDir
+                return if (pi == null) null else pi.applicationInfo.sourceDir
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return null
@@ -401,7 +403,7 @@ class AppUtils private constructor() {
          * @return App 版本号
          */
         val appVersionName: String?
-            get() = getAppVersionName(Utils.app.getPackageName())
+            get() = getAppVersionName(Utils.app.packageName)
 
         /**
          * 获取 App 版本号
@@ -412,9 +414,9 @@ class AppUtils private constructor() {
         fun getAppVersionName(packageName: String): String? {
             if (isSpace(packageName)) return null
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, 0)
-                return if (pi == null) null else pi!!.versionName
+                return if (pi == null) null else pi.versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return null
@@ -428,7 +430,7 @@ class AppUtils private constructor() {
          * @return App 版本码
          */
         val appVersionCode: Int
-            get() = getAppVersionCode(Utils.app.getPackageName())
+            get() = getAppVersionCode(Utils.app.packageName)
 
         /**
          * 获取 App 版本码
@@ -439,9 +441,9 @@ class AppUtils private constructor() {
         fun getAppVersionCode(packageName: String): Int {
             if (isSpace(packageName)) return -1
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, 0)
-                return if (pi == null) -1 else pi!!.versionCode
+                return if (pi == null) -1 else pi.versionCode
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return -1
@@ -452,23 +454,23 @@ class AppUtils private constructor() {
         /**
          * 判断 App 是否是系统应用
          *
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         val isSystemApp: Boolean
-            get() = isSystemApp(Utils.app.getPackageName())
+            get() = isSystemApp(Utils.app.packageName)
 
         /**
          * 判断 App 是否是系统应用
          *
          * @param packageName 包名
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         fun isSystemApp(packageName: String): Boolean {
             if (isSpace(packageName)) return false
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val ai = pm.getApplicationInfo(packageName, 0)
-                return ai != null && ai!!.flags and ApplicationInfo.FLAG_SYSTEM != 0
+                return ai != null && ai.flags and ApplicationInfo.FLAG_SYSTEM != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return false
@@ -479,23 +481,23 @@ class AppUtils private constructor() {
         /**
          * 判断 App 是否是 Debug 版本
          *
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         val isAppDebug: Boolean
-            get() = isAppDebug(Utils.app.getPackageName())
+            get() = isAppDebug(Utils.app.packageName)
 
         /**
          * 判断 App 是否是 Debug 版本
          *
          * @param packageName 包名
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         fun isAppDebug(packageName: String): Boolean {
             if (isSpace(packageName)) return false
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val ai = pm.getApplicationInfo(packageName, 0)
-                return ai != null && ai!!.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+                return ai != null && ai.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return false
@@ -509,7 +511,7 @@ class AppUtils private constructor() {
          * @return App 签名
          */
         val appSignature: Array<Signature>?
-            get() = getAppSignature(Utils.app.getPackageName())
+            get() = getAppSignature(Utils.app.packageName)
 
         /**
          * 获取 App 签名
@@ -517,13 +519,13 @@ class AppUtils private constructor() {
          * @param packageName 包名
          * @return App 签名
          */
+        @SuppressLint("PackageManagerGetSignatures")
         fun getAppSignature(packageName: String): Array<Signature>? {
             if (isSpace(packageName)) return null
             try {
-                val pm = Utils.app.getPackageManager()
-                @SuppressLint("PackageManagerGetSignatures")
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-                return if (pi == null) null else pi!!.signatures
+                return if (pi == null) null else pi.signatures
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
                 return null
@@ -533,18 +535,16 @@ class AppUtils private constructor() {
 
         /**
          * 获取应用签名的的 SHA1 值
-         *
-         * 可据此判断高德，百度地图 key 是否正确
+         * <p>可据此判断高德，百度地图 key 是否正确</p>
          *
          * @return 应用签名的 SHA1 字符串, 比如：53:FD:54:DC:19:0F:11:AC:B5:22:9E:F1:1A:68:88:1B:8B:E8:54:42
          */
         val appSignatureSHA1: String?
-            get() = getAppSignatureSHA1(Utils.app.getPackageName())
+            get() = getAppSignatureSHA1(Utils.app.packageName)
 
         /**
          * 获取应用签名的的 SHA1 值
-         *
-         * 可据此判断高德，百度地图 key 是否正确
+         * <p>可据此判断高德，百度地图 key 是否正确</p>
          *
          * @param packageName 包名
          * @return 应用签名的 SHA1 字符串, 比如：53:FD:54:DC:19:0F:11:AC:B5:22:9E:F1:1A:68:88:1B:8B:E8:54:42
@@ -557,7 +557,7 @@ class AppUtils private constructor() {
         /**
          * 判断 App 是否处于前台
          *
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         val isAppForeground: Boolean
             get() {
@@ -566,7 +566,7 @@ class AppUtils private constructor() {
                 if (info == null || info.size == 0) return false
                 for (aInfo in info) {
                     if (aInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                        return aInfo.processName == Utils.app.getPackageName()
+                        return aInfo.processName == Utils.app.packageName
                     }
                 }
                 return false
@@ -574,12 +574,11 @@ class AppUtils private constructor() {
 
         /**
          * 判断 App 是否处于前台
-         *
-         * 当不是查看当前 App，且 SDK 大于 21 时，
-         * 需添加权限 `<uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />`
+         * <p>当不是查看当前 App，且 SDK 大于 21 时，
+         * 需添加权限 {@code <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />}</p>
          *
          * @param packageName 包名
-         * @return `true`: 是<br></br>`false`: 否
+         * @return {@code true}: 是<br>{@code false}: 否
          */
         fun isAppForeground(packageName: String): Boolean {
             return !isSpace(packageName) && packageName == ProcessUtils.foregroundProcessName
@@ -593,7 +592,7 @@ class AppUtils private constructor() {
          * @return 当前应用的 AppInfo
          */
         val appInfo: AppInfo?
-            get() = getAppInfo(Utils.app.getPackageName())
+            get() = getAppInfo(Utils.app.packageName)
 
         /**
          * 获取 App 信息
@@ -605,7 +604,7 @@ class AppUtils private constructor() {
          */
         fun getAppInfo(packageName: String): AppInfo? {
             try {
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val pi = pm.getPackageInfo(packageName, 0)
                 return getBean(pm, pi)
             } catch (e: PackageManager.NameNotFoundException) {
@@ -637,11 +636,9 @@ class AppUtils private constructor() {
 
         /**
          * 获取所有已安装 App 信息
-         *
-         * [.getBean]
-         * （名称，图标，包名，包路径，版本号，版本 Code，是否系统应用）
-         *
-         * 依赖上面的 getBean 方法
+         * <p>{@link #getBean(PackageManager, PackageInfo)}
+         * （名称，图标，包名，包路径，版本号，版本 Code，是否系统应用）</p>
+         * <p>依赖上面的 getBean 方法</p>
          *
          * @return 所有已安装的 AppInfo 列表
          */
@@ -649,7 +646,7 @@ class AppUtils private constructor() {
         val appsInfo: List<AppInfo>
             get() {
                 val list = ArrayList<AppInfo>()
-                val pm = Utils.app.getPackageManager()
+                val pm = Utils.app.packageManager
                 val installedPackages = pm.getInstalledPackages(0)
                 for (pi in installedPackages) {
                     val ai = getBean(pm, pi) ?: continue
@@ -662,7 +659,7 @@ class AppUtils private constructor() {
          * 清除 App 所有数据
          *
          * @param dirPaths 目录路径
-         * @return `true`: 成功<br></br>`false`: 失败
+         * @return {@code true}: 成功<br>{@code false}: 失败
          */
         fun cleanAppData(vararg dirPaths: String): Boolean {
             if (dirPaths.isNotEmpty()) {
@@ -680,7 +677,7 @@ class AppUtils private constructor() {
          * 清除 App 所有数据
          *
          * @param dirs 目录
-         * @return `true`: 成功<br></br>`false`: 失败
+         * @return {@code true}: 成功<br>{@code false}: 失败
          */
         fun cleanAppData(vararg dirs: File): Boolean {
             var isSuccess = CleanUtils.cleanInternalCache()
@@ -720,6 +717,3 @@ class AppUtils private constructor() {
             }
     }
 }
-/**
- * 获取 App 具体设置
- */

@@ -46,10 +46,6 @@ class BarStatusFragmentActivity : BaseActivity() {
         false
     }
 
-    override fun getIntent(): Intent {
-        return super.getIntent()
-    }
-
     override fun initData(bundle: Bundle?) {
 
     }

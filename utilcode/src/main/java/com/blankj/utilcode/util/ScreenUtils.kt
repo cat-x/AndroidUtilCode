@@ -37,7 +37,7 @@ class ScreenUtils private constructor() {
         val screenWidth: Int
             get() {
                 val wm = Utils.app.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
-                        ?: return Utils.app.getResources().getDisplayMetrics().widthPixels
+                        ?: return Utils.app.resources.displayMetrics.widthPixels
                 val point = Point()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     wm.defaultDisplay.getRealSize(point)
@@ -55,7 +55,7 @@ class ScreenUtils private constructor() {
         val screenHeight: Int
             get() {
                 val wm = Utils.app.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
-                        ?: return Utils.app.getResources().getDisplayMetrics().heightPixels
+                        ?: return Utils.app.resources.displayMetrics.heightPixels
                 val point = Point()
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     wm.defaultDisplay.getRealSize(point)
@@ -71,7 +71,7 @@ class ScreenUtils private constructor() {
          * @return 屏幕密度
          */
         val screenDensity: Float
-            get() = Utils.app.getResources().getDisplayMetrics().density
+            get() = Utils.app.resources.displayMetrics.density
 
         /**
          * 获取屏幕密度 DPI
@@ -79,7 +79,7 @@ class ScreenUtils private constructor() {
          * @return 屏幕密度 DPI
          */
         val screenDensityDpi: Int
-            get() = Utils.app.getResources().getDisplayMetrics().densityDpi
+            get() = Utils.app.resources.displayMetrics.densityDpi
 
         /**
          * 设置屏幕为全屏
@@ -126,7 +126,7 @@ class ScreenUtils private constructor() {
          * @return `true`: 是<br></br>`false`: 否
          */
         val isLandscape: Boolean
-            get() = Utils.app.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+            get() = Utils.app.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
         /**
          * 判断是否竖屏
@@ -134,7 +134,7 @@ class ScreenUtils private constructor() {
          * @return `true`: 是<br></br>`false`: 否
          */
         val isPortrait: Boolean
-            get() = Utils.app.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+            get() = Utils.app.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
         /**
          * 获取屏幕旋转角度
@@ -212,7 +212,7 @@ class ScreenUtils private constructor() {
             get() {
                 try {
                     return Settings.System.getInt(
-                            Utils.app.getContentResolver(),
+                            Utils.app.contentResolver,
                             Settings.System.SCREEN_OFF_TIMEOUT
                     )
                 } catch (e: Settings.SettingNotFoundException) {
@@ -223,7 +223,7 @@ class ScreenUtils private constructor() {
             }
             set(duration) {
                 Settings.System.putInt(
-                        Utils.app.getContentResolver(),
+                        Utils.app.contentResolver,
                         Settings.System.SCREEN_OFF_TIMEOUT,
                         duration
                 )
@@ -235,7 +235,7 @@ class ScreenUtils private constructor() {
          * @return `true`: 是<br></br>`false`: 否
          */
         val isTablet: Boolean
-            get() = Utils.app.getResources().getConfiguration().screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE
+            get() = Utils.app.resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK >= Configuration.SCREENLAYOUT_SIZE_LARGE
     }
 }
 /**

@@ -151,13 +151,12 @@ class KeyboardUtils private constructor() {
             for (i in 0..2) {
                 try {
                     val declaredField = imm.javaClass.getDeclaredField(strArr[i]) ?: continue
-                    if (!declaredField.isAccessible()) {
-                        declaredField.setAccessible(true)
+                    if (!declaredField.isAccessible) {
+                        declaredField.isAccessible = true
                     }
                     val obj = declaredField.get(imm)
                     if (obj == null || obj !is View) continue
-                    val view = obj as View
-                    if (view.context === context) {
+                    if (obj.context === context) {
                         declaredField.set(imm, null)
                     } else {
                         return
@@ -214,11 +213,3 @@ class KeyboardUtils private constructor() {
         }
     }
 }
-/**
- * 判断软键盘是否可见
- *
- * 默认软键盘最小高度为 200
- *
- * @param activity activity
- * @return `true`: 可见<br></br>`false`: 不可见
- */

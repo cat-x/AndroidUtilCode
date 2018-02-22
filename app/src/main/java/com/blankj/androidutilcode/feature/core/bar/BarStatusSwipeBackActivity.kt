@@ -64,7 +64,7 @@ class BarStatusSwipeBackActivity : BaseActivity() {
 
     override fun initData(bundle: Bundle?) {
         mRandom = Random()
-        mColor = ContextCompat.getColor(UtilsApp.instance!!, R.color.colorPrimary)
+        mColor = ContextCompat.getColor(UtilsApp.instance, R.color.colorPrimary)
         mAlpha = 112
     }
 

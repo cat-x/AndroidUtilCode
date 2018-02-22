@@ -28,7 +28,7 @@ class CleanUtils private constructor() {
          * @return `true`: 清除成功<br></br>`false`: 清除失败
          */
         fun cleanInternalCache(): Boolean {
-            return deleteFilesInDir(Utils.app.getCacheDir())
+            return deleteFilesInDir(Utils.app.cacheDir)
         }
 
         /**
@@ -39,7 +39,7 @@ class CleanUtils private constructor() {
          * @return `true`: 清除成功<br></br>`false`: 清除失败
          */
         fun cleanInternalFiles(): Boolean {
-            return deleteFilesInDir(Utils.app.getFilesDir())
+            return deleteFilesInDir(Utils.app.filesDir)
         }
 
         /**
@@ -50,7 +50,7 @@ class CleanUtils private constructor() {
          * @return `true`: 清除成功<br></br>`false`: 清除失败
          */
         fun cleanInternalDbs(): Boolean {
-            return deleteFilesInDir(File(Utils.app.getFilesDir().getParent(), "databases"))
+            return deleteFilesInDir(File(Utils.app.filesDir.parent, "databases"))
         }
 
         /**
@@ -73,7 +73,7 @@ class CleanUtils private constructor() {
          * @return `true`: 清除成功<br></br>`false`: 清除失败
          */
         fun cleanInternalSp(): Boolean {
-            return deleteFilesInDir(File(Utils.app.getFilesDir().getParent(), "shared_prefs"))
+            return deleteFilesInDir(File(Utils.app.filesDir.parent, "shared_prefs"))
         }
 
         /**
@@ -84,7 +84,7 @@ class CleanUtils private constructor() {
          * @return `true`: 清除成功<br></br>`false`: 清除失败
          */
         fun cleanExternalCache(): Boolean {
-            return Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() && deleteFilesInDir(Utils.app.getExternalCacheDir())
+            return Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() && deleteFilesInDir(Utils.app.externalCacheDir)
         }
 
         /**

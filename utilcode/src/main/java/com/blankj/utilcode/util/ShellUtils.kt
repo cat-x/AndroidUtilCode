@@ -162,10 +162,3 @@ class ShellUtils private constructor() {
         }
     }
 }
-/**
- * 是否是在 root 下执行命令
- *
- * @param commands 多条命令数组
- * @param isRoot   是否需要 root 权限执行
- * @return CommandResult
- */

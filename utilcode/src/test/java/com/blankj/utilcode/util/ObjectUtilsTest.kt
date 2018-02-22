@@ -23,7 +23,7 @@ import java.util.*
 </pre> *
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE, sdk = intArrayOf(23))
+@Config(manifest = Config.NONE, sdk = [23])
 class ObjectUtilsTest {
 
     @Test

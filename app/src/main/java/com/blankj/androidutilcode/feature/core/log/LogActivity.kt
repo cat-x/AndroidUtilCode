@@ -55,7 +55,7 @@ class LogActivity : BaseBackActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        toolBar!!.setTitle(getString(R.string.demo_log))
+        toolBar!!.title = getString(R.string.demo_log)
 
         tvAboutLog = findViewById(R.id.tv_about_log)
         findViewById<View>(R.id.btn_toggle_log).setOnClickListener(this)
@@ -181,7 +181,7 @@ class LogActivity : BaseBackActivity() {
                 .setBorderSwitch(border)
                 .setConsoleFilter(consoleFilter)
                 .setFileFilter(fileFilter)
-        tvAboutLog!!.setText(mConfig.toString())
+        tvAboutLog!!.text = mConfig.toString()
     }
 
     private fun getDir(): String {
@@ -189,7 +189,7 @@ class LogActivity : BaseBackActivity() {
     }
 
     override fun onDestroy() {
-        UtilsApp.instance!!.initLog()
+        UtilsApp.instance.initLog()
         super.onDestroy()
     }
 

@@ -171,19 +171,3 @@ class EncodeUtils private constructor() {
         }
     }
 }
-/**
- * URL 编码
- *
- * 若想自己指定字符集,可以使用[.urlEncode]方法
- *
- * @param input 要编码的字符
- * @return 编码为 UTF-8 的字符串
- */
-/**
- * URL 解码
- *
- * 若想自己指定字符集,可以使用 [.urlDecode]方法
- *
- * @param input 要解码的字符串
- * @return URL 解码后的字符串
- */

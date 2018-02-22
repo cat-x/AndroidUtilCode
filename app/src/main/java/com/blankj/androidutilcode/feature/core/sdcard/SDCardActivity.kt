@@ -30,7 +30,7 @@ class SDCardActivity : BaseBackActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        toolBar!!.setTitle(getString(R.string.demo_sdcard))
+        toolBar!!.title = getString(R.string.demo_sdcard)
 
         val tvAboutSdcard = findViewById<TextView>(R.id.tv_about_sdcard)
         tvAboutSdcard.text = SpanUtils()

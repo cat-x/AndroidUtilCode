@@ -4,6 +4,9 @@
 
 ## [README of English][readme]
 
+## Kotlin 进展
+> Sync at [47097da](https://github.com/Blankj/AndroidUtilCode/commit/47097da708792271d3ab5fe1c2dfda85dd091d94)
+
 ## About
 
 **[AndroidUtilCode][readme]** :fire: 是一个强大易用的安卓工具类库，它合理地封装了安卓开发中常用的函数，具有完善的 Demo 和单元测试，利用其封装好的 APIs 可以大大提高开发效率，如今它主要包括两部分模块，其一是主工具类模块：**[utilcode][utilcode-cn]**，其中的工具类是开发中常用到的；其二是子工具类模块：**[subutil][subutil-cn]**，它包含的工具类并不是很常用，它的出现是为了防止主工具类的臃肿。 :fire:
@@ -41,7 +44,7 @@
 
 [logo]: https://raw.githubusercontent.com/Blankj/AndroidUtilCode/master/art/logo.png
 
-[aucsvg]: https://img.shields.io/badge/AndroidUtilCode-v1.12.5-brightgreen.svg
+[aucsvg]: https://img.shields.io/badge/AndroidUtilCode-v1.12.6-brightgreen.svg
 [auc]: https://github.com/Blankj/AndroidUtilCode
 
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg

@@ -20,7 +20,7 @@ import java.util.*
 </pre> *
  */
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE, sdk = intArrayOf(23))
+@Config(manifest = Config.NONE, sdk = [23])
 class EncryptUtilsTest {
 
     private val blankjHmacSHA512 = "FC55AD54B95F55A8E32EA1BAD7748C157F80679F5561EC95A3EAD975316BA85363CB4AF6462D695F742F469EDC2D577272BE359A7F9E9C7018FDF4C921E1B3CF"
@@ -445,7 +445,7 @@ class EncryptUtilsTest {
         assertTrue(
                 Arrays.equals(
                         bytesDataDES3,
-                        EncryptUtils.decryptBase64_3DES(
+                        EncryptUtils.decryptBase64At3DES(
                                 EncodeUtils.base64Encode(bytesResDES3!!),
                                 bytesKeyDES3,
                                 "DESede/ECB/NoPadding",

@@ -79,7 +79,7 @@ class SDCardUtils private constructor() {
                 var paths: List<String> = ArrayList()
                 try {
                     val getVolumePathsMethod = StorageManager::class.java.getMethod("getVolumePaths")
-                    getVolumePathsMethod.setAccessible(true)
+                    getVolumePathsMethod.isAccessible = true
                     val invoke = getVolumePathsMethod.invoke(storageManager) as kotlin.Array<String>?
                     if (invoke != null) {
                         paths = listOf(*invoke)

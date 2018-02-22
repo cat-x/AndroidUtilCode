@@ -45,10 +45,6 @@ class SubActivityActivity : BaseBackActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         ActivityCompat.finishAfterTransition(this)

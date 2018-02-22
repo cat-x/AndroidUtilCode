@@ -41,7 +41,7 @@ class SnackbarUtils private constructor(private val parent: View?) {
         messageColor = COLOR_DEFAULT
         bgColor = COLOR_DEFAULT
         bgResource = -1
-        duration = LENGTH_SHORT.toInt()
+        duration = LENGTH_SHORT
         actionText = ""
         actionTextColor = COLOR_DEFAULT
         bottomMargin = 0
@@ -163,7 +163,7 @@ class SnackbarUtils private constructor(private val parent: View?) {
             sReference = WeakReference(Snackbar.make(view, message!!, duration))
         }
         val snackbar = sReference!!.get()
-        val snackbarView = snackbar?.getView()
+        val snackbarView = snackbar?.view
         if (bgResource != -1) {
             snackbarView?.setBackgroundResource(bgResource)
         } else if (bgColor != COLOR_DEFAULT) {

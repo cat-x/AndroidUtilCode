@@ -94,7 +94,7 @@ class IntentUtils private constructor() {
          */
         @JvmOverloads
         fun getLaunchAppIntent(packageName: String, isNewTask: Boolean = false): Intent? {
-            val intent = Utils.app.getPackageManager().getLaunchIntentForPackage(packageName)
+            val intent = Utils.app.packageManager.getLaunchIntentForPackage(packageName)
                     ?: return null
             return getIntent(intent, isNewTask)
         }
@@ -375,101 +375,3 @@ class IntentUtils private constructor() {
     //        return intent;
     //    }
 }
-/**
- * 获取安装 App(支持 8.0)的意图
- *
- * 8.0 需添加权限
- * `<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />`
- *
- * @param file      文件
- * @param authority 7.0 及以上安装需要传入清单文件中的`<provider>`的 authorities 属性
- * <br></br>参看 https://developer.android.com/reference/android/support/v4/content/FileProvider.html
- * @return 安装 App(支持 8.0)的意图
- */
-/**
- * 获取卸载 App 的意图
- *
- * @param packageName 包名
- * @return 卸载 App 的意图
- */
-/**
- * 获取打开 App 的意图
- *
- * @param packageName 包名
- * @return 打开 App 的意图
- */
-/**
- * 获取 App 具体设置的意图
- *
- * @param packageName 包名
- * @return App 具体设置的意图
- */
-/**
- * 获取分享文本的意图
- *
- * @param content 分享文本
- * @return 分享文本的意图
- */
-/**
- * 获取分享图片的意图
- *
- * @param content   文本
- * @param imagePath 图片文件路径
- * @return 分享图片的意图
- */
-/**
- * 获取分享图片的意图
- *
- * @param content 文本
- * @param image   图片文件
- * @return 分享图片的意图
- */
-/**
- * 获取分享图片的意图
- *
- * @param content 分享文本
- * @param uri     图片 uri
- * @return 分享图片的意图
- */
-/**
- * 获取其他应用组件的意图
- *
- * @param packageName 包名
- * @param className   全类名
- * @return 其他应用组件的意图
- */
-/**
- * 获取其他应用组件的意图
- *
- * @param packageName 包名
- * @param className   全类名
- * @param bundle      bundle
- * @return 其他应用组件的意图
- */
-/**
- * 获取跳至拨号界面意图
- *
- * @param phoneNumber 电话号码
- * @return 跳至拨号界面意图
- */
-/**
- * 获取拨打电话意图
- *
- * 需添加权限 `<uses-permission android:name="android.permission.CALL_PHONE" />`
- *
- * @param phoneNumber 电话号码
- * @return 拨打电话意图
- */
-/**
- * 获取发送短信界面的意图
- *
- * @param phoneNumber 接收号码
- * @param content     短信内容
- * @return 发送短信界面的意图
- */
-/**
- * 获取拍照的意图
- *
- * @param outUri 输出的 uri
- * @return 拍照的意图
- */

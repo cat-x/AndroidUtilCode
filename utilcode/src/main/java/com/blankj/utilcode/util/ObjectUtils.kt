@@ -39,7 +39,7 @@ class ObjectUtils private constructor() {
             if (obj is CharSequence && obj.toString().length == 0) {
                 return true
             }
-            if (obj.javaClass.isArray() && Array.getLength(obj) == 0) {
+            if (obj.javaClass.isArray && Array.getLength(obj) == 0) {
                 return true
             }
             if (obj is Collection<*> && obj.isEmpty()) {
@@ -94,7 +94,7 @@ class ObjectUtils private constructor() {
          * @return `true`: 相等<br></br>`false`: 不相等
          */
         fun equals(o1: Any?, o2: Any): Boolean {
-            return o1 === o2 || o1 != null && o1 == o2
+            return o1 === o2 || (o1 != null && o1 == o2)
         }
 
         /**

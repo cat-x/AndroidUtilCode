@@ -48,7 +48,7 @@ class BarUtils private constructor() {
          */
         val statusBarHeight: Int
             get() {
-                val resources = Utils.app.getResources()
+                val resources = Utils.app.resources
                 val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
                 return resources.getDimensionPixelSize(resourceId)
             }
@@ -456,11 +456,10 @@ class BarUtils private constructor() {
             invokePanels(methodName)
         }
 
+        @SuppressLint("PrivateApi", "WrongConstant")
         private fun invokePanels(methodName: String) {
             try {
-                @SuppressLint("WrongConstant")
                 val service = Utils.app.getSystemService("statusbar")
-                @SuppressLint("PrivateApi")
                 val statusBarManager = Class.forName("android.app.StatusBarManager")
                 val expand = statusBarManager.getMethod(methodName)
                 expand.invoke(service)
@@ -481,7 +480,7 @@ class BarUtils private constructor() {
          */
         val navBarHeight: Int
             get() {
-                val res = Utils.app.getResources()
+                val res = Utils.app.resources
                 val resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android")
                 return if (resourceId != 0) {
                     res.getDimensionPixelSize(resourceId)
@@ -539,37 +538,3 @@ class BarUtils private constructor() {
         }
     }
 }
-/**
- * 设置状态栏颜色
- *
- * @param activity activity
- * @param color    状态栏颜色值
- */
-/**
- * 设置状态栏颜色
- *
- * @param activity activity
- * @param color    状态栏颜色值
- * @param alpha    状态栏透明度，此透明度并非颜色中的透明度
- */
-/**
- * 设置状态栏透明度
- *
- * @param activity activity
- */
-/**
- * 设置状态栏透明度
- *
- * @param activity activity
- */
-/**
- * 设置状态栏颜色
- *
- * @param fakeStatusBar 伪造状态栏
- * @param color         状态栏颜色值
- */
-/**
- * 设置状态栏透明度
- *
- * @param fakeStatusBar 伪造状态栏
- */

@@ -46,7 +46,7 @@ abstract class BaseBackActivity : BaseActivity() {
         setSupportActionBar(mToolbar)
         toolBar!!.setDisplayHomeAsUpEnabled(true)
 
-        BarUtils.setStatusBarColor(this, ContextCompat.getColor(UtilsApp.instance!!, R.color.colorPrimary), 0)
+        BarUtils.setStatusBarColor(this, ContextCompat.getColor(UtilsApp.instance, R.color.colorPrimary), 0)
         BarUtils.addMarginTopEqualStatusBarHeight(rootLayout)
     }
 

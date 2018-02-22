@@ -163,7 +163,7 @@ class StringUtils private constructor() {
             while (i < len) {
                 if (chars[i].toInt() == 12288) {
                     chars[i] = ' '
-                } else if (65281 <= chars[i].toInt() && chars[i].toInt() <= 65374) {
+                } else if (chars[i].toInt() in 65281..65374) {
                     chars[i] = (chars[i].toInt() - 65248).toChar()
                 } else {
                     chars[i] = chars[i]
@@ -187,7 +187,7 @@ class StringUtils private constructor() {
             while (i < len) {
                 if (chars[i] == ' ') {
                     chars[i] = 12288.toChar()
-                } else if (33 <= chars[i].toInt() && chars[i].toInt() <= 126) {
+                } else if (chars[i].toInt() in 33..126) {
                     chars[i] = (chars[i].toInt() + 65248).toChar()
                 } else {
                     chars[i] = chars[i]

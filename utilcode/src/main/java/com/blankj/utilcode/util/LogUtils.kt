@@ -11,8 +11,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.*
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Callable
@@ -35,7 +33,7 @@ import javax.xml.transform.stream.StreamSource
 class LogUtils private constructor() {
 
     @IntDef(V.toLong(), D.toLong(), I.toLong(), W.toLong(), E.toLong(), A.toLong())
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     private annotation class TYPE
 
     init {
@@ -45,10 +43,10 @@ class LogUtils private constructor() {
     class Config internal constructor() {
         init {
             if (sDefaultDir == null) {
-                if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() && Utils.app.getExternalCacheDir() != null)
-                    sDefaultDir = Utils.app.getExternalCacheDir().path + FILE_SEP + "log" + FILE_SEP
+                if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() && Utils.app.externalCacheDir != null)
+                    sDefaultDir = Utils.app.externalCacheDir.path + FILE_SEP + "log" + FILE_SEP
                 else {
-                    sDefaultDir = Utils.app.getCacheDir().path + FILE_SEP + "log" + FILE_SEP
+                    sDefaultDir = Utils.app.cacheDir.path + FILE_SEP + "log" + FILE_SEP
                 }
             }
         }
@@ -294,16 +292,16 @@ class LogUtils private constructor() {
 
         private fun log(type: Int, tag: String?, vararg contents: Any) {
             if (!sLogSwitch || !sLog2ConsoleSwitch && !sLog2FileSwitch) return
-            val type_low = type and 0x0f
-            val type_high = type and 0xf0
-            if (type_low < sConsoleFilter && type_low < sFileFilter) return
+            val typeLow = type and 0x0f
+            val typeHigh = type and 0xf0
+            if (typeLow < sConsoleFilter && typeLow < sFileFilter) return
             val tagHead = processTagAndHead(tag)
-            val body = processBody(type_high, *contents)
-            if (sLog2ConsoleSwitch && type_low >= sConsoleFilter && type_high != FILE) {
-                print2Console(type_low, tagHead.tag, tagHead.consoleHead, body)
+            val body = processBody(typeHigh, *contents)
+            if (sLog2ConsoleSwitch && typeLow >= sConsoleFilter && typeHigh != FILE) {
+                print2Console(typeLow, tagHead.tag, tagHead.consoleHead, body)
             }
-            if ((sLog2FileSwitch || type_high == FILE) && type_low >= sFileFilter) {
-                print2File(type_low, tagHead.tag, tagHead.fileHead + body)
+            if ((sLog2FileSwitch || typeHigh == FILE) && typeLow >= sFileFilter) {
+                print2File(typeLow, tagHead.tag, tagHead.fileHead + body)
             }
         }
 
@@ -370,12 +368,12 @@ class LogUtils private constructor() {
             return TagHead(tag!!, null, ": ")
         }
 
-        private fun processBody(type: Int, vararg contents: Any): String {
+        private fun processBody(type: Int, vararg contents: Any?): String {
             var body = NULL
-            if (contents != null) {
+            if (contents.isNotEmpty()) {
                 if (contents.size == 1) {
-                    val `object` = contents[0]
-                    if (`object` != null) body = `object`.toString()
+                    val any = contents[0]
+                    if (any != null) body = any.toString()
                     if (type == JSON) {
                         body = formatJson(body)
                     } else if (type == XML) {
@@ -533,11 +531,11 @@ class LogUtils private constructor() {
             var versionCode = 0
             try {
                 val pi = Utils.app
-                        .getPackageManager()
-                        .getPackageInfo(Utils.app.getPackageName(), 0)
+                        .packageManager
+                        .getPackageInfo(Utils.app.packageName, 0)
                 if (pi != null) {
-                    versionName = pi!!.versionName
-                    versionCode = pi!!.versionCode
+                    versionName = pi.versionName
+                    versionCode = pi.versionCode
                 }
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()

@@ -2,9 +2,6 @@ package com.blankj.utilcode.constant
 
 import android.support.annotation.IntDef
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-
 /**
  * <pre>
  * author: Blankj
@@ -22,6 +19,6 @@ object TimeConstants {
     const val DAY = 86400000
 
     @IntDef(MSEC.toLong(), SEC.toLong(), MIN.toLong(), HOUR.toLong(), DAY.toLong())
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     annotation class Unit
 }

@@ -4,8 +4,10 @@
 
 ## [README of Chinese][readme-cn]
 
-## About
+## Kotlin Work
+> Sync at [47097da](https://github.com/Blankj/AndroidUtilCode/commit/47097da708792271d3ab5fe1c2dfda85dd091d94)
 
+## About
 **[AndroidUtilCode][readme]** :fire: is a powerful & easy to use library for Android. It encapsulates the functions commonly used in Android development which have complete demo and unit test. Using its encapsulated APIs can greatly improve development efficiency. It mainly consists of two modules. One is the main module, **[utilcode][utilcode-cn]**, which includes the utils commonly used in development. The other is **[subutil][subutil-cn]** which contains the utils is not very common, which is beneficial to simplify the main module. :fire:
 
 
@@ -41,7 +43,7 @@ If this ptoject helps you a lot, and you would like to support this ptoject's fu
 
 [logo]: https://raw.githubusercontent.com/Blankj/AndroidUtilCode/master/art/logo.png
 
-[aucsvg]: https://img.shields.io/badge/AndroidUtilCode-v1.12.5-brightgreen.svg
+[aucsvg]: https://img.shields.io/badge/AndroidUtilCode-v1.12.6-brightgreen.svg
 [auc]: https://github.com/Blankj/AndroidUtilCode
 
 [apisvg]: https://img.shields.io/badge/API-14+-brightgreen.svg

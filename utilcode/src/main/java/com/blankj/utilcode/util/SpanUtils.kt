@@ -634,12 +634,10 @@ class SpanUtils {
      * 设置上一次的样式
      */
     private fun applyLast() {
-        if (mType == mTypeCharSequence) {
-            updateCharCharSequence()
-        } else if (mType == mTypeImage) {
-            updateImage()
-        } else if (mType == mTypeSpace) {
-            updateSpace()
+        when (mType) {
+            mTypeCharSequence -> updateCharCharSequence()
+            mTypeImage -> updateImage()
+            mTypeSpace -> updateSpace()
         }
         setDefault()
     }
@@ -783,14 +781,11 @@ class SpanUtils {
         val start = mBuilder.length
         mBuilder.append("<img>")
         val end = start + 5
-        if (imageBitmap != null) {
-            mBuilder.setSpan(CustomImageSpan(imageBitmap!!, alignImage), start, end, flag)
-        } else if (imageDrawable != null) {
-            mBuilder.setSpan(CustomImageSpan(imageDrawable!!, alignImage), start, end, flag)
-        } else if (imageUri != null) {
-            mBuilder.setSpan(CustomImageSpan(imageUri!!, alignImage), start, end, flag)
-        } else if (imageResourceId != -1) {
-            mBuilder.setSpan(CustomImageSpan(imageResourceId, alignImage), start, end, flag)
+        when {
+            imageBitmap != null -> mBuilder.setSpan(CustomImageSpan(imageBitmap!!, alignImage), start, end, flag)
+            imageDrawable != null -> mBuilder.setSpan(CustomImageSpan(imageDrawable!!, alignImage), start, end, flag)
+            imageUri != null -> mBuilder.setSpan(CustomImageSpan(imageUri!!, alignImage), start, end, flag)
+            imageResourceId != -1 -> mBuilder.setSpan(CustomImageSpan(imageResourceId, alignImage), start, end, flag)
         }
     }
 
@@ -810,24 +805,24 @@ class SpanUtils {
                                   spanstartv: Int, v: Int, fm: Paint.FontMetricsInt) {
             var need = height - (v + fm.descent - fm.ascent - spanstartv)
             //            if (need > 0) {
-            if (mVerticalAlignment == ALIGN_TOP) {
-                fm.descent += need
-            } else if (mVerticalAlignment == ALIGN_CENTER) {
-                fm.descent += need / 2
-                fm.ascent -= need / 2
-            } else {
-                fm.ascent -= need
+            when (mVerticalAlignment) {
+                ALIGN_TOP -> fm.descent += need
+                ALIGN_CENTER -> {
+                    fm.descent += need / 2
+                    fm.ascent -= need / 2
+                }
+                else -> fm.ascent -= need
             }
             //            }
             need = height - (v + fm.bottom - fm.top - spanstartv)
             //            if (need > 0) {
-            if (mVerticalAlignment == ALIGN_TOP) {
-                fm.top += need
-            } else if (mVerticalAlignment == ALIGN_CENTER) {
-                fm.bottom += need / 2
-                fm.top -= need / 2
-            } else {
-                fm.top -= need
+            when (mVerticalAlignment) {
+                ALIGN_TOP -> fm.top += need
+                ALIGN_CENTER -> {
+                    fm.bottom += need / 2
+                    fm.top -= need / 2
+                }
+                else -> fm.top -= need
             }
             //            }
         }
@@ -977,26 +972,24 @@ class SpanUtils {
         override val drawable: Drawable?
             get() {
                 var drawable: Drawable? = null
-                if (mDrawable != null) {
-                    drawable = mDrawable
-                } else if (mContentUri != null) {
-                    val bitmap: Bitmap
-                    try {
-                        val `is` = Utils.app.getContentResolver().openInputStream(mContentUri)
-                        bitmap = BitmapFactory.decodeStream(`is`)
-                        drawable = BitmapDrawable(Utils.app.getResources(), bitmap)
-                        drawable.setBounds(
-                                0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight
-                        )
-                        if (`is` != null) {
-                            `is`!!.close()
+                when {
+                    mDrawable != null -> drawable = mDrawable
+                    mContentUri != null -> {
+                        val bitmap: Bitmap
+                        try {
+                            val inputStream = Utils.app.contentResolver.openInputStream(mContentUri)
+                            bitmap = BitmapFactory.decodeStream(inputStream)
+                            drawable = BitmapDrawable(Utils.app.resources, bitmap)
+                            drawable.setBounds(
+                                    0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight
+                            )
+                            inputStream?.close()
+                        } catch (e: Exception) {
+                            Log.e("sms", "Failed to loaded content " + mContentUri, e)
                         }
-                    } catch (e: Exception) {
-                        Log.e("sms", "Failed to loaded content " + mContentUri, e)
-                    }
 
-                } else {
-                    try {
+                    }
+                    else -> try {
                         drawable = ContextCompat.getDrawable(Utils.app, mResourceId)
                         drawable!!.setBounds(
                                 0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight
@@ -1004,13 +997,12 @@ class SpanUtils {
                     } catch (e: Exception) {
                         Log.e("sms", "Unable to find resource: " + mResourceId)
                     }
-
                 }
                 return drawable
             }
 
         constructor(b: Bitmap, verticalAlignment: Int) : super(verticalAlignment) {
-            mDrawable = BitmapDrawable(Utils.app.getResources(), b)
+            mDrawable = BitmapDrawable(Utils.app.resources, b)
             mDrawable!!.setBounds(
                     0, 0, mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight
             )
@@ -1074,15 +1066,19 @@ class SpanUtils {
                 //                        "lineHeight: " + (fm.bottom - fm.top));
                 val lineHeight = fm.bottom - fm.top
                 if (lineHeight < rect.height()) {
-                    if (mVerticalAlignment == ALIGN_TOP) {
-                        fm.top = fm.top
-                        fm.bottom = rect.height() + fm.top
-                    } else if (mVerticalAlignment == ALIGN_CENTER) {
-                        fm.top = -rect.height() / 2 - lineHeight / 4
-                        fm.bottom = rect.height() / 2 - lineHeight / 4
-                    } else {
-                        fm.top = -rect.height() + fm.bottom
-                        fm.bottom = fm.bottom
+                    when (mVerticalAlignment) {
+                        ALIGN_TOP -> {
+                            fm.top = fm.top
+                            fm.bottom = rect.height() + fm.top
+                        }
+                        ALIGN_CENTER -> {
+                            fm.top = -rect.height() / 2 - lineHeight / 4
+                            fm.bottom = rect.height() / 2 - lineHeight / 4
+                        }
+                        else -> {
+                            fm.top = -rect.height() + fm.bottom
+                            fm.bottom = fm.bottom
+                        }
                     }
                     fm.ascent = fm.top
                     fm.descent = fm.bottom
@@ -1103,14 +1099,11 @@ class SpanUtils {
                 //            LogUtils.d("rectHeight: " + rect.height(),
                 //                    "lineHeight: " + (bottom - top));
                 if (rect.height() < lineHeight) {
-                    if (mVerticalAlignment == ALIGN_TOP) {
-                        transY = top.toFloat()
-                    } else if (mVerticalAlignment == ALIGN_CENTER) {
-                        transY = ((bottom + top - rect.height()) / 2).toFloat()
-                    } else if (mVerticalAlignment == ALIGN_BASELINE) {
-                        transY = (y - rect.height()).toFloat()
-                    } else {
-                        transY = (bottom - rect.height()).toFloat()
+                    when (mVerticalAlignment) {
+                        ALIGN_TOP -> transY = top.toFloat()
+                        ALIGN_CENTER -> transY = ((bottom + top - rect.height()) / 2).toFloat()
+                        ALIGN_BASELINE -> transY = (y - rect.height()).toFloat()
+                        else -> transY = (bottom - rect.height()).toFloat()
                     }
                     canvas.translate(x, transY)
                 } else {

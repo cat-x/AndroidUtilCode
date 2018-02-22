@@ -15,11 +15,11 @@ import android.view.View
 
 /**
  * <pre>
- * author: Blankj
- * blog  : http://blankj.com
- * time  : 2016/09/23
- * desc  : Activity 相关工具类
-</pre> *
+ *     author: Blankj
+ *     blog  : http://blankj.com
+ *     time  : 2016/09/23
+ *     desc  : Utils about activity.
+ * </pre>
  */
 class ActivityUtils private constructor() {
 
@@ -30,25 +30,24 @@ class ActivityUtils private constructor() {
     companion object {
 
         /**
-         * 判断 Activity 是否存在
+         * Return whether the activity exists.
          *
-         * @param packageName 包名
-         * @param className   activity 全路径类名
-         * @return `true`: 是<br></br>`false`: 否
+         * @param packageName The name of the package.
+         * @param className The name of the class.
+         * @return {@code true}: yes<br>{@code false}: no
          */
-        fun isActivityExists(packageName: String,
-                             className: String): Boolean {
+        fun isActivityExists(packageName: String, className: String): Boolean {
             val intent = Intent()
             intent.setClassName(packageName, className)
-            return !(Utils.app.getPackageManager().resolveActivity(intent, 0) == null ||
-                    intent.resolveActivity(Utils.app.getPackageManager()) == null ||
-                    Utils.app.getPackageManager().queryIntentActivities(intent, 0).size == 0)
+            return !(Utils.app.packageManager.resolveActivity(intent, 0) == null ||
+                    intent.resolveActivity(Utils.app.packageManager) == null ||
+                    Utils.app.packageManager.queryIntentActivities(intent, 0).size == 0)
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param clz Activity 类
+         * @param clz The activity class.
          */
         fun startActivity(clz: Class<*>) {
             val context = activityOrApp
@@ -56,10 +55,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param clz     Activity 类
-         * @param options 跳转动画
+         * @param clz     The activity class.
+         * @param options Additional options for how the Activity should be started.
          */
         fun startActivity(clz: Class<*>,
                           options: Bundle?) {
@@ -68,11 +67,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param clz       Activity 类
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param clz       The activity class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(clz: Class<*>,
                           @AnimRes enterAnim: Int,
@@ -86,10 +87,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param clz      Activity 类
+         * @param clz      The activity class.
          */
         fun startActivity(activity: Activity,
                           clz: Class<*>) {
@@ -97,11 +98,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param clz      Activity 类
-         * @param options  跳转动画
+         * @param clz      The activity class.
+         * @param options  Additional options for how the Activity should be started.
          */
         fun startActivity(activity: Activity,
                           clz: Class<*>,
@@ -110,11 +111,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity       activity
-         * @param clz            Activity 类
-         * @param sharedElements 共享元素
+         * @param clz            The activity class.
+         * @param sharedElements The names of the shared elements to transfer to the called
+         *                       Activity and their associated Views.
          */
         fun startActivity(activity: Activity,
                           clz: Class<*>,
@@ -124,12 +126,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity  activity
-         * @param clz       Activity 类
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param clz       The activity class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(activity: Activity,
                           clz: Class<*>,
@@ -144,10 +148,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras extras
-         * @param clz    Activity 类
+         * @param extras The Bundle of extras to add to this intent.
+         * @param clz    The activity class.
          */
         fun startActivity(extras: Bundle,
                           clz: Class<*>) {
@@ -156,11 +160,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras  extras
-         * @param clz     Activity 类
-         * @param options 跳转动画
+         * @param extras  The Bundle of extras to add to this intent.
+         * @param clz     The activity class.
+         * @param options Additional options for how the Activity should be started.
          */
         fun startActivity(extras: Bundle,
                           clz: Class<*>,
@@ -170,12 +174,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras    extras
-         * @param clz       Activity 类
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param extras    The Bundle of extras to add to this intent.
+         * @param clz       The activity class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(extras: Bundle,
                           clz: Class<*>,
@@ -190,11 +196,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras   extras
+         * @param extras   The Bundle of extras to add to this intent.
          * @param activity activity
-         * @param clz      Activity 类
+         * @param clz      The activity class.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -203,12 +209,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras   extras
+         * @param extras   The Bundle of extras to add to this intent.
          * @param activity activity
-         * @param clz      Activity 类
-         * @param options  跳转动画
+         * @param clz      The activity class.
+         * @param options  Additional options for how the Activity should be started.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -218,12 +224,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras         extras
+         * @param extras         The Bundle of extras to add to this intent.
          * @param activity       activity
-         * @param clz            Activity 类
-         * @param sharedElements 共享元素
+         * @param clz            The activity class.
+         * @param sharedElements The names of the shared elements to transfer to the called
+         *                       Activity and their associated Views.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -234,13 +241,15 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras    extras
+         * @param extras    The Bundle of extras to add to this intent.
          * @param activity  activity
-         * @param clz       Activity 类
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param clz       The activity class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -255,10 +264,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param pkg 包名
-         * @param cls 全类名
+         * @param pkg The name of the package.
+         * @param cls The name of the class.
          */
         fun startActivity(pkg: String,
                           cls: String) {
@@ -266,11 +275,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param pkg     包名
-         * @param cls     全类名
-         * @param options 动画
+         * @param pkg     The name of the package.
+         * @param cls     The name of the class.
+         * @param options Additional options for how the Activity should be started.
          */
         fun startActivity(pkg: String,
                           cls: String,
@@ -279,12 +288,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param pkg       包名
-         * @param cls       全类名
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param pkg       The name of the package.
+         * @param cls       The name of the class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(pkg: String,
                           cls: String,
@@ -298,11 +309,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param pkg      包名
-         * @param cls      全类名
+         * @param pkg      The name of the package.
+         * @param cls      The name of the class.
          */
         fun startActivity(activity: Activity,
                           pkg: String,
@@ -311,12 +322,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param pkg      包名
-         * @param cls      全类名
-         * @param options  动画
+         * @param pkg      The name of the package.
+         * @param cls      The name of the class.
+         * @param options  Additional options for how the Activity should be started.
          */
         fun startActivity(activity: Activity,
                           pkg: String,
@@ -326,12 +337,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity       activity
-         * @param pkg            包名
-         * @param cls            全类名
-         * @param sharedElements 共享元素
+         * @param pkg            The name of the package.
+         * @param cls            The name of the class.
+         * @param sharedElements The names of the shared elements to transfer to the called
+         *                       Activity and their associated Views.
          */
         fun startActivity(activity: Activity,
                           pkg: String,
@@ -341,13 +353,15 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity  activity
-         * @param pkg       包名
-         * @param cls       全类名
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param pkg       The name of the package.
+         * @param cls       The name of the class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(activity: Activity,
                           pkg: String,
@@ -361,11 +375,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras extras
-         * @param pkg    包名
-         * @param cls    全类名
+         * @param extras The Bundle of extras to add to this intent.
+         * @param pkg    The name of the package.
+         * @param cls    The name of the class.
          */
         fun startActivity(extras: Bundle,
                           pkg: String,
@@ -374,12 +388,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras  extras
-         * @param pkg     包名
-         * @param cls     全类名
-         * @param options 动画
+         * @param extras  The Bundle of extras to add to this intent.
+         * @param pkg     The name of the package.
+         * @param cls     The name of the class.
+         * @param options Additional options for how the Activity should be started.
          */
         fun startActivity(extras: Bundle,
                           pkg: String,
@@ -389,13 +403,15 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras    extras
-         * @param pkg       包名
-         * @param cls       全类名
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param extras    The Bundle of extras to add to this intent.
+         * @param pkg       The name of the package.
+         * @param cls       The name of the class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(extras: Bundle,
                           pkg: String,
@@ -410,12 +426,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param extras   extras
-         * @param pkg      包名
-         * @param cls      全类名
+         * @param extras   The Bundle of extras to add to this intent.
+         * @param pkg      The name of the package.
+         * @param cls      The name of the class.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -425,13 +441,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras   extras
+         * @param extras   The Bundle of extras to add to this intent.
          * @param activity activity
-         * @param pkg      包名
-         * @param cls      全类名
-         * @param options  动画
+         * @param pkg      The name of the package.
+         * @param cls      The name of the class.
+         * @param options  Additional options for how the Activity should be started.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -442,13 +458,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras         extras
+         * @param extras         The Bundle of extras to add to this intent.
          * @param activity       activity
-         * @param pkg            包名
-         * @param cls            全类名
-         * @param sharedElements 共享元素
+         * @param pkg            The name of the package.
+         * @param cls            The name of the class.
+         * @param sharedElements The names of the shared elements to transfer to the called
+         *                       Activity and their associated Views.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -459,13 +476,15 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param extras    extras
-         * @param pkg       包名
-         * @param cls       全类名
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param extras    The Bundle of extras to add to this intent.
+         * @param pkg       The name of the package.
+         * @param cls       The name of the class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(extras: Bundle,
                           activity: Activity,
@@ -480,19 +499,19 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param intent 意图
+         * @param intent The description of the activity to start.
          */
         fun startActivity(intent: Intent) {
             startActivity(intent, activityOrApp, null)
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param intent  意图
-         * @param options 跳转动画
+         * @param intent  The description of the activity to start.
+         * @param options Additional options for how the Activity should be started.
          */
         fun startActivity(intent: Intent,
                           options: Bundle) {
@@ -500,11 +519,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
-         * @param intent    意图
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param intent    The description of the activity to start.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(intent: Intent,
                           @AnimRes enterAnim: Int,
@@ -517,10 +538,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param intent   意图
+         * @param intent   The description of the activity to start.
          */
         fun startActivity(activity: Activity,
                           intent: Intent) {
@@ -528,11 +549,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity activity
-         * @param intent   意图
-         * @param options  跳转动画
+         * @param intent   The description of the activity to start.
+         * @param options  Additional options for how the Activity should be started.
          */
         fun startActivity(activity: Activity,
                           intent: Intent,
@@ -541,11 +562,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity       activity
-         * @param intent         意图
-         * @param sharedElements 共享元素
+         * @param intent         The description of the activity to start.
+         * @param sharedElements The names of the shared elements to transfer to the called
+         *                       Activity and their associated Views.
          */
         fun startActivity(activity: Activity,
                           intent: Intent,
@@ -554,12 +576,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动 Activity
+         * Start the activity.
          *
          * @param activity  activity
-         * @param intent    意图
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param intent    The description of the activity to start.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivity(activity: Activity,
                           intent: Intent,
@@ -572,19 +596,19 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动多个 Activity
+         * Start activities.
          *
-         * @param intents 意图
+         * @param intents The descriptions of the activities to start.
          */
         fun startActivities(intents: Array<Intent>) {
             startActivities(intents, activityOrApp, null)
         }
 
         /**
-         * 启动多个 Activity
+         * Start activities.
          *
-         * @param intents 意图
-         * @param options 跳转动画
+         * @param intents The descriptions of the activities to start.
+         * @param options Additional options for how the Activity should be started.
          */
         fun startActivities(intents: Array<Intent>,
                             options: Bundle?) {
@@ -592,11 +616,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动多个 Activity
+         * Start activities.
          *
-         * @param intents   意图
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param intents   The descriptions of the activities to start.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivities(intents: Array<Intent>,
                             @AnimRes enterAnim: Int,
@@ -609,10 +635,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动多个 Activity
+         * Start activities.
          *
          * @param activity activity
-         * @param intents  意图
+         * @param intents  The descriptions of the activities to start.
          */
         fun startActivities(activity: Activity,
                             intents: Array<Intent>) {
@@ -620,11 +646,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动多个 Activity
+         * Start activities.
          *
          * @param activity activity
-         * @param intents  意图
-         * @param options  跳转动画
+         * @param intents  The descriptions of the activities to start.
+         * @param options  Additional options for how the Activity should be started.
          */
         fun startActivities(activity: Activity,
                             intents: Array<Intent>,
@@ -633,12 +659,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 启动多个 Activity
+         * Start activities.
          *
          * @param activity  activity
-         * @param intents   意图
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param intents   The descriptions of the activities to start.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun startActivities(activity: Activity,
                             intents: Array<Intent>,
@@ -651,7 +679,7 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 回到桌面
+         * Start home activity.
          */
         fun startHomeActivity() {
             val homeIntent = Intent(Intent.ACTION_MAIN)
@@ -660,32 +688,32 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 获取 Activity 栈链表
+         * Return the list of activity.
          *
-         * @return Activity 栈链表
+         * @return the list of activity
          */
         val activityList: List<Activity>
             get() = Utils.sActivityList
 
         /**
-         * 获取启动项 Activity
+         * Return the name of launcher activity.
          *
-         * @return 启动项 Activity
+         * @return the name of launcher activity
          */
         val launcherActivity: String
-            get() = getLauncherActivity(Utils.app.getPackageName())
+            get() = getLauncherActivity(Utils.app.packageName)
 
         /**
-         * 获取启动项 Activity
+         * Return the name of launcher activity.
          *
-         * @param packageName 包名
-         * @return 启动项 Activity
+         * @param packageName The name of the package.
+         * @return the name of launcher activity
          */
         fun getLauncherActivity(packageName: String): String {
             val intent = Intent(Intent.ACTION_MAIN, null)
             intent.addCategory(Intent.CATEGORY_LAUNCHER)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            val pm = Utils.app.getPackageManager()
+            val pm = Utils.app.packageManager
             val info = pm.queryIntentActivities(intent, 0)
             for (aInfo in info) {
                 if (aInfo.activityInfo.packageName == packageName) {
@@ -696,9 +724,9 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 获取栈顶 Activity
+         * Return the top activity in activity's stack.
          *
-         * @return 栈顶 Activity
+         * @return the top activity in activity's stack
          */
         val topActivity: Activity?
             get() {
@@ -714,10 +742,10 @@ class ActivityUtils private constructor() {
             }
 
         /**
-         * 判断 Activity 是否存在栈中
+         * Return whether the activity exists in activity's stack.
          *
          * @param activity activity
-         * @return `true`: 存在<br></br>`false`: 不存在
+         * @return {@code true}: yes<br>{@code false}: no
          */
         fun isActivityExistsInStack(activity: Activity): Boolean {
             val activities = Utils.sActivityList
@@ -730,10 +758,10 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 判断 Activity 是否存在栈中
+         * Return whether the activity exists in activity's stack.
          *
-         * @param clz Activity 类
-         * @return `true`: 存在<br></br>`false`: 不存在
+         * @param clz The activity class.
+         * @return {@code true}: yes<br>{@code false}: no
          */
         fun isActivityExistsInStack(clz: Class<*>): Boolean {
             val activities = Utils.sActivityList
@@ -746,12 +774,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束 Activity
+         * Finish the activity.
          *
          * @param activity   activity
-         * @param isLoadAnim 是否启动动画
+         * @param isLoadAnim Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
+
         fun finishActivity(activity: Activity, isLoadAnim: Boolean = false) {
             activity.finish()
             if (!isLoadAnim) {
@@ -760,11 +788,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束 Activity
+         * Finish the activity.
          *
          * @param activity  activity
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun finishActivity(activity: Activity,
                            @AnimRes enterAnim: Int,
@@ -774,12 +804,11 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束 Activity
+         * Finish the activity.
          *
-         * @param clz        Activity 类
-         * @param isLoadAnim 是否启动动画
+         * @param clz        The activity class.
+         * @param isLoadAnim Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
         fun finishActivity(clz: Class<*>, isLoadAnim: Boolean = false) {
             val activities = Utils.sActivityList
             for (activity in activities) {
@@ -793,11 +822,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束 Activity
+         * Finish the activity.
          *
-         * @param clz       Activity 类
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param clz       The activity class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun finishActivity(clz: Class<*>,
                            @AnimRes enterAnim: Int,
@@ -812,13 +843,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束到指定 Activity
+         * Finish to the activity.
          *
          * @param activity      activity
-         * @param isIncludeSelf 是否结束该 activity 自己
-         * @param isLoadAnim    是否启动动画
+         * @param isIncludeSelf Whether include the activity.
+         * @param isLoadAnim    Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
         fun finishToActivity(activity: Activity,
                              isIncludeSelf: Boolean,
                              isLoadAnim: Boolean = false): Boolean {
@@ -837,12 +867,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束到指定 Activity
+         * Finish to the activity.
          *
          * @param activity      activity
-         * @param isIncludeSelf 是否结束该 activity 自己
-         * @param enterAnim     入场动画
-         * @param exitAnim      出场动画
+         * @param isIncludeSelf Whether include the activity.
+         * @param enterAnim     A resource ID of the animation resource to use for the
+         *                      incoming activity.
+         * @param exitAnim      A resource ID of the animation resource to use for the
+         *                      outgoing activity.
          */
         fun finishToActivity(activity: Activity,
                              isIncludeSelf: Boolean,
@@ -863,13 +895,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束到指定 Activity
+         * Finish to the activity.
          *
-         * @param clz           Activity 类
-         * @param isIncludeSelf 是否结束该 activity 自己
-         * @param isLoadAnim    是否启动动画
+         * @param clz           The activity class.
+         * @param isIncludeSelf Whether include the activity.
+         * @param isLoadAnim    Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
+
         fun finishToActivity(clz: Class<*>,
                              isIncludeSelf: Boolean,
                              isLoadAnim: Boolean = false): Boolean {
@@ -888,12 +920,14 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束到指定 Activity
+         * Finish to the activity.
          *
-         * @param clz           Activity 类
-         * @param isIncludeSelf 是否结束该 activity 自己
-         * @param enterAnim     入场动画
-         * @param exitAnim      出场动画
+         * @param clz           The activity class.
+         * @param isIncludeSelf Whether include the activity.
+         * @param enterAnim     A resource ID of the animation resource to use for the
+         *                      incoming activity.
+         * @param exitAnim      A resource ID of the animation resource to use for the
+         *                      outgoing activity.
          */
         fun finishToActivity(clz: Class<*>,
                              isIncludeSelf: Boolean,
@@ -915,12 +949,11 @@ class ActivityUtils private constructor() {
 
 
         /**
-         * 结束所有其他类型的 Activity
+         * Finish the activities whose type not equals the activity class.
          *
-         * @param clz        Activity 类
-         * @param isLoadAnim 是否启动动画
+         * @param clz        The activity class.
+         * @param isLoadAnim Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
         fun finishOtherActivities(clz: Class<*>,
                                   isLoadAnim: Boolean = false) {
             val activities = Utils.sActivityList
@@ -940,11 +973,13 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束所有其他类型的 Activity
+         * Finish the activities whose type not equals the activity class.
          *
-         * @param clz       Activity 类
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param clz       The activity class.
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun finishOtherActivities(clz: Class<*>,
                                   @AnimRes enterAnim: Int,
@@ -966,16 +1001,16 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束所有 Activity
+         * Finish all of activities except the newest activity.
          *
-         * @param isLoadAnim 是否启动动画
+         * @param isLoadAnim Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
         fun finishAllActivities(isLoadAnim: Boolean = false) {
             val activityList = Utils.sActivityList
-            for (i in activityList.indices.reversed()) {// 从栈顶开始移除
+            for (i in activityList.indices.reversed()) {// remove from top
                 val activity = activityList[i]
-                activity.finish()// 在 onActivityDestroyed 发生 remove
+                // sActivityList remove the index activity at onActivityDestroyed
+                activity.finish()
                 if (!isLoadAnim) {
                     activity.overridePendingTransition(0, 0)
                 }
@@ -983,27 +1018,29 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束所有 Activity
+         * Finish all of activities.
          *
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun finishAllActivities(@AnimRes enterAnim: Int,
                                 @AnimRes exitAnim: Int) {
             val activityList = Utils.sActivityList
-            for (i in activityList.indices.reversed()) {// 从栈顶开始移除
+            for (i in activityList.indices.reversed()) {// remove from top
                 val activity = activityList[i]
-                activity.finish()// 在 onActivityDestroyed 发生 remove
+                // sActivityList remove the index activity at onActivityDestroyed
+                activity.finish()
                 activity.overridePendingTransition(enterAnim, exitAnim)
             }
         }
 
         /**
-         * 结束除最新之外的所有 Activity
+         * Finish all of activities except the newest activity.
          *
-         * @param isLoadAnim 是否启动动画
+         * @param isLoadAnim Whether use animation for the outgoing activity.
          */
-        @JvmOverloads
         fun finishAllActivitiesExceptNewest(isLoadAnim: Boolean = false) {
             val activities = Utils.sActivityList
             val flag = false
@@ -1013,10 +1050,12 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 结束除最新之外的所有 Activity
+         * Finish all of activities except the newest activity.
          *
-         * @param enterAnim 入场动画
-         * @param exitAnim  出场动画
+         * @param enterAnim A resource ID of the animation resource to use for the
+         *                  incoming activity.
+         * @param exitAnim  A resource ID of the animation resource to use for the
+         *                  outgoing activity.
          */
         fun finishAllActivitiesExceptNewest(@AnimRes enterAnim: Int,
                                             @AnimRes exitAnim: Int) {
@@ -1028,23 +1067,23 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 获取 Activity 图标
+         * Return the icon of activity.
          *
-         * @param clz Activity 类
-         * @return Activity 图标
+         * @param clz The activity class.
+         * @return the icon of activity
          */
         fun getActivityIcon(clz: Class<*>): Drawable? {
             return getActivityIcon(ComponentName(Utils.app, clz))
         }
 
         /**
-         * 获取 Activity 图标
+         * Return the icon of activity.
          *
-         * @param activityName activityName
-         * @return Activity 图标
+         * @param activityName The name of activity.
+         * @return the icon of activity
          */
         fun getActivityIcon(activityName: ComponentName): Drawable? {
-            val pm = Utils.app.getPackageManager()
+            val pm = Utils.app.packageManager
             try {
                 return pm.getActivityIcon(activityName)
             } catch (e: PackageManager.NameNotFoundException) {
@@ -1055,23 +1094,23 @@ class ActivityUtils private constructor() {
         }
 
         /**
-         * 获取 Activity Logo
+         * Return the logo of activity.
          *
-         * @param clz Activity 类
-         * @return Activity Logo
+         * @param clz The activity class.
+         * @return the logo of activity
          */
         fun getActivityLogo(clz: Class<*>): Drawable? {
             return getActivityLogo(ComponentName(Utils.app, clz))
         }
 
         /**
-         * 获取 Activity Logo
+         * Return the logo of activity.
          *
-         * @param activityName activityName
-         * @return Activity Logo
+         * @param activityName The name of activity.
+         * @return the logo of activity
          */
         fun getActivityLogo(activityName: ComponentName): Drawable? {
-            val pm = Utils.app.getPackageManager()
+            val pm = Utils.app.packageManager
             try {
                 return pm.getActivityLogo(activityName)
             } catch (e: PackageManager.NameNotFoundException) {
@@ -1147,36 +1186,3 @@ class ActivityUtils private constructor() {
         }
     }
 }
-/**
- * 结束 Activity
- *
- * @param activity activity
- */
-/**
- * 结束 Activity
- *
- * @param clz Activity 类
- */
-/**
- * 结束到指定 Activity
- *
- * @param activity      activity
- * @param isIncludeSelf 是否结束该 activity 自己
- */
-/**
- * 结束到指定 Activity
- *
- * @param clz           Activity 类
- * @param isIncludeSelf 是否结束该 activity 自己
- */
-/**
- * 结束所有其他类型的 Activity
- *
- * @param clz Activity 类
- */
-/**
- * 结束所有 Activity
- */
-/**
- * 结束除最新之外的所有 Activity
- */

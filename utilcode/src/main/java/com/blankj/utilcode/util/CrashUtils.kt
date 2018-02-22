@@ -55,8 +55,8 @@ class CrashUtils private constructor() {
         init {
             try {
                 val pi = Utils.app
-                        .getPackageManager()
-                        .getPackageInfo(Utils.app.getPackageName(), 0)
+                        .packageManager
+                        .getPackageInfo(Utils.app.packageName, 0)
                 if (pi != null) {
                     versionName = pi.versionName
                     versionCode = pi.versionCode
@@ -212,15 +212,3 @@ class CrashUtils private constructor() {
         }
     }
 }
-/**
- * 初始化
- *
- * 需添加权限 `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
- */
-/**
- * 初始化
- *
- * 需添加权限 `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />`
- *
- * @param crashDir 崩溃文件存储目录
- */

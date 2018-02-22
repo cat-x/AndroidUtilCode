@@ -80,7 +80,7 @@ class UtilsApp : BaseApplication() {
         intent.setClassName("com.blankj.androidutilcode", "com.blankj.androidutilcode.MainActivity")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         val restartIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        val manager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager ?: return
+        val manager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager ?: return
         manager.set(AlarmManager.RTC, System.currentTimeMillis() + 1, restartIntent)
         ActivityUtils.finishAllActivities()
         android.os.Process.killProcess(android.os.Process.myPid())

@@ -1,8 +1,6 @@
 package com.blankj.subutil.util
 
 import android.support.annotation.IntDef
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 import java.util.concurrent.*
 
 /**
@@ -15,7 +13,7 @@ import java.util.concurrent.*
  */
 class ThreadPoolUtils {
     @IntDef(FixedThread.toLong(), CachedThread.toLong(), SingleThread.toLong())
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     annotation class Type
 
     private var exec: ExecutorService? = null

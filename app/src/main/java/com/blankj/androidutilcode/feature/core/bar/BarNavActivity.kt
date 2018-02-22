@@ -52,7 +52,7 @@ class BarNavActivity : BaseBackActivity() {
         when (view.id) {
             R.id.btn_show_nav -> {
                 BarUtils.setNavBarVisibility(this, true)
-                BarUtils.setStatusBarColor(this, ContextCompat.getColor(UtilsApp.instance!!, R.color.colorPrimary), 0)
+                BarUtils.setStatusBarColor(this, ContextCompat.getColor(UtilsApp.instance, R.color.colorPrimary), 0)
                 BarUtils.addMarginTopEqualStatusBarHeight(rootLayout)
             }
             R.id.btn_hide_nav -> BarUtils.setNavBarVisibility(this, false)

@@ -206,11 +206,11 @@ class ToastUtils private constructor() {
         }
 
         private fun show(@StringRes resId: Int, duration: Int) {
-            show(Utils.app.getResources().getText(resId).toString(), duration)
+            show(Utils.app.resources.getText(resId).toString(), duration)
         }
 
         private fun show(@StringRes resId: Int, duration: Int, vararg args: Any) {
-            show(String.format(Utils.app.getResources().getString(resId), *args), duration)
+            show(String.format(Utils.app.resources.getString(resId), *args), duration)
         }
 
         private fun show(format: String, duration: Int, vararg args: Any) {

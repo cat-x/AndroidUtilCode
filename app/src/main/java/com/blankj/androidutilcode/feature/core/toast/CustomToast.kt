@@ -55,11 +55,11 @@ object CustomToast {
     }
 
     private fun show(@StringRes resId: Int, duration: Int) {
-        show(UtilsApp.instance!!.getResources().getString(resId), duration)
+        show(UtilsApp.instance.resources.getString(resId), duration)
     }
 
     private fun show(@StringRes resId: Int, duration: Int, vararg args: Any) {
-        show(String.format(UtilsApp.instance.getResources().getString(resId), *args), duration)
+        show(String.format(UtilsApp.instance.resources.getString(resId), *args), duration)
     }
 
     private fun show(format: String, duration: Int, vararg args: Any) {

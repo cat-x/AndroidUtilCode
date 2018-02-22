@@ -12,7 +12,7 @@ import java.util.Map;
  * </pre>
  */
 public class Test6 {
-    public Map<String, String> map = new HashMap<String, String>();
+    public Map<String, String> map = new HashMap<>();
 
     public void put(String name, String value) {
         map.put(name, value);

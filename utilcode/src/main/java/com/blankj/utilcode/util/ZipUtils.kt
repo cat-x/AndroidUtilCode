@@ -409,19 +409,3 @@ class ZipUtils private constructor() {
         }
     }
 }
-/**
- * 批量压缩文件
- *
- * @param resFiles 待压缩文件集合
- * @param zipFile  压缩文件
- * @return `true`: 压缩成功<br></br>`false`: 压缩失败
- * @throws IOException IO错误时抛出
- */
-/**
- * 压缩文件
- *
- * @param resFile 待压缩文件
- * @param zipFile 压缩文件
- * @return `true`: 压缩成功<br></br>`false`: 压缩失败
- * @throws IOException IO 错误时抛出
- */

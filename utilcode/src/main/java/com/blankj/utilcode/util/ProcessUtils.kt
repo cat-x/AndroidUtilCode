@@ -50,8 +50,8 @@ class ProcessUtils private constructor() {
                         }
                     }
                 }
-                if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    val packageManager = Utils.app.getPackageManager()
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    val packageManager = Utils.app.packageManager
                     val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                     val list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
                     Log.i("ProcessUtils", list.toString())
@@ -61,7 +61,7 @@ class ProcessUtils private constructor() {
                         return null
                     }
                     try {
-                        val info = packageManager.getApplicationInfo(Utils.app.getPackageName(), 0)
+                        val info = packageManager.getApplicationInfo(Utils.app.packageName, 0)
                         val aom = Utils.app.getSystemService(Context.APP_OPS_SERVICE) as? AppOpsManager
                         if (aom != null) {
                             if (aom.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,

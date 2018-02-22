@@ -2,9 +2,6 @@ package com.blankj.utilcode.constant
 
 import android.support.annotation.IntDef
 
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-
 /**
  * <pre>
  * author: Blankj
@@ -21,6 +18,6 @@ object MemoryConstants {
     const val GB = 1073741824
 
     @IntDef(BYTE.toLong(), KB.toLong(), MB.toLong(), GB.toLong())
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     annotation class Unit
 }

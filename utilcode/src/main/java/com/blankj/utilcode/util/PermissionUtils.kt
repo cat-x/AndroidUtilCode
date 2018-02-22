@@ -204,7 +204,6 @@ class PermissionUtils private constructor(vararg permissions: String) {
                 return
             }
             if (sInstance.mPermissionsRequest != null) {
-                val size = sInstance.mPermissionsRequest!!.size
                 requestPermissions(sInstance.mPermissionsRequest!!.toTypedArray<String>(), 1)
             }
         }
@@ -263,7 +262,7 @@ class PermissionUtils private constructor(vararg permissions: String) {
          * @return 清单文件中的权限列表
          */
         val permissions: List<String>
-            get() = getPermissions(Utils.app.getPackageName())
+            get() = getPermissions(Utils.app.packageName)
 
         /**
          * 获取应用权限
@@ -272,7 +271,7 @@ class PermissionUtils private constructor(vararg permissions: String) {
          * @return 清单文件中的权限列表
          */
         fun getPermissions(packageName: String): List<String> {
-            val pm = Utils.app.getPackageManager()
+            val pm = Utils.app.packageManager
             try {
                 return Arrays.asList(
                         *pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
@@ -309,7 +308,7 @@ class PermissionUtils private constructor(vararg permissions: String) {
          */
         fun openAppSettings() {
             val intent = Intent("android.settings.APPLICATION_DETAILS_SETTINGS")
-            intent.data = Uri.parse("package:" + Utils.app.getPackageName())
+            intent.data = Uri.parse("package:" + Utils.app.packageName)
             Utils.app.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }
 

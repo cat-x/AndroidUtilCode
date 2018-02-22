@@ -30,7 +30,7 @@ class DeviceActivity : BaseBackActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        toolBar!!.setTitle(getString(R.string.demo_device))
+        toolBar!!.title = getString(R.string.demo_device)
 
         findViewById<View>(R.id.btn_shutdown).setOnClickListener(this)
         findViewById<View>(R.id.btn_reboot).setOnClickListener(this)

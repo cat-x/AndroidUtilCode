@@ -699,7 +699,7 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
                 return if (bitmap == null)
                     null
                 else
-                    BitmapDrawable(Utils.app.getResources(), bitmap)
+                    BitmapDrawable(Utils.app.resources, bitmap)
             }
         }
     }
@@ -757,7 +757,7 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
         fun getInstance(cacheName: String, maxSize: Long = DEFAULT_MAX_SIZE, maxCount: Int = DEFAULT_MAX_COUNT): CacheUtils {
             var cacheName = cacheName
             if (isSpace(cacheName)) cacheName = "cacheUtils"
-            val file = File(Utils.app.getCacheDir(), cacheName)
+            val file = File(Utils.app.cacheDir, cacheName)
             return getInstance(file, maxSize, maxCount)
         }
 
@@ -798,125 +798,3 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
         }
     }
 }
-/**
- * 获取缓存实例
- *
- * 在 /data/data/com.xxx.xxx/cache/cacheName 目录
- *
- * 缓存尺寸不限
- *
- * 缓存个数不限
- *
- * @param cacheName 缓存目录名
- * @return [CacheUtils]
- */
-/**
- * 获取缓存实例
- *
- * 在 cacheDir 目录
- *
- * 缓存尺寸不限
- *
- * 缓存个数不限
- *
- * @param cacheDir 缓存目录
- * @return [CacheUtils]
- *////////////////////////////////////////////////////////////////////////////
-// bytes 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入字节数组
- *
- * @param key   键
- * @param value 值
- */
-/**
- * 缓存中读取字节数组
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- *////////////////////////////////////////////////////////////////////////////
-// String 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入 String
- *
- * @param key   键
- * @param value 值
- */
-/**
- * 缓存中读取 String
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- *////////////////////////////////////////////////////////////////////////////
-// JSONObject 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入 JSONObject
- *
- * @param key   键
- * @param value 值
- */
-/**
- * 缓存中读取 JSONObject
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- *////////////////////////////////////////////////////////////////////////////
-// JSONArray 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入 JSONArray
- *
- * @param key   键
- * @param value 值
- */
-/**
- * 缓存中读取 JSONArray
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- *////////////////////////////////////////////////////////////////////////////
-// Bitmap 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入 Bitmap
- *
- * @param key   键
- * @param value 值
- */
-/**
- * 缓存中读取 Bitmap
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- */
-/**
- * 缓存中读取 Drawable
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- *////////////////////////////////////////////////////////////////////////////
-// Parcelable 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入 Parcelable
- *
- * @param key   键
- * @param value 值
- *////////////////////////////////////////////////////////////////////////////
-// Serializable 读写
-///////////////////////////////////////////////////////////////////////////
-/**
- * 缓存中写入 Serializable
- *
- * @param key   键
- * @param value 值
- */
-/**
- * 缓存中读取 Serializable
- *
- * @param key 键
- * @return 存在且没过期返回对应值，否则返回`null`
- */

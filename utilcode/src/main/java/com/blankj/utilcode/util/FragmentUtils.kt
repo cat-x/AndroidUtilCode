@@ -34,7 +34,7 @@ class FragmentUtils private constructor() {
     class FragmentNode(internal var fragment: Fragment, internal var next: List<FragmentNode>?) {
 
         override fun toString(): String {
-            return (fragment.javaClass.getSimpleName()
+            return (fragment.javaClass.simpleName
                     + "->"
                     + if (next == null || next!!.isEmpty()) "no child" else next!!.toString())
         }
@@ -677,14 +677,14 @@ class FragmentUtils private constructor() {
                             src: Fragment?,
                             vararg dest: Fragment) {
             if (src != null && src.isRemoving) {
-                Log.e("FragmentUtils", src.javaClass.getName() + " is isRemoving")
+                Log.e("FragmentUtils", src.javaClass.name + " is isRemoving")
                 return
             }
             var name: String
             var args: Bundle
             when (type) {
                 TYPE_ADD_FRAGMENT -> for (fragment in dest) {
-                    name = fragment.javaClass.getName()
+                    name = fragment.javaClass.name
                     args = fragment.arguments
                     val fragmentByTag = fm.findFragmentByTag(name)
                     if (fragmentByTag != null && fragmentByTag.isAdded) {
@@ -709,7 +709,7 @@ class FragmentUtils private constructor() {
                     }
                 }
                 TYPE_REPLACE_FRAGMENT -> {
-                    name = dest[0].javaClass.getName()
+                    name = dest[0].javaClass.name
                     args = dest[0].arguments
                     ft.replace(args.getInt(ARGS_ID), dest[0], name)
                     if (args.getBoolean(ARGS_IS_ADD_STACK)) ft.addToBackStack(name)
@@ -1001,81 +1001,7 @@ class FragmentUtils private constructor() {
          * @return 类名
          */
         fun getSimpleName(fragment: Fragment?): String {
-            return fragment?.javaClass?.getSimpleName() ?: "null"
+            return fragment?.javaClass?.simpleName ?: "null"
         }
     }
 }
-/**
- * 新增 fragment
- *
- * @param fm          fragment 管理器
- * @param containerId 布局 Id
- * @param add         要新增的 fragment
- */
-/**
- * 新增 fragment
- *
- * @param fm          fragment 管理器
- * @param containerId 布局 Id
- * @param add         要新增的 fragment
- * @param isHide      是否隐藏
- */
-/**
- * 新增 fragment
- *
- * @param fm          fragment 管理器
- * @param containerId 布局 Id
- * @param add         要新增的 fragment
- * @param isAddStack  是否入回退栈
- * @param enterAnim   入场动画
- * @param exitAnim    出场动画
- */
-/**
- * 替换 fragment
- *
- * @param srcFragment  源 fragment
- * @param destFragment 目标 fragment
- */
-/**
- * 替换 fragment
- *
- * @param srcFragment  源 fragment
- * @param destFragment 目标 fragment
- * @param isAddStack   是否入回退栈
- * @param enterAnim    入场动画
- * @param exitAnim     出场动画
- */
-/**
- * 替换 fragment
- *
- * @param fm          fragment 管理器
- * @param containerId 布局 Id
- * @param fragment    fragment
- */
-/**
- * 替换 fragment
- *
- * @param fm          fragment 管理器
- * @param containerId 布局 Id
- * @param fragment    fragment
- * @param isAddStack  是否入回退栈
- * @param enterAnim   入场动画
- * @param exitAnim    出场动画
- */
-/**
- * 出栈 fragment
- *
- * @param fm fragment 管理器
- */
-/**
- * 出栈到指定 fragment
- *
- * @param fm          fragment 管理器
- * @param popClz      出栈 fragment 的类型
- * @param isInclusive 是否出栈 popClz 的 fragment
- */
-/**
- * 出栈所有 fragment
- *
- * @param fm fragment 管理器
- */

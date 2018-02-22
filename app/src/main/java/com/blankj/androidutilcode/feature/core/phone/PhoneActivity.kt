@@ -33,7 +33,7 @@ class PhoneActivity : BaseBackActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        toolBar!!.setTitle(getString(R.string.demo_phone))
+        toolBar!!.title = getString(R.string.demo_phone)
 
         findViewById<View>(R.id.btn_dial).setOnClickListener(this)
         findViewById<View>(R.id.btn_call).setOnClickListener(this)

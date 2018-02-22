@@ -53,7 +53,7 @@ class ClipboardUtils private constructor() {
          */
         fun copyUri(uri: Uri) {
             val clipboard = Utils.app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.primaryClip = ClipData.newUri(Utils.app.getContentResolver(), "uri", uri)
+            clipboard.primaryClip = ClipData.newUri(Utils.app.contentResolver, "uri", uri)
         }
 
         /**

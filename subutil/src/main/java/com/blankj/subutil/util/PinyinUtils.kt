@@ -26,13 +26,13 @@ class PinyinUtils private constructor() {
          * @return 拼音
          */
         fun ccs2Pinyin(ccs: CharSequence?, split: CharSequence = ""): String? {
-            if (ccs == null || ccs.length == 0) return null
+            if (ccs == null || ccs.isEmpty()) return null
             val sb = StringBuilder()
             var i = 0
             val len = ccs.length
             while (i < len) {
                 val ch = ccs[i]
-                if (ch.toInt() >= 0x4E00 && ch.toInt() <= 0x9FA5) {
+                if (ch.toInt() in 0x4E00..0x9FA5) {
                     val sp = (ch.toInt() - 0x4E00) * 6
                     sb.append(pinyinTable.substring(sp, sp + 6).trim())
                 } else {
@@ -51,7 +51,7 @@ class PinyinUtils private constructor() {
          * @return 拼音
          */
         fun getPinyinFirstLetter(ccs: CharSequence?): String? {
-            return if (ccs == null || ccs.length == 0) null else ccs2Pinyin(ccs[0].toString())!!.substring(0, 1)
+            return if (ccs == null || ccs.isEmpty()) null else ccs2Pinyin(ccs[0].toString())!!.substring(0, 1)
         }
 
         /**
@@ -63,7 +63,7 @@ class PinyinUtils private constructor() {
          */
         @JvmOverloads
         fun getPinyinFirstLetters(ccs: CharSequence?, split: CharSequence = ""): String? {
-            if (ccs == null || ccs.length == 0) return null
+            if (ccs == null || ccs.isEmpty()) return null
             val len = ccs.length
             val sb = StringBuilder(len)
             for (i in 0 until len) {
@@ -79,26 +79,27 @@ class PinyinUtils private constructor() {
          * @return 姓氏的拼音
          */
         fun getSurnamePinyin(name: CharSequence?): String? {
-            if (name == null || name.length == 0) return null
+            if (name == null || name.isEmpty()) return null
             if (name.length >= 2) {
                 val str = name.subSequence(0, 2)
-                if (str == "澹台")
-                    return "tantai"
-                else if (str == "尉迟")
-                    return "yuchi"
-                else if (str == "万俟")
-                    return "moqi"
-                else if (str == "单于") return "chanyu"
+                when (str) {
+                    "澹台" -> return "tantai"
+                    "尉迟" -> return "yuchi"
+                    "万俟" -> return "moqi"
+                    "单于" -> return "chanyu"
+                    else -> {
+                    }
+                }
             }
             val ch = name[0]
             if (surnames.containsKey(ch)) {
                 return surnames.get(ch)
             }
-            if (ch.toInt() >= 0x4E00 && ch.toInt() <= 0x9FA5) {
+            return if (ch.toInt() in 0x4E00..0x9FA5) {
                 val sp = (ch.toInt() - 0x4E00) * 6
-                return pinyinTable.substring(sp, sp + 6).trim({ it <= ' ' })
+                pinyinTable.substring(sp, sp + 6).trim({ it <= ' ' })
             } else {
-                return ch.toString()
+                ch.toString()
             }
         }
 
@@ -110,11 +111,11 @@ class PinyinUtils private constructor() {
          */
         fun getSurnameFirstLetter(name: CharSequence): String? {
             val surname = getSurnamePinyin(name)
-            return if (surname == null || surname.length == 0) null else surname[0].toString()
+            return if (surname == null || surname.isEmpty()) null else surname[0].toString()
         }
 
         // 多音字姓氏映射表
-        private val surnames: SimpleArrayMap<Char, String>
+        private val surnames: SimpleArrayMap<Char, String> = SimpleArrayMap(35)
 
         /**
          * 获取拼音对照表，对比过pinyin4j和其他方式，这样查表设计的好处就是读取快
@@ -128,7 +129,6 @@ class PinyinUtils private constructor() {
         private val pinyinTable: String
 
         init {
-            surnames = SimpleArrayMap(35)
             surnames.put('乐', "yue")
             surnames.put('乘', "sheng")
             surnames.put('乜', "nie")
@@ -201,15 +201,3 @@ class PinyinUtils private constructor() {
         }
     }
 }
-/**
- * 汉字转拼音
- *
- * @param ccs 汉字字符串(Chinese characters)
- * @return 拼音
- */
-/**
- * 获取所有汉字的首字母
- *
- * @param ccs 汉字字符串(Chinese characters)
- * @return 所有汉字的首字母
- */

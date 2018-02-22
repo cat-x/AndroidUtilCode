@@ -761,10 +761,10 @@ class EncryptUtils private constructor() {
          * @param iv             初始化向量
          * @return 明文
          */
-        fun decryptBase64_3DES(data: ByteArray,
-                               key: ByteArray,
-                               transformation: String,
-                               iv: ByteArray): ByteArray? {
+        fun decryptBase64At3DES(data: ByteArray,
+                                key: ByteArray,
+                                transformation: String,
+                                iv: ByteArray): ByteArray? {
             return decrypt3DES(base64Decode(data), key, transformation, iv)
         }
 
@@ -969,7 +969,7 @@ class EncryptUtils private constructor() {
             var len = hexString.length
             if (len % 2 != 0) {
                 hexString = "0" + hexString
-                len = len + 1
+                len += 1
             }
             val hexBytes = hexString.toUpperCase().toCharArray()
             val ret = ByteArray(len shr 1)
@@ -982,9 +982,9 @@ class EncryptUtils private constructor() {
         }
 
         private fun hex2Dec(hexChar: Char): Int {
-            return if (hexChar >= '0' && hexChar <= '9') {
+            return if (hexChar in '0'..'9') {
                 hexChar - '0'
-            } else if (hexChar >= 'A' && hexChar <= 'F') {
+            } else if (hexChar in 'A'..'F') {
                 hexChar - 'A' + 10
             } else {
                 throw IllegalArgumentException()

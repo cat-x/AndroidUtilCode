@@ -103,7 +103,7 @@ class ImageUtils private constructor() {
          * @return drawable
          */
         fun bitmap2Drawable(bitmap: Bitmap?): Drawable? {
-            return if (bitmap == null) null else BitmapDrawable(Utils.app.getResources(), bitmap)
+            return if (bitmap == null) null else BitmapDrawable(Utils.app.resources, bitmap)
         }
 
         /**
@@ -292,7 +292,7 @@ class ImageUtils private constructor() {
                       maxWidth: Int,
                       maxHeight: Int): Bitmap {
             val options = BitmapFactory.Options()
-            val resources = Utils.app.getResources()
+            val resources = Utils.app.resources
             options.inJustDecodeBounds = true
             BitmapFactory.decodeResource(resources, resId, options)
             options.inSampleSize = calculateInSampleSize(options, maxWidth, maxHeight)
@@ -715,7 +715,7 @@ class ImageUtils private constructor() {
                           recycle: Boolean = false): Bitmap? {
             if (isEmptyBitmap(src)) return null
             // 原图与倒影之间的间距
-            val REFLECTION_GAP = 0
+            val reflectionGap = 0
             val srcWidth = src.width
             val srcHeight = src.height
             val matrix = Matrix()
@@ -725,17 +725,17 @@ class ImageUtils private constructor() {
             val ret = Bitmap.createBitmap(srcWidth, srcHeight + reflectionHeight, src.config)
             val canvas = Canvas(ret)
             canvas.drawBitmap(src, 0f, 0f, null)
-            canvas.drawBitmap(reflectionBitmap, 0f, (srcHeight + REFLECTION_GAP).toFloat(), null)
+            canvas.drawBitmap(reflectionBitmap, 0f, (srcHeight + reflectionGap).toFloat(), null)
             val paint = Paint(Paint.ANTI_ALIAS_FLAG)
             val shader = LinearGradient(
                     0f, srcHeight.toFloat(),
-                    0f, (ret.height + REFLECTION_GAP).toFloat(),
+                    0f, (ret.height + reflectionGap).toFloat(),
                     0x70FFFFFF,
                     0x00FFFFFF,
                     Shader.TileMode.MIRROR)
             paint.shader = shader
             paint.xfermode = PorterDuffXfermode(android.graphics.PorterDuff.Mode.DST_IN)
-            canvas.drawRect(0f, (srcHeight + REFLECTION_GAP).toFloat(), srcWidth.toFloat(), ret.height.toFloat(), paint)
+            canvas.drawRect(0f, (srcHeight + reflectionGap).toFloat(), srcWidth.toFloat(), ret.height.toFloat(), paint)
             if (!reflectionBitmap.isRecycled) reflectionBitmap.recycle()
             if (recycle && !src.isRecycled) src.recycle()
             return ret
@@ -1632,178 +1632,3 @@ class ImageUtils private constructor() {
         }
     }
 }
-/**
- * 缩放图片
- *
- * @param src       源图片
- * @param newWidth  新宽度
- * @param newHeight 新高度
- * @return 缩放后的图片
- */
-/**
- * 缩放图片
- *
- * @param src         源图片
- * @param scaleWidth  缩放宽度倍数
- * @param scaleHeight 缩放高度倍数
- * @return 缩放后的图片
- */
-/**
- * 裁剪图片
- *
- * @param src    源图片
- * @param x      开始坐标 x
- * @param y      开始坐标 y
- * @param width  裁剪宽度
- * @param height 裁剪高度
- * @return 裁剪后的图片
- */
-/**
- * 倾斜图片
- *
- * @param src 源图片
- * @param kx  倾斜因子 x
- * @param ky  倾斜因子 y
- * @return 倾斜后的图片
- */
-/**
- * 倾斜图片
- *
- * @param src 源图片
- * @param kx  倾斜因子 x
- * @param ky  倾斜因子 y
- * @param px  平移因子 x
- * @param py  平移因子 y
- * @return 倾斜后的图片
- */
-/**
- * 旋转图片
- *
- * @param src     源图片
- * @param degrees 旋转角度
- * @param px      旋转点横坐标
- * @param py      旋转点纵坐标
- * @return 旋转后的图片
- */
-/**
- * 转为圆形图片
- *
- * @param src 源图片
- * @return 圆形图片
- */
-/**
- * 转为圆形图片
- *
- * @param src         源图片
- * @param borderSize  边框尺寸
- * @param borderColor 边框颜色
- * @return 圆形图片
- */
-/**
- * 转为圆角图片
- *
- * @param src    源图片
- * @param radius 圆角的度数
- * @return 圆角图片
- */
-/**
- * 转为圆角图片
- *
- * @param src         源图片
- * @param radius      圆角的度数
- * @param borderSize  边框尺寸
- * @param borderColor 边框颜色
- * @return 圆角图片
- */
-/**
- * 添加倒影
- *
- * @param src              源图片的
- * @param reflectionHeight 倒影高度
- * @return 带倒影图片
- */
-/**
- * 添加图片水印
- *
- * @param src       源图片
- * @param watermark 图片水印
- * @param x         起始坐标 x
- * @param y         起始坐标 y
- * @param alpha     透明度
- * @return 带有图片水印的图片
- */
-/**
- * 转为 alpha 位图
- *
- * @param src 源图片
- * @return alpha 位图
- */
-/**
- * 转为灰度图片
- *
- * @param src 源图片
- * @return 灰度图
- */
-/**
- * 快速模糊
- *
- * 先缩小原图，对小图进行模糊，再放大回原先尺寸
- *
- * @param src    源图片
- * @param scale  缩放比例(0...1)
- * @param radius 模糊半径
- * @return 模糊后的图片
- */
-/**
- * renderScript 模糊图片
- *
- * API 大于 17
- *
- * @param src    源图片
- * @param radius 模糊半径(0...25)
- * @return 模糊后的图片
- */
-/**
- * stack 模糊图片
- *
- * @param src    源图片
- * @param radius 模糊半径
- * @return stack 模糊后的图片
- */
-/**
- * 保存图片
- *
- * @param src    源图片
- * @param file   要保存到的文件
- * @param format 格式
- * @return `true`: 成功<br></br>`false`: 失败
- */
-/**
- * 按质量压缩
- *
- * @param src     源图片
- * @param quality 质量
- * @return 质量压缩后的图片
- */
-/**
- * 按质量压缩
- *
- * @param src         源图片
- * @param maxByteSize 允许最大值字节数
- * @return 质量压缩压缩过的图片
- */
-/**
- * 按采样大小压缩
- *
- * @param src        源图片
- * @param sampleSize 采样率大小
- * @return 按采样率压缩后的图片
- */
-/**
- * 按采样大小压缩
- *
- * @param src       源图片
- * @param maxWidth  最大宽度
- * @param maxHeight 最大高度
- * @return 按采样率压缩后的图片
- */

@@ -47,7 +47,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
         val result = arrayOfNulls<Class<*>>(args.size)
         for (i in args.indices) {
             val value = args[i]
-            result[i] = if (value == null) NULL::class.java else value.javaClass
+            result[i] = value?.javaClass ?: NULL::class.java
         }
         return result as Array<Class<*>>
     }
@@ -125,8 +125,8 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
         val field = getAccessibleField(name)
         if (field!!.modifiers and Modifier.FINAL == Modifier.FINAL) {
             try {
-                val modifiersField = Field::class.java!!.getDeclaredField("modifiers")
-                modifiersField.setAccessible(true)
+                val modifiersField = Field::class.java.getDeclaredField("modifiers")
+                modifiersField.isAccessible = true
                 modifiersField.setInt(field, field.modifiers and Modifier.FINAL.inv())
             } catch (ignore: NoSuchFieldException) {
                 // runs in android will happen
@@ -307,24 +307,18 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
         if (type == null) {
             return null
         } else if (type.isPrimitive) {
-            if (Boolean::class.javaPrimitiveType == type) {
-                return Boolean::class.java
-            } else if (Int::class.javaPrimitiveType == type) {
-                return Int::class.java
-            } else if (Long::class.javaPrimitiveType == type) {
-                return Long::class.java
-            } else if (Short::class.javaPrimitiveType == type) {
-                return Short::class.java
-            } else if (Byte::class.javaPrimitiveType == type) {
-                return Byte::class.java
-            } else if (Double::class.javaPrimitiveType == type) {
-                return Double::class.java
-            } else if (Float::class.javaPrimitiveType == type) {
-                return Float::class.java
-            } else if (Char::class.javaPrimitiveType == type) {
-                return Char::class.java
-            } else if (Void.TYPE == type) {
-                return Void::class.java
+            when (type) {
+                Boolean::class.javaPrimitiveType -> return Boolean::class.java
+                Int::class.javaPrimitiveType -> return Int::class.java
+                Long::class.javaPrimitiveType -> return Long::class.java
+                Short::class.javaPrimitiveType -> return Short::class.java
+                Byte::class.javaPrimitiveType -> return Byte::class.java
+                Double::class.javaPrimitiveType -> return Double::class.java
+                Float::class.javaPrimitiveType -> return Float::class.java
+                Char::class.javaPrimitiveType -> return Char::class.java
+                Void.TYPE -> return Void::class.java
+                else -> {
+                }
             }
         }
         return type
@@ -420,7 +414,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
          */
         @Throws(ReflectUtils.ReflectException::class)
         fun reflect(any: Any?): ReflectUtils {
-            return ReflectUtils(if (any == null) Any::class.java else any.javaClass, any!!)
+            return ReflectUtils(any?.javaClass ?: Any::class.java, any!!)
         }
 
         private fun forName(className: String): Class<*> {
@@ -441,20 +435,4 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
 
         }
     }
-}///////////////////////////////////////////////////////////////////////////
-// newInstance
-///////////////////////////////////////////////////////////////////////////
-/**
- * 实例化反射对象
- *
- * @return [ReflectUtils]
- *////////////////////////////////////////////////////////////////////////////
-// method
-///////////////////////////////////////////////////////////////////////////
-/**
- * 设置反射的方法
- *
- * @param name 方法名
- * @return [ReflectUtils]
- * @throws ReflectException 反射异常
- */
+}

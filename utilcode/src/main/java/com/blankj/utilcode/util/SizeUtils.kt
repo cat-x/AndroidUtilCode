@@ -22,7 +22,7 @@ class SizeUtils private constructor() {
     /**
      * 获取到 View 尺寸的监听
      */
-    interface onGetSizeListener {
+    interface OnGetSizeListener {
         fun onGetSize(view: View)
     }
 
@@ -35,7 +35,7 @@ class SizeUtils private constructor() {
          * @return px 值
          */
         fun dp2px(dpValue: Float): Int {
-            val scale = Utils.app.getResources().getDisplayMetrics().density
+            val scale = Utils.app.resources.displayMetrics.density
             return (dpValue * scale + 0.5f).toInt()
         }
 
@@ -46,7 +46,7 @@ class SizeUtils private constructor() {
          * @return dp 值
          */
         fun px2dp(pxValue: Float): Int {
-            val scale = Utils.app.getResources().getDisplayMetrics().density
+            val scale = Utils.app.resources.displayMetrics.density
             return (pxValue / scale + 0.5f).toInt()
         }
 
@@ -57,7 +57,7 @@ class SizeUtils private constructor() {
          * @return px 值
          */
         fun sp2px(spValue: Float): Int {
-            val fontScale = Utils.app.getResources().getDisplayMetrics().scaledDensity
+            val fontScale = Utils.app.resources.displayMetrics.scaledDensity
             return (spValue * fontScale + 0.5f).toInt()
         }
 
@@ -68,7 +68,7 @@ class SizeUtils private constructor() {
          * @return sp 值
          */
         fun px2sp(pxValue: Float): Int {
-            val fontScale = Utils.app.getResources().getDisplayMetrics().scaledDensity
+            val fontScale = Utils.app.resources.displayMetrics.scaledDensity
             return (pxValue / fontScale + 0.5f).toInt()
         }
 
@@ -99,11 +99,11 @@ class SizeUtils private constructor() {
         /**
          * 在 onCreate 中获取视图的尺寸
          *
-         * 需回调 onGetSizeListener 接口，在 onGetSize 中获取 view 宽高
+         * 需回调 OnGetSizeListener 接口，在 onGetSize 中获取 view 宽高
          *
          * 用法示例如下所示
          * <pre>
-         * SizeUtils.forceGetViewSize(view, new SizeUtils.onGetSizeListener() {
+         * SizeUtils.forceGetViewSize(view, new SizeUtils.OnGetSizeListener() {
          * Override
          * public void onGetSize(final View view) {
          * view.getWidth();
@@ -114,7 +114,7 @@ class SizeUtils private constructor() {
          * @param view     视图
          * @param listener 监听器
          */
-        fun forceGetViewSize(view: View, listener: onGetSizeListener?) {
+        fun forceGetViewSize(view: View, listener: OnGetSizeListener?) {
             view.post {
                 listener?.onGetSize(view)
             }

@@ -1077,16 +1077,12 @@ class FileUtils private constructor() {
          */
         @SuppressLint("DefaultLocale")
         private fun byte2FitMemorySize(byteNum: Long): String {
-            return if (byteNum < 0) {
-                "shouldn't be less than zero!"
-            } else if (byteNum < 1024) {
-                String.format("%.3fB", byteNum.toDouble())
-            } else if (byteNum < 1048576) {
-                String.format("%.3fKB", byteNum.toDouble() / 1024)
-            } else if (byteNum < 1073741824) {
-                String.format("%.3fMB", byteNum.toDouble() / 1048576)
-            } else {
-                String.format("%.3fGB", byteNum.toDouble() / 1073741824)
+            return when {
+                byteNum < 0 -> "shouldn't be less than zero!"
+                byteNum < 1024 -> String.format("%.3fB", byteNum.toDouble())
+                byteNum < 1048576 -> String.format("%.3fKB", byteNum.toDouble() / 1024)
+                byteNum < 1073741824 -> String.format("%.3fMB", byteNum.toDouble() / 1048576)
+                else -> String.format("%.3fGB", byteNum.toDouble() / 1073741824)
             }
         }
 
@@ -1104,28 +1100,3 @@ class FileUtils private constructor() {
         }
     }
 }
-/**
- * 获取目录下所有文件
- *
- * 不递归进子目录
- *
- * @param dirPath 目录路径
- * @return 文件链表
- */
-/**
- * 获取目录下所有文件
- *
- * 不递归进子目录
- *
- * @param dir 目录
- * @return 文件链表
- */
-/**
- * 获取目录下所有过滤的文件
- *
- * 不递归进子目录
- *
- * @param dir    目录
- * @param filter 过滤器
- * @return 文件链表
- */

@@ -54,7 +54,7 @@ class NetworkActivity : BaseBackActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        toolBar!!.setTitle(getString(R.string.demo_network))
+        toolBar!!.title = getString(R.string.demo_network)
 
         tvAboutNetwork = findViewById(R.id.tv_about_network)
         tvAboutNetworkAsync = findViewById(R.id.tv_about_network_async)
