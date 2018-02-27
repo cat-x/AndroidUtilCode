@@ -15,10 +15,10 @@ object Config {
 
     val FILE_SEP = System.getProperty("file.separator")
     val LINE_SEP = System.getProperty("line.separator")
-    val PKG = "com.blankj.androidutilcode"
-    val TEST_PKG = "com.blankj.testinstall"
-    val GITHUB = "https://github.com/Blankj/AndroidUtilCode"
-    val BLOG = "http://www.jianshu.com/u/46702d5c6978"
+    const val PKG = "com.blankj.androidutilcode"
+    const val TEST_PKG = "com.blankj.testinstall"
+    const val GITHUB = "https://github.com/Blankj/AndroidUtilCode"
+    const val BLOG = "http://www.jianshu.com/u/46702d5c6978"
     val CACHE_PATH: String
     val TEST_APK_PATH: String
 

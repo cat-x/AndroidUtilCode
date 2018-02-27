@@ -68,11 +68,11 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
      */
     @JvmOverloads
     fun put(key: String, value: ByteArray, saveTime: Int = -1) {
-        var value = value
-        if (value.size <= 0) return
-        if (saveTime >= 0) value = CacheHelper.newByteArrayWithTime(saveTime, value)
+        var valueTemp = value
+        if (valueTemp.isEmpty()) return
+        if (saveTime >= 0) valueTemp = CacheHelper.newByteArrayWithTime(saveTime, valueTemp)
         val file = mCacheManager.getFileBeforePut(key)
-        CacheHelper.writeFileFromBytes(file, value)
+        CacheHelper.writeFileFromBytes(file, valueTemp)
         mCacheManager.updateModify(file)
         mCacheManager.put(file)
     }
@@ -301,7 +301,7 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
     @JvmOverloads
     fun getSerializable(key: String, defaultValue: Any? = null): Any? {
         val bytes = getBytes(key) ?: return defaultValue
-        return CacheHelper.bytes2Object(getBytes(key))
+        return CacheHelper.bytes2Object(bytes)
     }
 
     /**
@@ -324,13 +324,12 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
     }
 
     inner class CacheManager constructor(val cacheDir: File, val sizeLimit: Long, val countLimit: Int) {
-        private val cacheSize: AtomicLong
+        private val cacheSize: AtomicLong = AtomicLong()
         private val cacheCount: AtomicInteger
         private val lastUsageDates = Collections.synchronizedMap(HashMap<File, Long>())
         private val mThread: Thread
 
         init {
-            cacheSize = AtomicLong()
             cacheCount = AtomicInteger()
             mThread = Thread(Runnable {
                 var size = 0
@@ -409,7 +408,7 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
 
         fun clear(): Boolean {
             val files = cacheDir.listFiles()
-            if (files == null || files.size <= 0) return true
+            if (files == null || files.isEmpty()) return true
             var flag = true
             for (file in files) {
                 if (!file.delete()) {
@@ -458,7 +457,7 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
 
     sealed class CacheHelper {
         companion object {
-            internal val timeInfoLen = 14
+            internal const val timeInfoLen = 14
 
             fun newByteArrayWithTime(second: Int, data: ByteArray): ByteArray {
                 val time = createDueTime(second).toByteArray()
@@ -649,7 +648,7 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
             }
 
             fun bytes2Bitmap(bytes: ByteArray?): Bitmap? {
-                return if (bytes == null || bytes.size == 0)
+                return if (bytes == null || bytes.isEmpty())
                     null
                 else
                     BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -706,13 +705,13 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
 
     companion object {
 
-        private val DEFAULT_MAX_SIZE = java.lang.Long.MAX_VALUE
-        private val DEFAULT_MAX_COUNT = Integer.MAX_VALUE
+        private const val DEFAULT_MAX_SIZE = java.lang.Long.MAX_VALUE
+        private const val DEFAULT_MAX_COUNT = Integer.MAX_VALUE
 
-        val SEC = 1
-        val MIN = 60
-        val HOUR = 3600
-        val DAY = 86400
+        const val SEC = 1
+        const val MIN = 60
+        const val HOUR = 3600
+        const val DAY = 86400
 
         private val CACHE_MAP = SimpleArrayMap<String, CacheUtils>()
 
@@ -755,9 +754,9 @@ class CacheUtils private constructor(cacheDir: File, maxSize: Long, maxCount: In
          */
         @JvmOverloads
         fun getInstance(cacheName: String, maxSize: Long = DEFAULT_MAX_SIZE, maxCount: Int = DEFAULT_MAX_COUNT): CacheUtils {
-            var cacheName = cacheName
-            if (isSpace(cacheName)) cacheName = "cacheUtils"
-            val file = File(Utils.app.cacheDir, cacheName)
+            var cacheNameTemp = cacheName
+            if (isSpace(cacheNameTemp)) cacheNameTemp = "cacheUtils"
+            val file = File(Utils.app.cacheDir, cacheNameTemp)
             return getInstance(file, maxSize, maxCount)
         }
 

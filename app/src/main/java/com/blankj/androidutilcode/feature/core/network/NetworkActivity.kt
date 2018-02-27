@@ -30,7 +30,7 @@ class NetworkActivity : BaseBackActivity() {
 
     internal var mHandler = Handler(Handler.Callback { msg ->
         var text = tvAboutNetworkAsync.text.toString()
-        if (text.length != 0) {
+        if (text.isNotEmpty()) {
             text += '\n'.toString()
         }
         if (msg.what == 1) {

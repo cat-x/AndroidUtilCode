@@ -8,7 +8,7 @@ package com.blankj.subutil.util
  * desc  : 相机相关工具类
 </pre> *
  */
-class CameraUtils//    private CameraUtils() {
+object CameraUtils//    private CameraUtils() {
 //        throw new UnsupportedOperationException("u can't instantiate me...");
 //    }
 //

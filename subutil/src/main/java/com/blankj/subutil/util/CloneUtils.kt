@@ -20,19 +20,17 @@ object CloneUtils {
         if (serializable == null) return null
         var baos: ByteArrayOutputStream? = null
         var oos: ObjectOutputStream? = null
-        try {
+        return try {
             baos = ByteArrayOutputStream()
             oos = ObjectOutputStream(baos)
             oos.writeObject(serializable)
-            return baos.toByteArray()
+            baos.toByteArray()
         } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         } finally {
             try {
-                if (oos != null) {
-                    oos.close()
-                }
+                oos?.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -43,17 +41,15 @@ object CloneUtils {
     private fun bytes2Object(bytes: ByteArray?): Any? {
         if (bytes == null) return null
         var ois: ObjectInputStream? = null
-        try {
+        return try {
             ois = ObjectInputStream(ByteArrayInputStream(bytes))
-            return ois.readObject()
+            ois.readObject()
         } catch (e: Exception) {
             e.printStackTrace()
-            return null
+            null
         } finally {
             try {
-                if (ois != null) {
-                    ois.close()
-                }
+                ois?.close()
             } catch (e: IOException) {
                 e.printStackTrace()
             }

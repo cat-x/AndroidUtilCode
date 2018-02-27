@@ -195,17 +195,17 @@ class LogActivity : BaseBackActivity() {
 
     companion object {
 
-        private val TAG = "CMJ"
+        private const val TAG = "CMJ"
 
-        private val UPDATE_LOG = 0x01
-        private val UPDATE_CONSOLE = 0x01 shl 1
-        private val UPDATE_TAG = 0x01 shl 2
-        private val UPDATE_HEAD = 0x01 shl 3
-        private val UPDATE_FILE = 0x01 shl 4
-        private val UPDATE_DIR = 0x01 shl 5
-        private val UPDATE_BORDER = 0x01 shl 6
-        private val UPDATE_CONSOLE_FILTER = 0x01 shl 7
-        private val UPDATE_FILE_FILTER = 0x01 shl 8
+        private const val UPDATE_LOG = 0x01
+        private const val UPDATE_CONSOLE = 0x01 shl 1
+        private const val UPDATE_TAG = 0x01 shl 2
+        private const val UPDATE_HEAD = 0x01 shl 3
+        private const val UPDATE_FILE = 0x01 shl 4
+        private const val UPDATE_DIR = 0x01 shl 5
+        private const val UPDATE_BORDER = 0x01 shl 6
+        private const val UPDATE_CONSOLE_FILTER = 0x01 shl 7
+        private const val UPDATE_FILE_FILTER = 0x01 shl 8
 
         private val longStr: String
 

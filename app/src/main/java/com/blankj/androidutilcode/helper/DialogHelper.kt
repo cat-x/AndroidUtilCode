@@ -25,8 +25,8 @@ object DialogHelper {
         AlertDialog.Builder(topActivity)
                 .setTitle(android.R.string.dialog_alert_title)
                 .setMessage(R.string.permission_rationale_message)
-                .setPositiveButton(android.R.string.ok) { dialog, which -> shouldRequest.again(true) }
-                .setNegativeButton(android.R.string.cancel) { dialog, which -> shouldRequest.again(false) }
+                .setPositiveButton(android.R.string.ok) { _, _ -> shouldRequest.again(true) }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> shouldRequest.again(false) }
                 .setCancelable(false)
                 .create()
                 .show()
@@ -38,8 +38,8 @@ object DialogHelper {
         AlertDialog.Builder(topActivity)
                 .setTitle(android.R.string.dialog_alert_title)
                 .setMessage(R.string.permission_denied_forever_message)
-                .setPositiveButton(android.R.string.ok) { dialog, which -> PermissionUtils.openAppSettings() }
-                .setNegativeButton(android.R.string.cancel) { dialog, which -> }
+                .setPositiveButton(android.R.string.ok) { _, _ -> PermissionUtils.openAppSettings() }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
                 .setCancelable(false)
                 .create()
                 .show()

@@ -11,49 +11,40 @@ import java.io.IOException
  * desc  : 关闭相关工具类
 </pre> *
  */
-class CloseUtils private constructor() {
+object CloseUtils {
 
-    init {
-        throw UnsupportedOperationException("u can't instantiate me...")
-    }
 
-    companion object {
-
-        /**
-         * 关闭 IO
-         *
-         * @param closeables closeables
-         */
-        fun <T : Closeable> closeIO(vararg closeables: T?) {
-            if (closeables.isEmpty()) return
-            for (closeable in closeables) {
-                if (closeable != null) {
+    /**
+     * 关闭 IO
+     *
+     * @param closeables closeables
+     */
+    fun <T : Closeable> closeIO(vararg closeables: T?) {
+        if (closeables.isEmpty()) return
+        closeables.filterNotNull()
+                .forEach {
                     try {
-                        closeable.close()
+                        it.close()
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
-
                 }
-            }
-        }
+    }
 
-        /**
-         * 安静关闭 IO
-         *
-         * @param closeables closeables
-         */
-        fun <T : Closeable> closeIOQuietly(vararg closeables: T?) {
-            if (closeables.isEmpty()) return
-            for (closeable in closeables) {
-                if (closeable != null) {
+    /**
+     * 安静关闭 IO
+     *
+     * @param closeables closeables
+     */
+    fun <T : Closeable> closeIOQuietly(vararg closeables: T?) {
+        if (closeables.isEmpty()) return
+        closeables.filterNotNull()
+                .forEach {
                     try {
-                        closeable.close()
+                        it.close()
                     } catch (ignored: IOException) {
                     }
-
                 }
-            }
-        }
     }
+
 }

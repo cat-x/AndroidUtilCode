@@ -29,85 +29,79 @@ import java.util.*
  *     desc  : Utils about initialization.
  * </pre>
  */
-class Utils private constructor() {
+@SuppressLint("StaticFieldLeak")
+object Utils {
 
-    init {
-        throw UnsupportedOperationException("u can't instantiate me...")
+    private var sApplication: Application? = null
+
+    internal var sTopActivityWeakRef: WeakReference<Activity>? = null
+    internal var sActivityList: MutableList<Activity> = LinkedList()
+
+    private val mCallbacks = object : ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity?, bundle: Bundle?) {
+            if (activity != null) {
+                sActivityList.add(activity)
+                setTopActivityWeakRef(activity)
+            }
+
+        }
+
+        override fun onActivityStarted(activity: Activity?) {
+            if (activity != null) {
+                setTopActivityWeakRef(activity)
+            }
+        }
+
+        override fun onActivityResumed(activity: Activity?) {
+            if (activity != null) {
+                setTopActivityWeakRef(activity)
+            }
+        }
+
+        override fun onActivityPaused(activity: Activity?) {
+
+        }
+
+        override fun onActivityStopped(activity: Activity?) {
+
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity?, bundle: Bundle?) {
+
+        }
+
+        override fun onActivityDestroyed(activity: Activity?) {
+            sActivityList.remove(activity)
+        }
     }
 
-    companion object {
+    /**
+     * Init utils.
+     * <p>Init it in the class of Application.</p>
+     *
+     * @param context context
+     */
+    fun init(context: Context) {
+        Utils.sApplication = context.applicationContext as Application
+        Utils.sApplication!!.registerActivityLifecycleCallbacks(mCallbacks)
+    }
 
-        @SuppressLint("StaticFieldLeak")
-        private var sApplication: Application? = null
-
-        internal var sTopActivityWeakRef: WeakReference<Activity>? = null
-        internal var sActivityList: MutableList<Activity> = LinkedList()
-
-        private val mCallbacks = object : ActivityLifecycleCallbacks {
-            override fun onActivityCreated(activity: Activity?, bundle: Bundle?) {
-                if (activity != null) {
-                    sActivityList.add(activity)
-                    setTopActivityWeakRef(activity)
-                }
-
-            }
-
-            override fun onActivityStarted(activity: Activity?) {
-                if (activity != null) {
-                    setTopActivityWeakRef(activity)
-                }
-            }
-
-            override fun onActivityResumed(activity: Activity?) {
-                if (activity != null) {
-                    setTopActivityWeakRef(activity)
-                }
-            }
-
-            override fun onActivityPaused(activity: Activity?) {
-
-            }
-
-            override fun onActivityStopped(activity: Activity?) {
-
-            }
-
-            override fun onActivitySaveInstanceState(activity: Activity?, bundle: Bundle?) {
-
-            }
-
-            override fun onActivityDestroyed(activity: Activity?) {
-                sActivityList.remove(activity)
-            }
+    /**
+     * Return the context of Application object.
+     *
+     * @return the context of Application object
+     */
+    val app: Application
+        get() {
+            if (sApplication != null) return sApplication!!
+            throw NullPointerException("u should init first")
         }
 
-        /**
-         * Init utils.
-         * <p>Init it in the class of Application.</p>
-         *
-         * @param context context
-         */
-        fun init(context: Context) {
-            Utils.sApplication = context.applicationContext as Application
-            Utils.sApplication!!.registerActivityLifecycleCallbacks(mCallbacks)
-        }
-
-        /**
-         * Return the context of Application object.
-         *
-         * @return the context of Application object
-         */
-        val app: Application
-            get() {
-                if (sApplication != null) return sApplication!!
-                throw NullPointerException("u should init first")
-            }
-
-        private fun setTopActivityWeakRef(activity: Activity) {
-            if (activity.javaClass == PermissionUtils.PermissionActivity::class.java) return
-            if (sTopActivityWeakRef == null || activity != sTopActivityWeakRef!!.get()) {
-                sTopActivityWeakRef = WeakReference(activity)
-            }
+    private fun setTopActivityWeakRef(activity: Activity) {
+        if (activity.javaClass == PermissionUtils.PermissionActivity::class.java) return
+        if (sTopActivityWeakRef == null || activity != sTopActivityWeakRef!!.get()) {
+            sTopActivityWeakRef = WeakReference(activity)
         }
     }
 }
+

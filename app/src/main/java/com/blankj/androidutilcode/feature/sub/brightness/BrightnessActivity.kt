@@ -15,6 +15,7 @@ import com.blankj.androidutilcode.R
 import com.blankj.androidutilcode.base.BaseActivity
 import com.blankj.subutil.util.BrightnessUtils
 import com.blankj.subutil.util.Utils
+import com.blankj.subutil.util.brightness
 import com.blankj.utilcode.util.SpanUtils
 
 /**
@@ -50,7 +51,7 @@ class BrightnessActivity : BaseActivity() {
 
     private val windowBrightnessChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            BrightnessUtils.setWindowBrightness(window, progress)
+            window.brightness = progress
             updateWindowBrightness()
         }
 
@@ -83,7 +84,7 @@ class BrightnessActivity : BaseActivity() {
         sbBrightness.setOnSeekBarChangeListener(brightnessChangeListener)
         updateBrightness()
 
-        sbWindowBrightness.progress = BrightnessUtils.getWindowBrightness(window)
+        sbWindowBrightness.progress = window.brightness
         sbWindowBrightness.setOnSeekBarChangeListener(windowBrightnessChangeListener)
         updateWindowBrightness()
 
@@ -121,7 +122,7 @@ class BrightnessActivity : BaseActivity() {
 
     private fun updateWindowBrightness() {
         tvWindowBrightness.text = SpanUtils()
-                .append(BrightnessUtils.getWindowBrightness(window).toString())
+                .append(window.brightness.toString())
                 .create()
     }
 

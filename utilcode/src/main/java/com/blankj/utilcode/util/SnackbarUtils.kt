@@ -173,7 +173,7 @@ class SnackbarUtils private constructor(private val parent: View?) {
             val params = snackbarView?.layoutParams as ViewGroup.MarginLayoutParams
             params.bottomMargin = bottomMargin
         }
-        if (actionText!!.length > 0 && actionListener != null) {
+        if (actionText!!.isNotEmpty() && actionListener != null) {
             if (actionTextColor != COLOR_DEFAULT) {
                 snackbar?.setActionTextColor(actionTextColor)
             }
@@ -221,11 +221,11 @@ class SnackbarUtils private constructor(private val parent: View?) {
         @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
         annotation class Duration
 
-        const private val COLOR_DEFAULT = -0x1000001
-        const private val COLOR_SUCCESS = -0xd44a00
-        const private val COLOR_WARNING = -0x3f00
-        const private val COLOR_ERROR = -0x10000
-        const private val COLOR_MESSAGE = -0x1
+        private const val COLOR_DEFAULT = -0x1000001
+        private const val COLOR_SUCCESS = -0xd44a00
+        private const val COLOR_WARNING = -0x3f00
+        private const val COLOR_ERROR = -0x10000
+        private const val COLOR_MESSAGE = -0x1
 
         private var sReference: WeakReference<Snackbar>? = null
 

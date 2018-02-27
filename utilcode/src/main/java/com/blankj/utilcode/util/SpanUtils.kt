@@ -76,7 +76,7 @@ class SpanUtils {
     private var spaceSize: Int = 0
     private var spaceColor: Int = 0
 
-    private val mBuilder: SpannableStringBuilder
+    private val mBuilder: SpannableStringBuilder = SpannableStringBuilder()
 
     private var mType: Int = 0
     private val mTypeCharSequence = 0
@@ -84,7 +84,6 @@ class SpanUtils {
     private val mTypeSpace = 2
 
     init {
-        mBuilder = SpannableStringBuilder()
         mText = ""
         setDefault()
     }
@@ -481,7 +480,7 @@ class SpanUtils {
      * @return [SpanUtils]
      */
     fun setSpans(vararg spans: Any): SpanUtils {
-        if (spans.size > 0) {
+        if (spans.isNotEmpty()) {
             this.spans = spans
         }
         return this
@@ -643,7 +642,7 @@ class SpanUtils {
     }
 
     private fun updateCharCharSequence() {
-        if (mText!!.length == 0) return
+        if (mText!!.isEmpty()) return
         val start = mBuilder.length
         mBuilder.append(mText)
         val end = mBuilder.length
@@ -1134,7 +1133,7 @@ class SpanUtils {
     }
 
     companion object {
-        private val COLOR_DEFAULT = -0x1000001
+        private const val COLOR_DEFAULT = -0x1000001
 
         const val ALIGN_BOTTOM = 0
         const val ALIGN_BASELINE = 1

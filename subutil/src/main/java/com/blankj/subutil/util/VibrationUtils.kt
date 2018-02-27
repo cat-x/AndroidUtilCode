@@ -8,7 +8,7 @@ package com.blankj.subutil.util
  * desc  : 震动相关工具类
 </pre> *
  */
-class VibrationUtils//    private VibrationUtils() {
+object VibrationUtils//    private VibrationUtils() {
 //        throw new UnsupportedOperationException("u can't instantiate me...");
 //    }
 //

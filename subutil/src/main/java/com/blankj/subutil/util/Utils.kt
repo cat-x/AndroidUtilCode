@@ -45,35 +45,29 @@ import android.app.Application
  * 　　　　　　　　　　　　　　丶亅亅丶　　　　　　　　　　　　　　　亅日瓦日
  * 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　丶
  */
-class Utils private constructor() {
+@SuppressLint("StaticFieldLeak")
+object Utils {
 
-    init {
-        throw UnsupportedOperationException("u can't instantiate me...")
+    private var sApplication: Application? = null
+
+    /**
+     * 初始化工具类
+     *
+     * @param app 应用
+     */
+    fun init(app: Application) {
+        Utils.sApplication = app
     }
 
-    companion object {
-
-        @SuppressLint("StaticFieldLeak")
-        private var sApplication: Application? = null
-
-        /**
-         * 初始化工具类
-         *
-         * @param app 应用
-         */
-        fun init(app: Application) {
-            Utils.sApplication = app
+    /**
+     * 获取 Application
+     *
+     * @return Application
+     */
+    val app: Application
+        get() {
+            if (sApplication != null) return sApplication!!
+            throw NullPointerException("u should init first")
         }
 
-        /**
-         * 获取 Application
-         *
-         * @return Application
-         */
-        val app: Application
-            get() {
-                if (sApplication != null) return sApplication!!
-                throw NullPointerException("u should init first")
-            }
-    }
 }

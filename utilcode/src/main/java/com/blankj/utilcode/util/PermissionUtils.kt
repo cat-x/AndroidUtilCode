@@ -37,11 +37,7 @@ class PermissionUtils private constructor(vararg permissions: String) {
     init {
         mPermissions = LinkedHashSet()
         for (permission in permissions) {
-            for (aPermission in PermissionConstants.getPermissions(permission)) {
-                if (PERMISSIONS.contains(aPermission)) {
-                    mPermissions.add(aPermission)
-                }
-            }
+            PermissionConstants.getPermissions(permission).filterTo(mPermissions) { PERMISSIONS.contains(it) }
         }
         sInstance = this
     }
@@ -291,12 +287,7 @@ class PermissionUtils private constructor(vararg permissions: String) {
          * @return `true`: 是<br></br>`false`: 否
          */
         fun isGranted(vararg permissions: String): Boolean {
-            for (permission in permissions) {
-                if (!isGranted(permission)) {
-                    return false
-                }
-            }
-            return true
+            return permissions.all { isGranted(it) }
         }
 
         private fun isGranted(permission: String): Boolean {

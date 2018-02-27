@@ -15,7 +15,7 @@ import android.support.v4.util.SimpleArrayMap
  */
 @SuppressLint("ApplySharedPref")
 class SPUtils private constructor(spName: String) {
-    private val sp: SharedPreferences
+    private val sp: SharedPreferences = Utils.app.getSharedPreferences(spName, Context.MODE_PRIVATE)
 
     /**
      * SP 中获取所有键值对
@@ -24,10 +24,6 @@ class SPUtils private constructor(spName: String) {
      */
     val all: Map<String, *>
         get() = sp.all
-
-    init {
-        sp = Utils.app.getSharedPreferences(spName, Context.MODE_PRIVATE)
-    }
 
     /**
      * SP 中写入 String
@@ -264,11 +260,11 @@ class SPUtils private constructor(spName: String) {
         /**
          * 获取 SP 实例
          *
-         * @param spName sp 名
+         * @param name sp 名
          * @return [SPUtils]
          */
-        fun getInstance(spName: String): SPUtils {
-            var spName = spName
+        fun getInstance(name: String): SPUtils {
+            var spName = name
             if (isSpace(spName)) spName = "spUtils"
             var spUtils: SPUtils? = SP_UTILS_MAP.get(spName)
             if (spUtils == null) {

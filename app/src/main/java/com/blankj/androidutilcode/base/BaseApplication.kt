@@ -56,7 +56,7 @@ open class BaseApplication : Application() {
 
     companion object {
 
-        private val TAG = "BaseApplication"
+        private const val TAG = "BaseApplication"
 
         var instance: BaseApplication? = null
             private set

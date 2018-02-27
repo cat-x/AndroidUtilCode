@@ -162,9 +162,9 @@ abstract class BaseAdapter<M> : RecyclerView.Adapter<BaseViewHolder>() {
 
     companion object {
 
-        protected val VIEW_TYPE_EMPTY = 0xfff0
-        protected val VIEW_TYPE_HEADER = 0xfff1
-        protected val VIEW_TYPE_FOOTER = 0xfff2
-        protected val VIEW_TYPE_DEFAULT = 0xfff3
+        protected const val VIEW_TYPE_EMPTY = 0xfff0
+        protected const val VIEW_TYPE_HEADER = 0xfff1
+        protected const val VIEW_TYPE_FOOTER = 0xfff2
+        protected const val VIEW_TYPE_DEFAULT = 0xfff3
     }
 }

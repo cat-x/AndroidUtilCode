@@ -115,7 +115,7 @@ class RecycleViewDivider(context: Context, orientation: Int, protected var mDivi
 
     companion object {
 
-        val HORIZONTAL = LinearLayout.HORIZONTAL
-        val VERTICAL = LinearLayout.VERTICAL
+        const val HORIZONTAL = LinearLayout.HORIZONTAL
+        const val VERTICAL = LinearLayout.VERTICAL
     }
 }

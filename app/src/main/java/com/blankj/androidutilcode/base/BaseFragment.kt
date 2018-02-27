@@ -103,8 +103,8 @@ abstract class BaseFragment : Fragment(), IBaseView {
 
     companion object {
 
-        private val TAG = "BaseFragment"
+        private const val TAG = "BaseFragment"
 
-        private val STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN"
+        private const val STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN"
     }
 }

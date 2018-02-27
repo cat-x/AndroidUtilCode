@@ -11,7 +11,7 @@ import java.util.*
  * desc  : 反射相关工具类
 </pre> *
  */
-class ReflectUtils private constructor(private val type: Class<*>, private val `object`: Any = type) {
+class ReflectUtils private constructor(private val type: Class<*>, private val any: Any = type) {
 
     /**
      * 实例化反射对象
@@ -26,12 +26,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
             val constructor = type().getDeclaredConstructor(*types)
             return newInstance(constructor, *args)
         } catch (e: NoSuchMethodException) {
-            val list = ArrayList<Constructor<*>>()
-            for (constructor in type().declaredConstructors) {
-                if (match(constructor.parameterTypes, types)) {
-                    list.add(constructor)
-                }
-            }
+            val list = type().declaredConstructors.filter { match(it.parameterTypes, types) }
             if (list.isEmpty()) {
                 throw ReflectException(e)
             } else {
@@ -95,7 +90,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
     fun field(name: String): ReflectUtils {
         try {
             val field = getField(name)
-            return ReflectUtils(field.type, field.get(`object`))
+            return ReflectUtils(field.type, field.get(any))
         } catch (e: IllegalAccessException) {
             throw ReflectException(e)
         }
@@ -112,7 +107,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
     fun field(name: String, value: Any): ReflectUtils {
         try {
             val field = getField(name)
-            field.set(`object`, unwrap(value))
+            field.set(any, unwrap(value))
             return this
         } catch (e: Exception) {
             throw ReflectException(e)
@@ -154,8 +149,8 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
 
     }
 
-    private fun unwrap(`object`: Any): Any {
-        return (`object` as? ReflectUtils)?.get() ?: `object`
+    private fun unwrap(any1: Any): Any {
+        return (any1 as? ReflectUtils)?.get() ?: any1
     }
 
     /**
@@ -172,11 +167,11 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
         val types = getArgsType(*args)
         try {
             val method = exactMethod(name, types)
-            return method(method, obj = `object`, args = *args)
+            return method(method, obj = any, args = *args)
         } catch (e: NoSuchMethodException) {
             try {
                 val method = similarMethod(name, types)
-                return method(method, obj = `object`, args = *args)
+                return method(method, obj = any, args = *args)
             } catch (e1: NoSuchMethodException) {
                 throw ReflectException(e1)
             }
@@ -222,22 +217,16 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
     @Throws(NoSuchMethodException::class)
     private fun similarMethod(name: String, types: Array<Class<*>>): Method {
         var type: Class<*>? = type()
-        val methods = ArrayList<Method>()
-        for (method in type!!.methods) {
-            if (isSimilarSignature(method, name, types)) {
-                methods.add(method)
-            }
-        }
+        val methods = type!!.methods
+                .asSequence()
+                .filter { isSimilarSignature(it, name, types) }
+                .toMutableList()
         if (!methods.isEmpty()) {
             sortMethods(methods)
             return methods[0]
         }
         do {
-            for (method in type!!.declaredMethods) {
-                if (isSimilarSignature(method, name, types)) {
-                    methods.add(method)
-                }
-            }
+            type!!.declaredMethods.filterTo(methods) { isSimilarSignature(it, name, types) }
             if (!methods.isEmpty()) {
                 sortMethods(methods)
                 return methods[0]
@@ -275,13 +264,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
 
     private fun match(declaredTypes: Array<Class<*>>, actualTypes: Array<Class<*>>): Boolean {
         if (declaredTypes.size == actualTypes.size) {
-            for (i in actualTypes.indices) {
-                if (actualTypes[i] == NULL::class.java || wrapper(declaredTypes[i])!!.isAssignableFrom(wrapper(actualTypes[i])!!)) {
-                    continue
-                }
-                return false
-            }
-            return true
+            return actualTypes.indices.none { actualTypes[it] != NULL::class.java && !wrapper(declaredTypes[it])!!.isAssignableFrom(wrapper(actualTypes[it])!!) }
         } else {
             return false
         }
@@ -330,20 +313,20 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
      * @param <T> 返回的范型
      * @return 反射想要获取的
     </T> */
-    fun <T> get(): T {
-        return `object` as T
+    fun <T> get(): T? {
+        return any as? T
     }
 
     override fun hashCode(): Int {
-        return `object`.hashCode()
+        return any.hashCode()
     }
 
-    override fun equals(obj: Any?): Boolean {
-        return obj is ReflectUtils && `object` == obj.get<Any>()
+    override fun equals(other: Any?): Boolean {
+        return other is ReflectUtils && any == other.get<Any>()
     }
 
     override fun toString(): String {
-        return `object`.toString()
+        return any.toString()
     }
 
     private class NULL
@@ -358,7 +341,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
 
         companion object {
 
-            private val serialVersionUID = 858774075258496016L
+            private const val serialVersionUID = 858774075258496016L
         }
     }
 
@@ -408,7 +391,7 @@ class ReflectUtils private constructor(private val type: Class<*>, private val `
         /**
          * 设置要反射的类
          *
-         * @param `object` 类对象
+         * @param `any` 类对象
          * @return [ReflectUtils]
          * @throws ReflectException 反射异常
          */

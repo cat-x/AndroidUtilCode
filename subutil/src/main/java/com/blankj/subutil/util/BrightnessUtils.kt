@@ -93,29 +93,23 @@ object BrightnessUtils {
             Settings.System.putInt(resolver, Settings.System.SCREEN_BRIGHTNESS, brightness)
             resolver.notifyChange(Settings.System.getUriFor("screen_brightness"), null)
         }
+}
 
-    /**
-     * 设置窗口亮度
-     *
-     * @param window     窗口
-     * @param brightness 亮度值
-     */
-    fun setWindowBrightness(window: Window,
-                            @IntRange(from = 0, to = 255) brightness: Int) {
-        val lp = window.attributes
-        lp.screenBrightness = brightness / 255f
-        window.attributes = lp
-    }
-
-    /**
-     * 获取窗口亮度
-     *
-     * @param window 窗口
-     * @return 屏幕亮度 0-255
-     */
-    fun getWindowBrightness(window: Window): Int {
-        val lp = window.attributes
+/**
+ * 获取窗口亮度
+ * 或
+ * 设置窗口亮度
+ *
+ * @return 屏幕亮度 0-255
+ */
+var Window.brightness: Int
+    get() {
+        val lp = attributes
         val brightness = lp.screenBrightness
         return if (brightness < 0) brightness.toInt() else (brightness * 255).toInt()
     }
-}
+    set(@IntRange(from = 0, to = 255) brightness) {
+        val lp = attributes
+        lp.screenBrightness = brightness / 255f
+        attributes = lp
+    }
